@@ -166,15 +166,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 GetStartedBtn: {
-        width: RF (350),
+        width: RF (375),
         height: RF (50),
-        borderRadius: RF (10),
+        borderRadius: RF (5),
         backgroundColor: 'Secondary',
         alignItems: 'center',
         justifyContent: 'center',
     },
      BtnText: {
-        color: '#FFFFFF'
+        color: '#FFFFFF',
+        fontFamily: 'Poppins-Medium',
     }
     
 });

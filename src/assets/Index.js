@@ -22,7 +22,7 @@ export const EyeIcon = require('../assets/images/Eye.png');
 export const EyeOffIcon = require('../assets/images/EyeOff.png');
 
 // Signup screen
-export const TeleIcon = require('../assets/images/Eye.png');
+export const TeleIcon = require('../assets/images/Telephone.png');
 
 // Home Screen
 export const HomeIcon = require('../assets/images/Home.png');

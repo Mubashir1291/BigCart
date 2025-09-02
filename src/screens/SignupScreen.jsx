@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Image, ImageBackground,Switch, TouchableOpacity
 import React from 'react'
 import { useNavigation } from '@react-navigation/native';
 
-import { EmailIcon, PasswordIcon, WelcomeImage, EyeIcon,EyeOffIcon} from '../assets/Index';
+import { EmailIcon, PasswordIcon, WelcomeImage, EyeIcon,EyeOffIcon, TeleIcon} from '../assets/Index';
 import { BorderClr, Link, MidGrey, Primary, primaryClr, Secondary, SimpleText, TextClr } from '../styles/colors/colorsCode';
 import { RF } from '../Utils/Responsive';
 import Buttons from '../components/buttons/Buttons';
@@ -14,33 +14,34 @@ import { useState } from 'react';
   
 // Form validation schema
 
-const loginValidationSchema = Yup.object().shape({
+const signupValidationSchema = Yup.object().shape({
   email: Yup
     .string()
-    .email('Please enter valid email')
-    .required('Email Address is Required'),
+    .email("Please Enter The Valid Email")
+    .required("Email Address is Required"),
+    phone: Yup
+    .string()
+    .required("Phone Number is Required"),
   password: Yup
     .string()
-    .min(8, ({ min }) => "Password must be at least " + min + " sCharacters")
-    .required('Password is required'),
-});
+    .min(8, ({ min }) => "Password Must be " + min+  " Characters")
+    .required("Password is required"),
 
-const WelcomeScreen = () => {
+}) 
+
+const SignupScreen = () => {
 
   const [rememberMe, setRememberMe] = React.useState(false);
 
   const [showPass, setShowPass] = useState(false);
 
 
+
   const navigation = useNavigation();
 
-  const SignInHandler = () => {
+  const SignupHandler = () => {
 
     navigation.navigate('HomeScreen');
-  }
-    const SignupHandle = () => {
-
-    navigation.navigate('SignupScreen');
   }
 
 
@@ -70,12 +71,15 @@ const WelcomeScreen = () => {
         {/* // Formik for form validation */}
 
          <Formik
-            validationSchema={loginValidationSchema}
-            initialValues={{ email: '', password: '' }}
+            validationSchema={signupValidationSchema}
+            initialValues={{ email: '', password: '', phone:'' }}
             onSubmit={values => console.log(values)}
           >
             {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
               <>
+
+              {/* Email Input  */}
+
               <View style={ styles.TextInputContainer }>
                 <Image source={EmailIcon} style={styles.IconSize} />
 
@@ -96,6 +100,29 @@ const WelcomeScreen = () => {
 
               </View>
 
+              {/* Phone Number Input */}
+               <View style={ styles.TextInputContainer }>
+                <Image source={TeleIcon} style={styles.IconSize} />
+
+                <TextInput
+                  name="phone"
+                  placeholder="Phone Number"
+                  onChangeText={handleChange('phone')}
+                  onBlur={handleBlur('phone')}
+                  value={values.phone}
+                  keyboardType='numeric'
+                />
+                </View>
+                <View style = {{marginTop: RF (5) ,flexDirection:'row', justifyContent:'flex-start', width:RF(350)}}>
+
+                {errors.phone && 
+                 <Text style={{ fontSize: RF(10), color: 'red' }}>{errors.phone}</Text>
+                }
+
+              </View>
+
+              {/* Password Input */}
+
                <View style={ styles.TextInputContainer }>
                 <Image source={PasswordIcon} style={styles.IconSize} />
                 <TextInput
@@ -106,6 +133,7 @@ const WelcomeScreen = () => {
                   value={values.password}
                   secureTextEntry = {!showPass}
                   />
+                  
 
                   <TouchableOpacity onPress={() => setShowPass(!showPass)} style={{marginLeft:RF(310) ,position:'absolute'}} >
                   <Image source={showPass ? EyeOffIcon : EyeIcon} style={styles.IconSize} />
@@ -116,14 +144,12 @@ const WelcomeScreen = () => {
                   {errors.password &&
                  <Text style={{ fontSize: RF (10) , color: 'red' }}>{errors.password}</Text>}
                   </View>
-                  
-                 <Buttons text={'Login'} onPress={SignInHandler} />
 
+                  {/* Confirm Password Input */}
 
-              </>
-            )}
-          </Formik>
-          <View style={styles.SwitchContainer} >
+                {/* Remember Me & Forget  */}
+
+                   <View style={styles.SwitchContainer} >
                <Switch
                  trackColor={{false: '#767577', true: Primary}}
                  thumbColor={rememberMe ? Secondary : '#f4f3f4'}
@@ -139,14 +165,23 @@ const WelcomeScreen = () => {
 
                </TouchableOpacity>
               </View>
+                  
+                 
+                 {/* Login Button */}
+                <Buttons text={'Signup'} onPress={SignupHandler} />
+
+              </>
+            )}
+          </Formik>
+         
 
 
 
         
       <View style={styles.BottomTextCont} >
             <Text style={styles.SimpleText}>Already have an account? </Text>
-            <TouchableOpacity onPress={SignupHandle} >
-            <Text style={styles.LoginText}>Sign up</Text>
+            <TouchableOpacity>
+            <Text style={styles.LoginText}>Login </Text>
             </TouchableOpacity>
           </View>
 
@@ -163,7 +198,7 @@ const WelcomeScreen = () => {
   )
 }
 
-export default WelcomeScreen
+export default SignupScreen
 
 const styles = StyleSheet.create({
 

@@ -34,9 +34,9 @@ const styles = StyleSheet.create({
         marginTop: RF (10),
     },
 GetStartedBtn: {
-        width: RF (350),
+        width: RF (375),
         height: RF (50),
-        borderRadius: RF (7),
+        borderRadius: RF (5),
         backgroundColor: 'Secondary',
         alignItems: 'center',
         justifyContent: 'center',

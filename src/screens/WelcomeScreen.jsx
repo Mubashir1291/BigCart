@@ -7,6 +7,7 @@ import { BorderClr, MidGrey, Primary, Secondary, SimpleText, TextClr } from '../
 import { RF } from '../Utils/Responsive';
 import { RFP } from '../Utils/Responsive';
 import Buttons from '../components/buttons/Buttons';
+import LinearGradient from 'react-native-linear-gradient';
 
 
 
@@ -14,10 +15,18 @@ import Buttons from '../components/buttons/Buttons';
 const WelcomeScreen = () => {
 
   const navigation = useNavigation();
-  const CreateAccountHandle = () => {
+  const LoginHandle = () => {
 
     navigation.navigate('SignInScreen');
   }
+
+const CreateAccountHandle = () => {
+
+    navigation.navigate('SignupScreen');
+  }
+
+
+
   return (
 
 
@@ -41,20 +50,27 @@ const WelcomeScreen = () => {
         </View>
         </TouchableOpacity>
 
-        <View style={styles.BtnContainer} >
-          <Buttons style ={{position: 'absolute'}}text={'Create an Account'} onPress={CreateAccountHandle}/>
-          <Image source={UserIcon} style={styles.UserBtnLogo} />
+       <TouchableOpacity onPress={CreateAccountHandle} >
+        <LinearGradient
+         style={styles.GetStartedBtn}
+         colors={[Primary, Secondary]}
+          start={{ x: 0, y: 1 }}
+          end={{ x: 1, y: 1 }}>
+          <Image source={UserIcon} style={styles.googleLogo} />
+          <Text style={styles.CreatAcntText}> Create an account</Text>
+      
+        </LinearGradient>
+        </TouchableOpacity>
 
-        
-        </View>
 
-
-
+-
 
         
       <View style={styles.BottomTextCont} >
             <Text style={styles.SimpleText}>Already have an account? </Text>
+            <TouchableOpacity onPress={LoginHandle} >
             <Text style={styles.LoginText}>Login</Text>
+            </TouchableOpacity>
           </View>
 
       </View>
@@ -114,17 +130,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     flexDirection: 'row',
     alignItems: 'center',
-    width: RF (350),
+    width: RF (375),
     height: RF (50),
-    borderRadius: RF (7),
+    borderRadius: RF (5),
     marginTop: RF (20),
-    elevation: RF (1),
+    paddingInline : RF (10),
+    paddingLeft: RF (30),
   },
+  
   googleLogo: {
     width: RF (24),
     height: RF (24),
-    marginLeft: RF (10),
-    marginRight: RF (10),
+
   },
 
   GoogleLogoText: {
@@ -137,8 +154,10 @@ const styles = StyleSheet.create({
   BtnContainer: {
     marginTop: RF (10),
     alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row'
+    justifyContent: 'flex-start',
+    flexDirection: 'row',
+    paddingInline: RF (10),
+    paddingLeft: RF (30),
   },
   BottomTextCont: {
     flexDirection: 'row',
@@ -162,10 +181,27 @@ const styles = StyleSheet.create({
   },
 
   UserBtnLogo: {
-       width: RF (24),
+    width: RF (24),
     height: RF (24),
-    marginRight: RF (300),
     position: 'absolute',
   },  
+
+  GetStartedBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: RF (375),
+    height: RF (50),
+    borderRadius: RF (5),
+    marginTop: RF (10),
+    paddingInline : RF (10),
+    paddingLeft: RF (30),
+  },
+  CreatAcntText: {
+
+    fontSize: RF (14),
+    marginLeft: RF (50),
+    color: 'white',
+    fontFamily: 'Poppins-Medium',
+  },
 
 })
