@@ -43,6 +43,10 @@ const SignupScreen = () => {
 
     navigation.navigate('HomeScreen');
   }
+   const SigninHandler = () => {
+
+    navigation.navigate('SignInScreen');
+  }
 
 
 
@@ -92,7 +96,7 @@ const SignupScreen = () => {
                   keyboardType="email-address"
                 />
                 </View>
-                <View style = {{marginTop: RF (5) ,flexDirection:'row', justifyContent:'flex-start', width:RF(350)}}>
+                <View style = {{marginTop: RF(5) ,flexDirection:'row', justifyContent:'flex-start', width:RF(350)}}>
 
                 {errors.email && 
                  <Text style={{ fontSize: RF(10), color: 'red' }}>{errors.email}</Text>
@@ -140,9 +144,9 @@ const SignupScreen = () => {
                   </TouchableOpacity>
                 </View>
 
-                 <View style = {{marginTop: RF (5) ,flexDirection:'row', justifyContent:'flex-start', width:RF(350)}}> 
+                 <View style = {{marginTop: RF(5) ,flexDirection:'row', justifyContent:'flex-start', width:RF(350)}}> 
                   {errors.password &&
-                 <Text style={{ fontSize: RF (10) , color: 'red' }}>{errors.password}</Text>}
+                 <Text style={{ fontSize: RF(10) , color: 'red' }}>{errors.password}</Text>}
                   </View>
 
                   {/* Confirm Password Input */}
@@ -180,7 +184,8 @@ const SignupScreen = () => {
         
       <View style={styles.BottomTextCont} >
             <Text style={styles.SimpleText}>Already have an account? </Text>
-            <TouchableOpacity>
+            
+            <TouchableOpacity onPress={SigninHandler}>
             <Text style={styles.LoginText}>Login </Text>
             </TouchableOpacity>
           </View>
@@ -208,83 +213,83 @@ const styles = StyleSheet.create({
   },
   welcome: {
     color: '#ffffff',
-    fontSize: RF (20),
-    marginTop: RF (63),
+    fontSize: RF(20),
+    marginTop: RF(63),
 
   },
   DetailsCont: {
     backgroundColor: MidGrey,
     width: '100%',
-    borderTopEndRadius: RF (20),
-    borderTopLeftRadius: RF (20),
+    borderTopEndRadius: RF(20),
+    borderTopLeftRadius: RF(20),
     alignItems: 'center',
   },
   welcomeBottom: {
     color: '#000000',
-    fontSize: RF (20),
-    marginTop: RF (20),
+    fontSize: RF(20),
+    marginTop: RF(20),
     fontFamily: 'Poppins-Bold',
 
   },
   SignInHeadings: {
     color: '#868889',
-    fontSize: RF (15),
-    marginTop: RF (5),
-    marginLeft: RF (8),
+    fontSize: RF(15),
+    marginTop: RF(5),
+    marginLeft: RF(8),
     
  },
   loremHeadings2: {
     color: '#868889',
-    fontSize: RF (15),
-    marginRight: RF (120)
+    fontSize: RF(15),
+    marginRight: RF(120)
   },
 
   GoogleContainer: {
     backgroundColor: '#ffffff',
     flexDirection: 'row',
     alignItems: 'center',
-    width: RF (350),
-    height: RF (50),
-    borderRadius: RF (7),
-    marginTop: RF (20),
-    elevation: RF (1),
+    width: RF(350),
+    height: RF(50),
+    borderRadius: RF(7),
+    marginTop: RF(20),
+    elevation: RF(1),
   },
   googleLogo: {
-    width: RF (24),
-    height: RF (24),
-    marginLeft: RF (10),
-    marginRight: RF (10),
+    width: RF(24),
+    height: RF(24),
+    marginLeft: RF(10),
+    marginRight: RF(10),
   },
 
   GoogleLogoText: {
 
-    fontSize: RF (14),
-    marginLeft: RF (50),
+    fontSize: RF(14),
+    marginLeft: RF(50),
     color: '#000000',
     fontFamily: 'Poppins-Medium',
   },
   BtnContainer: {
-    marginTop: RF (10),
+    marginTop: RF(10),
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row'
   },
   BottomTextCont: {
     flexDirection: 'row',
-    marginTop: RF (20),
-    marginBottom: RF (30),
+    marginTop: RF(20),
+    marginBottom: RF(30),
     alignItems: 'center',
   },
 
   SimpleText: {
     color: TextClr,
-    fontSize: RF (14),
+    fontSize: RF(14),
 
     
   },
     LoginText: {
     color: SimpleText,
-    fontSize: RF (14),
+    fontSize: RF(14),
     fontFamily: 'Poppins-SemiBold',
 
     
@@ -295,34 +300,34 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
      width: '100%', 
     alignItems: 'center',
-    paddingLeft: RF (19),
+    paddingLeft: RF(19),
     },
     SwitchContainer:{
 
       flexDirection: 'row',
       alignItems: 'center',
-      marginTop: RF (10),
+      marginTop: RF(10),
     },
     ForgetText :{
       color: Link,
-      fontSize: RF (15),
-      marginLeft: RF (90)
+      fontSize: RF(15),
+      marginLeft: RF(90)
     },
     rememberMeText:{
       color: TextClr,
-      fontSize: RF (15),
+      fontSize: RF(15),
 
     },
        TextInputContainer: {
     backgroundColor: '#ffffff',
     flexDirection: 'row',
     alignItems: 'center',
-    width: RF (350),
-    height: RF (50),
-    borderRadius: RF (7),
-    marginTop: RF (10),
-    elevation: RF (1),
-    paddingInline: RF (22)
+    width: RF(350),
+    height: RF(50),
+    borderRadius: RF(7),
+    marginTop: RF(10),
+    elevation: RF(1),
+    paddingInline: RF(22)
 },
 
   IconSize: {

@@ -3,10 +3,10 @@ import Swiper from 'react-native-swiper';
 import React from 'react'; 
 import { useNavigation } from '@react-navigation/native';
 import {  Primary , Secondary } from '../styles/colors/colorsCode';
-import Buttons from '../components/buttons/Buttons';
 import { AppLogo,  Slide1, Slide2, Slide3, Slide4 } from '../assets/Index';
 import { RF } from '../Utils/Responsive';
 import LinearGradient from 'react-native-linear-gradient';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 
@@ -109,66 +109,66 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     TextContainer: {
-        marginTop: RF (50),
+        marginTop: RF(50),
         alignItems: 'center'
     },
     Textcontainer3: {
-        marginTop: RF (20),
+        marginTop: RF(20),
         alignItems: 'center'
     },
     Heading1: {
         fontFamily: 'Poppins-Bold',
-        fontSize: RF (30),
+        fontSize: RF(30),
         color: '#000000',
     },
     Heading2: {
         fontFamily: 'Poppins-Bold',
-        fontSize: RF (30),
+        fontSize: RF(30),
         color: '#000000',
     },
     Heading3: {
-        fontSize: RF (17)
+        fontSize: RF(17)
     },
     
    
     BigCartLogo: {
         resizeMode: 'contain',
-        width: RF (250),
-        height: 50
+        width: RF(250),
+        height: RF(50)
     },
     paginationStyle: {
         position: 'absolute',
-        bottom: RF (120),
+        bottom: RF(120),
     },
     dotStyle: {
         backgroundColor: 'rgba(0,0,0,.2)',
-        width: RF (8),
-        height: RF (8),
-        borderRadius: RF (4),
-        marginLeft: RF (3),
-        marginRight: RF (3),
-        marginTop: RF (3),
-        marginBottom: RF (3),
+        width: RF(8),
+        height: RF(8),
+        borderRadius: RF(4),
+        marginLeft: RF(3),
+        marginRight: RF(3),
+        marginTop: RF(3),
+        marginBottom: RF(3),
     },
     activeDotStyle: {
         backgroundColor:Primary,
-        width: RF (8),
-        height: RF (8),
-        borderRadius: RF (4),
-        marginLeft: RF (3),
-        marginRight: RF (3),
-        marginTop: RF (3),
-        marginBottom: RF (3),
+        width: RF(8),
+        height: RF(8),
+        borderRadius: RF(4),
+        marginLeft: RF(3),
+        marginRight: RF(3),
+        marginTop: RF(3),
+        marginBottom: RF(3),
     },
         fixedButtonContainer: {
         position: 'absolute',
-        bottom: RF (50),
+        bottom: RF(50),
         alignItems: 'center',
     },
 GetStartedBtn: {
-        width: RF (375),
-        height: RF (50),
-        borderRadius: RF (5),
+        width: RF(375),
+        height: RF(50),
+        borderRadius: RF(5),
         backgroundColor: 'Secondary',
         alignItems: 'center',
         justifyContent: 'center',

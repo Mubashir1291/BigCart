@@ -3,10 +3,8 @@ import React from 'react'
 import { useNavigation } from '@react-navigation/native';
 
 import { GoogleIcon, UserIcon, WelcomeImage } from '../assets/Index';
-import { BorderClr, MidGrey, Primary, Secondary, SimpleText, TextClr } from '../styles/colors/colorsCode';
+import {  MidGrey, Primary, Secondary, SimpleText, TextClr } from '../styles/colors/colorsCode';
 import { RF } from '../Utils/Responsive';
-import { RFP } from '../Utils/Responsive';
-import Buttons from '../components/buttons/Buttons';
 import LinearGradient from 'react-native-linear-gradient';
 
 
@@ -63,11 +61,9 @@ const CreateAccountHandle = () => {
         </TouchableOpacity>
 
 
--
-
         
       <View style={styles.BottomTextCont} >
-            <Text style={styles.SimpleText}>Already have an account? </Text>
+            <Text style={styles.SimpleText}> Already have an account? </Text>
             <TouchableOpacity onPress={LoginHandle} >
             <Text style={styles.LoginText}>Login</Text>
             </TouchableOpacity>
@@ -95,85 +91,85 @@ const styles = StyleSheet.create({
   },
   welcome: {
     color: '#ffffff',
-    fontSize: RF (20),
-    marginTop: RF (63),
+    fontSize: RF(20),
+    marginTop: RF(63),
 
   },
   DetailsCont: {
     backgroundColor: MidGrey,
     width: '100%',
-    borderTopEndRadius: RF (20),
-    borderTopLeftRadius: RF (20),
+    borderTopEndRadius: RF(20),
+    borderTopLeftRadius: RF(20),
     alignItems: 'center',
   },
   welcomeBottom: {
     color: '#000000',
-    fontSize: RF (20),
-    marginTop: RF (30),
-    marginRight: RF (250),
+    fontSize: RF(20),
+    marginTop: RF(30),
+    marginRight: RF(250),
     fontFamily: 'Poppins-Bold',
 
   },
   loremHeadings: {
     color: '#868889',
-    fontSize: RF (15),
-    marginTop: RF (5),
-    marginRight: RF (85)
+    fontSize: RF(15),
+    marginTop: RF(5),
+    marginRight: RF(85)
   },
   loremHeadings2: {
     color: '#868889',
-    fontSize: RF (15),
-    marginRight: RF (120)
+    fontSize: RF(15),
+    marginRight: RF(120)
   },
 
   GoogleContainer: {
     backgroundColor: '#ffffff',
     flexDirection: 'row',
     alignItems: 'center',
-    width: RF (375),
-    height: RF (50),
-    borderRadius: RF (5),
-    marginTop: RF (20),
-    paddingInline : RF (10),
-    paddingLeft: RF (30),
+    width: RF(375),
+    height: RF(50),
+    borderRadius: RF(5),
+    marginTop: RF(20),
+    paddingInline : RF(10),
+    paddingLeft: RF(30),
   },
   
   googleLogo: {
-    width: RF (24),
-    height: RF (24),
+    width: RF(24),
+    height: RF(24),
 
   },
 
   GoogleLogoText: {
 
-    fontSize: RF (14),
-    marginLeft: RF (50),
+    fontSize: RF(14),
+    marginLeft: RF(50),
     color: '#000000',
     fontFamily: 'Poppins-Medium',
   },
   BtnContainer: {
-    marginTop: RF (10),
+    marginTop: RF(10),
     alignItems: 'center',
     justifyContent: 'flex-start',
     flexDirection: 'row',
-    paddingInline: RF (10),
-    paddingLeft: RF (30),
+    paddingInline: RF(10),
+    paddingLeft: RF(30),
   },
   BottomTextCont: {
     flexDirection: 'row',
-    marginTop: RF (20),
-    marginBottom: RF (30)
+    marginTop: RF(20),
+    marginBottom: RF(30)
   },
 
   SimpleText: {
     color: TextClr,
-    fontSize: RF (14),
+    fontSize: RF(14),
 
     
   },
     LoginText: {
     color: SimpleText,
-    fontSize: RF (14),
+    fontSize: RF(14),
     fontFamily: 'Poppins-SemiBold',
 
     
@@ -181,25 +177,25 @@ const styles = StyleSheet.create({
   },
 
   UserBtnLogo: {
-    width: RF (24),
-    height: RF (24),
+    width: RF(24),
+    height: RF(24),
     position: 'absolute',
   },  
 
   GetStartedBtn: {
     flexDirection: 'row',
     alignItems: 'center',
-    width: RF (375),
-    height: RF (50),
-    borderRadius: RF (5),
-    marginTop: RF (10),
-    paddingInline : RF (10),
-    paddingLeft: RF (30),
+    width: RF(375),
+    height: RF(50),
+    borderRadius: RF(5),
+    marginTop: RF(10),
+    paddingInline : RF(10),
+    paddingLeft: RF(30),
   },
   CreatAcntText: {
 
-    fontSize: RF (14),
-    marginLeft: RF (50),
+    fontSize: RF(14),
+    marginLeft: RF(50),
     color: 'white',
     fontFamily: 'Poppins-Medium',
   },

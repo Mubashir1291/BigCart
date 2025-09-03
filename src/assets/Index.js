@@ -74,3 +74,31 @@ export const OrderIcon = require('../assets/images/Order.png');
 export const TransactionIcon = require('../assets/images/Transaction.png');
 export const BellIcon = require('../assets/images/Notification.png');
 export const LogoutIcon = require('../assets/images/Logout.png');
+
+
+
+
+// Dummy Data--------------------------------------------------------------
+
+// Home Screen 
+
+   export const HomeBackGround = require('../assets/dummyData/HomeBackground.png');
+
+ // Category
+    export const CatIconApple = require('../assets/dummyData/AppleImage.png');     
+    export const CatIconBabyCare = require('../assets/dummyData/BabyCare.png');
+    export const CatIconDrink = require('../assets/dummyData/Drink.png');
+    export const CatIconGrocery = require('../assets/dummyData/Grocery.png');
+    export const CatIconvegitable = require('../assets/dummyData/Vegitable.png');
+    export const CatIconHouseHold = require('../assets/dummyData/Household.png');
+    export const CatIconEdible = require('../assets/dummyData/Edible.png');
+
+    // ----------------- Home Screen Feature Products ------------------------
+
+
+    export const Avacado = require('../assets/images/Avacado.png');
+    export const Brocli = require('../assets/images/Brocli.png');    
+    export const Grapes = require('../assets/images/Grapes.png');
+    export const Peach = require('../assets/images/Peach.png');
+    export const Pineapple = require('../assets/images/Pineapple.png');
+    export const Pomgrante = require('../assets/images/Pomegrante.png');

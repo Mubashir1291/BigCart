@@ -3,7 +3,7 @@ import React from 'react'
 import { useNavigation } from '@react-navigation/native';
 
 import { EmailIcon, PasswordIcon, WelcomeImage, EyeIcon,EyeOffIcon} from '../assets/Index';
-import { BorderClr, Link, MidGrey, Primary, primaryClr, Secondary, SimpleText, TextClr } from '../styles/colors/colorsCode';
+import { BorderClr, Link, MidGrey, Primary, primaryClr, Secondary, SimpleText, TextClr, White } from '../styles/colors/colorsCode';
 import { RF } from '../Utils/Responsive';
 import Buttons from '../components/buttons/Buttons';
 import {Formik} from 'formik';
@@ -88,7 +88,7 @@ const WelcomeScreen = () => {
                   keyboardType="email-address"
                 />
                 </View>
-                <View style = {{marginTop: RF (5) ,flexDirection:'row', justifyContent:'flex-start', width:RF(350)}}>
+                <View style = {{marginTop: RF(5) ,flexDirection:'row', justifyContent:'flex-start', width:RF(350)}}>
 
                 {errors.email && 
                  <Text style={{ fontSize: RF(10), color: 'red' }}>{errors.email}</Text>
@@ -107,17 +107,17 @@ const WelcomeScreen = () => {
                   secureTextEntry = {!showPass}
                   />
 
-                  <TouchableOpacity onPress={() => setShowPass(!showPass)} style={{marginLeft:RF(310) ,position:'absolute'}} >
+                  <TouchableOpacity onPress={() => setShowPass(!showPass)} style={{marginLeft:RF(330) ,position:'absolute'}} >
                   <Image source={showPass ? EyeOffIcon : EyeIcon} style={styles.IconSize} />
                   </TouchableOpacity>
                 </View>
 
-                 <View style = {{marginTop: RF (5) ,flexDirection:'row', justifyContent:'flex-start', width:RF(350)}}> 
+                 <View style = {{marginTop: RF(5) ,flexDirection:'row', justifyContent:'flex-start', width:RF(350)}}> 
                   {errors.password &&
-                 <Text style={{ fontSize: RF (10) , color: 'red' }}>{errors.password}</Text>}
+                 <Text style={{ fontSize: RF(10) , color: 'red' }}>{errors.password}</Text>}
                   </View>
                   
-                 <Buttons text={'Login'} onPress={SignInHandler} />
+                
 
 
               </>
@@ -125,11 +125,13 @@ const WelcomeScreen = () => {
           </Formik>
           <View style={styles.SwitchContainer} >
                <Switch
-                 trackColor={{false: '#767577', true: Primary}}
+                 trackColor={{false: White, true: Primary}}
                  thumbColor={rememberMe ? Secondary : '#f4f3f4'}
                  ios_backgroundColor="#3e3e3e"
                  onValueChange={setRememberMe}
                  value={rememberMe}
+                 BorderClr = {{MidGrey}}
+          
                  />
                <Text style={styles.rememberMeText}>Remember me</Text>
 
@@ -139,6 +141,7 @@ const WelcomeScreen = () => {
 
                </TouchableOpacity>
               </View>
+               <Buttons text={'Login'} onPress={SignInHandler} />
 
 
 
@@ -173,83 +176,83 @@ const styles = StyleSheet.create({
   },
   welcome: {
     color: '#ffffff',
-    fontSize: RF (20),
-    marginTop: RF (63),
+    fontSize: RF(20),
+    marginTop: RF(63),
 
   },
   DetailsCont: {
     backgroundColor: MidGrey,
     width: '100%',
-    borderTopEndRadius: RF (20),
-    borderTopLeftRadius: RF (20),
+    borderTopEndRadius: RF(20),
+    borderTopLeftRadius: RF(20),
     alignItems: 'center',
   },
   welcomeBottom: {
     color: '#000000',
-    fontSize: RF (20),
-    marginTop: RF (20),
+    fontSize: RF(20),
+    marginTop: RF(20),
     fontFamily: 'Poppins-Bold',
 
   },
   SignInHeadings: {
     color: '#868889',
-    fontSize: RF (15),
-    marginTop: RF (5),
-    marginLeft: RF (8),
+    fontSize: RF(15),
+    marginTop: RF(5),
+    marginLeft: RF(8),
     
  },
   loremHeadings2: {
     color: '#868889',
-    fontSize: RF (15),
-    marginRight: RF (120)
+    fontSize: RF(15),
+    marginRight: RF(120)
   },
 
   GoogleContainer: {
     backgroundColor: '#ffffff',
     flexDirection: 'row',
     alignItems: 'center',
-    width: RF (350),
-    height: RF (50),
-    borderRadius: RF (7),
-    marginTop: RF (20),
-    elevation: RF (1),
+    width: RF(350),
+    height: RF(50),
+    borderRadius: RF(7),
+    marginTop: RF(20),
+    elevation: RF(1),
   },
   googleLogo: {
-    width: RF (24),
-    height: RF (24),
-    marginLeft: RF (10),
-    marginRight: RF (10),
+    width: RF(24),
+    height: RF(24),
+    marginLeft: RF(10),
+    marginRight: RF(10),
   },
 
   GoogleLogoText: {
 
-    fontSize: RF (14),
-    marginLeft: RF (50),
+    fontSize: RF(14),
+    marginLeft: RF(50),
     color: '#000000',
     fontFamily: 'Poppins-Medium',
   },
   BtnContainer: {
-    marginTop: RF (10),
+    marginTop: RF(10),
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row'
   },
   BottomTextCont: {
     flexDirection: 'row',
-    marginTop: RF (20),
-    marginBottom: RF (30),
+    marginTop: RF(20),
+    marginBottom: RF(30),
     alignItems: 'center',
   },
 
   SimpleText: {
     color: TextClr,
-    fontSize: RF (14),
+    fontSize: RF(14),
 
     
   },
     LoginText: {
     color: SimpleText,
-    fontSize: RF (14),
+    fontSize: RF(14),
     fontFamily: 'Poppins-SemiBold',
 
     
@@ -260,34 +263,34 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
      width: '100%', 
     alignItems: 'center',
-    paddingLeft: RF (19),
+    paddingLeft: RF(19),
     },
     SwitchContainer:{
 
       flexDirection: 'row',
       alignItems: 'center',
-      marginTop: RF (10),
+      marginTop: RF(10),
     },
     ForgetText :{
       color: Link,
-      fontSize: RF (15),
-      marginLeft: RF (90)
+      fontSize: RF(15),
+      marginLeft: RF(90)
     },
     rememberMeText:{
       color: TextClr,
-      fontSize: RF (15),
+      fontSize: RF(15),
 
     },
-       TextInputContainer: {
+    TextInputContainer: {
     backgroundColor: '#ffffff',
     flexDirection: 'row',
     alignItems: 'center',
-    width: RF (350),
-    height: RF (50),
-    borderRadius: RF (7),
-    marginTop: RF (10),
-    elevation: RF (1),
-    paddingInline: RF (22)
+    width: RF(375),
+    height: RF(50),
+    borderRadius: RF(5),
+    marginTop: RF(10),
+    elevation: RF(1),
+    paddingInline: RF(22)
 },
 
   IconSize: {
