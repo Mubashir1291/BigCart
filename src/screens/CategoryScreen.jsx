@@ -1,8 +1,22 @@
-import { StyleSheet, Text, View, Image, FlatList } from 'react-native'
-import React from 'react'
-import { BackIcon } from '../assets/Index'
+import { StyleSheet, Text, View, Image, FlatList, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { BackIcon } from '../assets/Index';
 import { RF } from '../Utils/Responsive';
-import { CatIconApple,CatIconBabyCare,CatIconDrink,CatIconEdible,CatIconGrocery,CatIconHouseHold, CatIconvegitable, FilterIcon,} from '../assets/Index';
+import {
+  CatIconApple,
+  CatIconBabyCare,
+  CatIconDrink,
+  CatIconEdible,
+  CatIconGrocery,
+  CatIconHouseHold,
+  CatIconvegitable,
+  FilterIcon,
+} from '../assets/Index';
+import { useNavigation } from '@react-navigation/native';
+
+
+
+
 
 const CategoriesImages = [
   { id: '1', source: CatIconvegitable, color: '#E6F2EA', name: 'Vegitable' },
@@ -14,108 +28,105 @@ const CategoriesImages = [
   { id: '7', source: CatIconBabyCare, color: '#D2EFFF', name: 'Baby Care' },
 ];
 
- 
-
 const CategoryScreen = () => {
+  const navigation = useNavigation();
+  const backArrowHandle = () => {
+    navigation.navigate('NavBar');
+  };
   return (
-    <View style={{flex:1 , backgroundColor:'#F4F5F9'}}>
-        <View style={styles.Maincontainer}>
-            <View style={styles.CategoryPageContainer}>
-                   <Image source={BackIcon} style={styles.BackArrowIcon} />
-                  <Text  style = {styles.CategoryText}>Categories</Text>
-                   <Image source={FilterIcon} style={styles.filterIcon} />
-                 </View>  
+    <View style={{ flex: 1, backgroundColor: '#F4F5F9' }}>
+      <View style={styles.Maincontainer}>
+        <View style={styles.CategoryPageContainer}>
+            <TouchableOpacity onPress={backArrowHandle}>
+          <Image source={BackIcon} style={styles.BackArrowIcon} />
+          </TouchableOpacity>
+          <Text style={styles.CategoryText}>Categories</Text>
+          <Image source={FilterIcon} style={styles.filterIcon} />
+        </View>
 
-
-                 <FlatList
-                           data={CategoriesImages}
-                           renderItem={({ item }) => (
-                             <View style={styles.categoryItem}>
-                               <View
-                                 style={[
-                                   styles.categoryImageWrapper,
-                                   { backgroundColor: item?.color },
-                                 ]}
-                               >
-                               
-                                 <Image source={item.source} style={styles.categoryImage} />
-                               </View>
-                               <Text style={styles.categoryNameText}>{item.name}</Text>
-                             </View>
-                             
-                           )}
-                           keyExtractor={item => item.id}
-                           horizontal={false}
-                           showsVerticalScrollIndicator={false}
-                           contentContainerStyle={styles.flatListContainer}
-                           numColumns={3}
-                           
-                         />
-                 
-                         
-
+        <FlatList
+          data={CategoriesImages}
+          renderItem={({ item }) => (
+            <View style={styles.categoryItem}>
+              <View style={styles.CategoryCard}>
+                <View
+                  style={[
+                    styles.categoryImageWrapper,
+                    { backgroundColor: item?.color },
+                  ]}
+                >
+                  <Image source={item.source} style={styles.categoryImage} />
+                </View>
+                <Text style={styles.categoryNameText}>{item.name}</Text>
+              </View>
+            </View>
+          )}
+          keyExtractor={item => item.id}
+          horizontal={false}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.flatListContainer}
+          numColumns={3}
+          columnWrapperStyle={{ gap: 10 }}
+          ItemSeparatorComponent={<View style={{ height: RF(10) }} />}
+        />
+      </View>
     </View>
-    </View>
-  )
-}
+  );
+};
 
-export default CategoryScreen
+export default CategoryScreen;
 
 const styles = StyleSheet.create({
-     Maincontainer:{
-    
-    },
-
-    CategoryPageContainer:{
-     
- flexDirection: 'row',
-    justifyContent:'space-between',
+  CategoryPageContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
     width: '100%',
-    height: RF(50),
+    height: RF(75),
     paddingHorizontal: 10,
-    backgroundColor: '#FFFFFF'
-    },
+    backgroundColor: '#FFFFFF',
+  },
 
-    BackArrowIcon: {
+  BackArrowIcon: {
     width: RF(20),
     height: RF(20),
     resizeMode: 'contain',
   },
-  CategoryText:{
-
+  CategoryText: {
     fontSize: RF(18),
-    fontFamily:'Poppins-Medium'
+    fontFamily: 'Poppins-Medium',
   },
 
- filterIcon: {
+  filterIcon: {
     width: RF(20),
     height: RF(20),
     resizeMode: 'contain',
+    tintColor: 'black',
   },
   flatListContainer: {
-    paddingVertical: RF(10),
+    paddingVertical: RF(15),
     paddingHorizontal: RF(15),
   },
-  CategoryCard:{
-      width:'100%',
-      height : RF(100),
-      backgroundColor: 'white'
+  CategoryCard: {
+    width: '100%',
+    backgroundColor: 'white',
+    padding: RF(10),
+    alignItems: 'center',
   },
   categoryItem: {
+    width: '30%',
     alignItems: 'center',
-    marginHorizontal: RF(5),
   },
   categoryImageWrapper: {
-    height: RF(80),
-    width: RF(80),
+    height: RF(60),
+    width: RF(60),
     borderRadius: RF(60),
     justifyContent: 'center',
     alignItems: 'center',
   },
   categoryImage: {
-    width: RF(40),
-    height: RF(40),
+    width: RF(30),
+    height: RF(30),
     resizeMode: 'contain',
   },
   categoryNameText: {
@@ -124,6 +135,4 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Regular',
     color: '#333',
   },
-
-
-})
+});

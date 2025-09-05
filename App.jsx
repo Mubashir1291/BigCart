@@ -7,6 +7,8 @@ import SignInScreen from "./src/screens/SignInScreen";
 import SignupScreen from "./src/screens/SignupScreen";
 import NavBar from "./src/screens/NavBar";
 import CatergoryScreen from "./src/screens/CategoryScreen";
+import VegitableScreen from "./src/screens/VegitableScreen";
+
 
 
 
@@ -28,8 +30,10 @@ function App() {
                 <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
                 <Stack.Screen name="SignInScreen" component={SignInScreen} />
                 <Stack.Screen name="SignupScreen" component={SignupScreen} /> */}
-                <Stack.Screen name="NavBar" component={NavBar} />
-                 <Stack.Screen name="CategoryScreen" component={CatergoryScreen} />
+                {/* <Stack.Screen name="NavBar" component={NavBar} />
+                 <Stack.Screen name="CategoryScreen" component={CatergoryScreen} /> */}
+                 <Stack.Screen name="VegitableScreen" component={VegitableScreen} />
+
 
 
 

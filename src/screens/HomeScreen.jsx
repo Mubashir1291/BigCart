@@ -95,13 +95,20 @@ const ProductsImages = [
 ];
 
 const HomeScreen = () => {
-    const navigation = useNavigation();
+
+  const navigation = useNavigation();
   
   const [Heart, setHeart] = useState([]);
 
+  
    const CategoryHandle = () => {
 
     navigation.navigate('CategoryScreen');
+  }
+
+   const VegitableHandle = () => {
+
+    navigation.navigate('VegitableScreen');
   }
   
   return (
@@ -137,6 +144,7 @@ const HomeScreen = () => {
               source={HomeBackGround}
               style={styles.mainBannerImage}
             />
+
             <ImageBackground
               source={HomeBackGround}
               style={styles.mainBannerImage}
@@ -181,7 +189,9 @@ const HomeScreen = () => {
         {/* Featured Products Section */}
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionHeaderText}>Featured Products</Text>
+          <TouchableOpacity onPress={VegitableHandle}>
           <Image source={RightIcon} style={styles.rightArrowIcon} />
+          </TouchableOpacity>
         </View>
 
         {/* Flat List For Products */}

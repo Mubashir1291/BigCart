@@ -77,7 +77,7 @@ const OnBoard1 = () => {
                     </View>
                 </ImageBackground>
             </Swiper>
-            <TouchableOpacity onPress={welcomeScreenHandle}  >
+            <TouchableOpacity onPress={welcomeScreenHandle}>
                            <LinearGradient
                                style={styles.GetStartedBtn}
                                colors={[Primary, Secondary]}
