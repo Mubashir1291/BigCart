@@ -26,7 +26,9 @@ export const TeleIcon = require('../assets/images/Telephone.png');
 
 // Home Screen
 export const HomeIcon = require('../assets/images/Home.png');
-export const HeartIcon = require('../assets/images/Heart.png');      
+export const HeartIcon = require('../assets/images/Heart.png'); 
+export const HeartFilIcon = require('../assets/images/heartFill.png');      
+
 export const CartIcon = require('../assets/images/Cart.png');
 export const SignUpIcon = require('../assets/images/SignUp.png');
 export const SearchIcon = require('../assets/images/Search.png');
@@ -74,6 +76,8 @@ export const OrderIcon = require('../assets/images/Order.png');
 export const TransactionIcon = require('../assets/images/Transaction.png');
 export const BellIcon = require('../assets/images/Notification.png');
 export const LogoutIcon = require('../assets/images/Logout.png');
+export const GreenCartIcon = require('../assets/images/GreenCart.png');
+
 
 
 

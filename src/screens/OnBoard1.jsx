@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, View, ImageBackground , TouchableOpacity} from 'react-native';
+import { Image, StyleSheet, Text, View, ImageBackground , TouchableOpacity, Dimensions} from 'react-native';
 import Swiper from 'react-native-swiper';
 import React from 'react'; 
 import { useNavigation } from '@react-navigation/native';
@@ -79,7 +79,7 @@ const OnBoard1 = () => {
                     </View>
                 </ImageBackground>
             </Swiper>
-            <TouchableOpacity onPress={welcomeScreenHandle} style={styles.fixedButtonContainer} >
+            <TouchableOpacity onPress={welcomeScreenHandle}  >
                            <LinearGradient
                                style={styles.GetStartedBtn}
                                colors={[Primary, Secondary]}
@@ -100,12 +100,12 @@ export default OnBoard1;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+     
         
     },
     slide: {
         flex: 1,
+        justifyContent:'flex-start',
         alignItems: 'center',
     },
     TextContainer: {
@@ -166,12 +166,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 GetStartedBtn: {
-        width: RF(375),
+        width:'90%',
         height: RF(50),
         borderRadius: RF(5),
         backgroundColor: 'Secondary',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'center', bottom:RF(40),
+        alignSelf:'center'
+
     },
      BtnText: {
         color: '#FFFFFF',

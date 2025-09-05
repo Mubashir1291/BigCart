@@ -36,7 +36,7 @@ const WelcomeScreen = () => {
 
   const SignInHandler = () => {
 
-    navigation.navigate('HomeScreen');
+    navigation.navigate('NavBar');
   }
     const SignupHandle = () => {
 
@@ -52,19 +52,12 @@ const WelcomeScreen = () => {
 
       style={styles.ImageBackground}>
 
-      <Text style={styles.welcome}>Welcome</Text>
       <View  style={{flex: 1, justifyContent: 'flex-end', width: '100%'}}>
       <View style={styles.DetailsCont}>
         
-        <View style={styles.WelcomeCont}>    
-         <Text style={styles.welcomeBottom}> Welcome </Text> 
-        <Text style={styles.welcomeBottom}> Back!</Text> 
-
-         </View>   
-
-        <View style={styles.WelcomeCont}>    
+        <Text style={styles.welcomeBottom}> Welcome Back </Text>   
         <Text style={styles.SignInHeadings} >Sign in to your account </Text>
-        </View>   
+          
 
 
         {/* // Formik for form validation */}
@@ -174,69 +167,33 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center'
   },
-  welcome: {
-    color: '#ffffff',
-    fontSize: RF(20),
-    marginTop: RF(63),
-
-  },
+ 
   DetailsCont: {
     backgroundColor: MidGrey,
     width: '100%',
     borderTopEndRadius: RF(20),
     borderTopLeftRadius: RF(20),
     alignItems: 'center',
+    padding: RF(20),
+    gap:RF(10)
+
   },
   welcomeBottom: {
     color: '#000000',
     fontSize: RF(20),
-    marginTop: RF(20),
     fontFamily: 'Poppins-Bold',
+    alignSelf:'flex-start'
 
   },
   SignInHeadings: {
     color: '#868889',
-    fontSize: RF(15),
-    marginTop: RF(5),
-    marginLeft: RF(8),
-    
+    fontSize: RF(15), 
+     alignSelf:'flex-start'
  },
-  loremHeadings2: {
-    color: '#868889',
-    fontSize: RF(15),
-    marginRight: RF(120)
-  },
+ 
 
-  GoogleContainer: {
-    backgroundColor: '#ffffff',
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: RF(350),
-    height: RF(50),
-    borderRadius: RF(7),
-    marginTop: RF(20),
-    elevation: RF(1),
-  },
-  googleLogo: {
-    width: RF(24),
-    height: RF(24),
-    marginLeft: RF(10),
-    marginRight: RF(10),
-  },
+ 
 
-  GoogleLogoText: {
-
-    fontSize: RF(14),
-    marginLeft: RF(50),
-    color: '#000000',
-    fontFamily: 'Poppins-Medium',
-  },
-  BtnContainer: {
-    marginTop: RF(10),
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row'
-  },
   BottomTextCont: {
     flexDirection: 'row',
     marginTop: RF(20),
@@ -266,10 +223,12 @@ const styles = StyleSheet.create({
     paddingLeft: RF(19),
     },
     SwitchContainer:{
-
+       width: '100%', 
       flexDirection: 'row',
       alignItems: 'center',
-      marginTop: RF(10),
+      alignSelf:'flex-start',
+      justifyContent:"space-between",
+      
     },
     ForgetText :{
       color: Link,
@@ -285,13 +244,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     flexDirection: 'row',
     alignItems: 'center',
-    width: RF(375),
+    width: '100%',
     height: RF(50),
     borderRadius: RF(5),
-    marginTop: RF(10),
     elevation: RF(1),
-    paddingInline: RF(22)
-},
+    paddingHorizontal:RF(10),
+    gap:RF(10)
+  
+  },
 
   IconSize: {
     width: RF(18),

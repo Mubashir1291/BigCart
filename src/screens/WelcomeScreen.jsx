@@ -32,23 +32,22 @@ const CreateAccountHandle = () => {
 
       style={styles.ImageBackground}>
 
-      <Text style={styles.welcome}>Welcome</Text>
+     
       <View  style={{flex: 1, justifyContent: 'flex-end', width: '100%'}}>
       <View style={styles.DetailsCont}>
         <Text style={styles.welcomeBottom}>Welcome</Text>
+        <Text style={styles.loremHeadings} >Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy</Text>
+      
 
-
-        <Text style={styles.loremHeadings} >Lorem ipsum dolor sit amet, consetetur</Text>
-        <Text style={styles.loremHeadings2}>sadipscing elitr, sed diam nonumy</Text>
-
-        <TouchableOpacity>
-        <View style={styles.GoogleContainer}>
+        
+        <TouchableOpacity style={styles.GoogleContainer}>
           <Image source={GoogleIcon} style={styles.googleLogo} />
           <Text style={styles.GoogleLogoText}>Continue with Google</Text>
-        </View>
+          <View></View>
         </TouchableOpacity>
+        
 
-       <TouchableOpacity onPress={CreateAccountHandle} >
+       <TouchableOpacity style={{width:'100%'}} onPress={CreateAccountHandle} >
         <LinearGradient
          style={styles.GetStartedBtn}
          colors={[Primary, Secondary]}
@@ -89,49 +88,41 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center'
   },
-  welcome: {
-    color: '#ffffff',
-    fontSize: RF(20),
-    marginTop: RF(63),
 
-  },
   DetailsCont: {
     backgroundColor: MidGrey,
     width: '100%',
     borderTopEndRadius: RF(20),
     borderTopLeftRadius: RF(20),
     alignItems: 'center',
+    padding:RF(20),
+    gap:RF(10)
   },
   welcomeBottom: {
     color: '#000000',
     fontSize: RF(20),
     marginTop: RF(30),
-    marginRight: RF(250),
+    alignSelf:'flex-start',
     fontFamily: 'Poppins-Bold',
 
   },
   loremHeadings: {
     color: '#868889',
     fontSize: RF(15),
-    marginTop: RF(5),
-    marginRight: RF(85)
-  },
-  loremHeadings2: {
-    color: '#868889',
-    fontSize: RF(15),
-    marginRight: RF(120)
+ 
+   
   },
 
   GoogleContainer: {
     backgroundColor: '#ffffff',
     flexDirection: 'row',
     alignItems: 'center',
-    width: RF(375),
+    width:'100%',
     height: RF(50),
     borderRadius: RF(5),
-    marginTop: RF(20),
-    paddingInline : RF(10),
-    paddingLeft: RF(30),
+    paddingHorizontal:RF(10),
+    justifyContent:'space-between'
+   
   },
   
   googleLogo: {
@@ -143,7 +134,7 @@ const styles = StyleSheet.create({
   GoogleLogoText: {
 
     fontSize: RF(14),
-    marginLeft: RF(50),
+  
     color: '#000000',
     fontFamily: 'Poppins-Medium',
   },
@@ -185,7 +176,7 @@ const styles = StyleSheet.create({
   GetStartedBtn: {
     flexDirection: 'row',
     alignItems: 'center',
-    width: RF(375),
+    width: '100%',
     height: RF(50),
     borderRadius: RF(5),
     marginTop: RF(10),
