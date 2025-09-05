@@ -41,7 +41,7 @@ const SignupScreen = () => {
 
   const SignupHandler = () => {
 
-    navigation.navigate('HomeScreen');
+    navigation.navigate('NavBar');
   }
    const SigninHandler = () => {
 
@@ -57,19 +57,13 @@ const SignupScreen = () => {
 
       style={styles.ImageBackground}>
 
-      <Text style={styles.welcome}>Welcome</Text>
       <View  style={{flex: 1, justifyContent: 'flex-end', width: '100%'}}>
       <View style={styles.DetailsCont}>
         
-        <View style={styles.WelcomeCont}>    
-         <Text style={styles.welcomeBottom}> Welcome </Text> 
-        <Text style={styles.welcomeBottom}> Back!</Text> 
+         <Text style={styles.welcomeBottom}> Welcome Back! </Text> 
 
-         </View>   
 
-        <View style={styles.WelcomeCont}>    
         <Text style={styles.SignInHeadings} >Sign in to your account </Text>
-        </View>   
 
 
         {/* // Formik for form validation */}
@@ -85,18 +79,23 @@ const SignupScreen = () => {
               {/* Email Input  */}
 
               <View style={ styles.TextInputContainer }>
+              <View style={{flexDirection:'row', alignItems:'center'}}>
+                
                 <Image source={EmailIcon} style={styles.IconSize} />
 
                 <TextInput
                   name="email"
                   placeholder="Email Address"
                   onChangeText={handleChange('email')}
+                     placeholderTextColor={'grey'}
+                color={'black'}
                   onBlur={handleBlur('email')}
                   value={values.email}
                   keyboardType="email-address"
                 />
                 </View>
-                <View style = {{marginTop: RF(5) ,flexDirection:'row', justifyContent:'flex-start', width:RF(350)}}>
+                </View>
+                <View style = {{flexDirection:'row',  width:'100%'}}>
 
                 {errors.email && 
                  <Text style={{ fontSize: RF(10), color: 'red' }}>{errors.email}</Text>
@@ -106,18 +105,23 @@ const SignupScreen = () => {
 
               {/* Phone Number Input */}
                <View style={ styles.TextInputContainer }>
+              <View style={{flexDirection:'row', alignItems:'center'}}>
+                
                 <Image source={TeleIcon} style={styles.IconSize} />
 
                 <TextInput
                   name="phone"
                   placeholder="Phone Number"
+                     placeholderTextColor={'grey'}
+                color={'black'}
                   onChangeText={handleChange('phone')}
                   onBlur={handleBlur('phone')}
                   value={values.phone}
                   keyboardType='numeric'
                 />
                 </View>
-                <View style = {{marginTop: RF (5) ,flexDirection:'row', justifyContent:'flex-start', width:RF(350)}}>
+                </View>
+                <View style = {{flexDirection:'row',  width:'100%'}}>
 
                 {errors.phone && 
                  <Text style={{ fontSize: RF(10), color: 'red' }}>{errors.phone}</Text>
@@ -128,48 +132,31 @@ const SignupScreen = () => {
               {/* Password Input */}
 
                <View style={ styles.TextInputContainer }>
+                <View style={{flexDirection:'row', alignItems:'center'}}>
+                
                 <Image source={PasswordIcon} style={styles.IconSize} />
                 <TextInput
                   name="password"
                   placeholder="Password"
                   onChangeText={handleChange('password')}
+                     placeholderTextColor={'grey'}
+                color={'black'}
                   onBlur={handleBlur('password')}
                   value={values.password}
                   secureTextEntry = {!showPass}
                   />
+                  </View>
                   
 
-                  <TouchableOpacity onPress={() => setShowPass(!showPass)} style={{marginLeft:RF(310) ,position:'absolute'}} >
+                  <TouchableOpacity onPress={() => setShowPass(!showPass)} style={{ }} >
                   <Image source={showPass ? EyeOffIcon : EyeIcon} style={styles.IconSize} />
                   </TouchableOpacity>
                 </View>
 
-                 <View style = {{marginTop: RF(5) ,flexDirection:'row', justifyContent:'flex-start', width:RF(350)}}> 
+                 <View style = {{flexDirection:'row',  width:'100%'}}> 
                   {errors.password &&
                  <Text style={{ fontSize: RF(10) , color: 'red' }}>{errors.password}</Text>}
                   </View>
-
-                  {/* Confirm Password Input */}
-
-                {/* Remember Me & Forget  */}
-
-                   <View style={styles.SwitchContainer} >
-               <Switch
-                 trackColor={{false: '#767577', true: Primary}}
-                 thumbColor={rememberMe ? Secondary : '#f4f3f4'}
-                 ios_backgroundColor="#3e3e3e"
-                 onValueChange={setRememberMe}
-                 value={rememberMe}
-                 />
-               <Text style={styles.rememberMeText}>Remember me</Text>
-
-               <TouchableOpacity>
-
-              <Text style={styles.ForgetText}> Forget Password </Text>
-
-               </TouchableOpacity>
-              </View>
-                  
                  
                  {/* Login Button */}
                 <Buttons text={'Signup'} onPress={SignupHandler} />
@@ -211,39 +198,31 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center'
   },
-  welcome: {
-    color: '#ffffff',
-    fontSize: RF(20),
-    marginTop: RF(63),
-
-  },
+ 
   DetailsCont: {
-    backgroundColor: MidGrey,
+   backgroundColor: MidGrey,
     width: '100%',
     borderTopEndRadius: RF(20),
     borderTopLeftRadius: RF(20),
     alignItems: 'center',
+    padding: RF(20),
+    gap:RF(4)
   },
   welcomeBottom: {
-    color: '#000000',
+   color: '#000000',
     fontSize: RF(20),
-    marginTop: RF(20),
+
+    alignSelf:'flex-start',
     fontFamily: 'Poppins-Bold',
 
   },
   SignInHeadings: {
     color: '#868889',
     fontSize: RF(15),
-    marginTop: RF(5),
-    marginLeft: RF(8),
+    alignSelf:'flex-start'
+
     
  },
-  loremHeadings2: {
-    color: '#868889',
-    fontSize: RF(15),
-    marginRight: RF(120)
-  },
-
   GoogleContainer: {
     backgroundColor: '#ffffff',
     flexDirection: 'row',
@@ -251,34 +230,25 @@ const styles = StyleSheet.create({
     width: RF(350),
     height: RF(50),
     borderRadius: RF(7),
-    marginTop: RF(20),
     elevation: RF(1),
   },
   googleLogo: {
     width: RF(24),
     height: RF(24),
-    marginLeft: RF(10),
-    marginRight: RF(10),
+   
   },
 
   GoogleLogoText: {
 
     fontSize: RF(14),
-    marginLeft: RF(50),
     color: '#000000',
     fontFamily: 'Poppins-Medium',
   },
-  BtnContainer: {
-    marginTop: RF(10),
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row'
-  },
+
   BottomTextCont: {
     flexDirection: 'row',
-    marginTop: RF(20),
-    marginBottom: RF(30),
     alignItems: 'center',
+    marginTop :RF(10)
   },
 
   SimpleText: {
@@ -306,28 +276,27 @@ const styles = StyleSheet.create({
 
       flexDirection: 'row',
       alignItems: 'center',
-      marginTop: RF(10),
     },
     ForgetText :{
       color: Link,
       fontSize: RF(15),
-      marginLeft: RF(90)
     },
     rememberMeText:{
       color: TextClr,
       fontSize: RF(15),
 
     },
-       TextInputContainer: {
+    TextInputContainer: {
     backgroundColor: '#ffffff',
     flexDirection: 'row',
+    justifyContent:'space-between',
     alignItems: 'center',
-    width: RF(350),
+    width: '100%',
     height: RF(50),
-    borderRadius: RF(7),
-    marginTop: RF(10),
+    borderRadius: RF(5),
     elevation: RF(1),
-    paddingInline: RF(22)
+    paddingHorizontal:RF(10),
+    gap:RF(10)
 },
 
   IconSize: {

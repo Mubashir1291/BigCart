@@ -55,6 +55,7 @@ const CreateAccountHandle = () => {
           end={{ x: 1, y: 1 }}>
           <Image source={UserIcon} style={styles.googleLogo} />
           <Text style={styles.CreatAcntText}> Create an account</Text>
+          <View></View>
       
         </LinearGradient>
         </TouchableOpacity>
@@ -101,16 +102,15 @@ const styles = StyleSheet.create({
   welcomeBottom: {
     color: '#000000',
     fontSize: RF(20),
-    marginTop: RF(30),
     alignSelf:'flex-start',
     fontFamily: 'Poppins-Bold',
 
   },
   loremHeadings: {
     color: '#868889',
-    fontSize: RF(15),
- 
-   
+    fontSize: RF(15), 
+        alignSelf:'flex-start',
+
   },
 
   GoogleContainer: {
@@ -128,24 +128,15 @@ const styles = StyleSheet.create({
   googleLogo: {
     width: RF(24),
     height: RF(24),
-
   },
 
   GoogleLogoText: {
 
     fontSize: RF(14),
-  
     color: '#000000',
     fontFamily: 'Poppins-Medium',
   },
-  BtnContainer: {
-    marginTop: RF(10),
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    flexDirection: 'row',
-    paddingInline: RF(10),
-    paddingLeft: RF(30),
-  },
+
   BottomTextCont: {
     flexDirection: 'row',
     marginTop: RF(20),
@@ -174,19 +165,18 @@ const styles = StyleSheet.create({
   },  
 
   GetStartedBtn: {
+       backgroundColor: '#ffffff',
     flexDirection: 'row',
     alignItems: 'center',
-    width: '100%',
+    width:'100%',
     height: RF(50),
     borderRadius: RF(5),
-    marginTop: RF(10),
-    paddingInline : RF(10),
-    paddingLeft: RF(30),
+    paddingHorizontal:RF(10),
+    justifyContent:'space-between'
   },
   CreatAcntText: {
 
     fontSize: RF(14),
-    marginLeft: RF(50),
     color: 'white',
     fontFamily: 'Poppins-Medium',
   },

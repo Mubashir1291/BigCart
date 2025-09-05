@@ -74,8 +74,6 @@ const OnBoard1 = () => {
                             source={AppLogo}
                             style={styles.BigCartLogo}
                         />
-                        
-                        
                     </View>
                 </ImageBackground>
             </Swiper>

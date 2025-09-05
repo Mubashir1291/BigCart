@@ -3,7 +3,7 @@ import React from 'react'
 import { useNavigation } from '@react-navigation/native';
 
 import { EmailIcon, PasswordIcon, WelcomeImage, EyeIcon,EyeOffIcon} from '../assets/Index';
-import { BorderClr, Link, MidGrey, Primary, primaryClr, Secondary, SimpleText, TextClr, White } from '../styles/colors/colorsCode';
+import { BorderClr, LightGrey, Link, MidGrey, Primary, primaryClr, Secondary, SimpleText, TextClr, White } from '../styles/colors/colorsCode';
 import { RF } from '../Utils/Responsive';
 import Buttons from '../components/buttons/Buttons';
 import {Formik} from 'formik';
@@ -41,6 +41,7 @@ const WelcomeScreen = () => {
     const SignupHandle = () => {
 
     navigation.navigate('SignupScreen');
+    
   }
 
 
@@ -70,18 +71,24 @@ const WelcomeScreen = () => {
             {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
               <>
               <View style={ styles.TextInputContainer }>
+                <View style={{flexDirection:'row', alignItems:'center'}}>
                 <Image source={EmailIcon} style={styles.IconSize} />
 
-                <TextInput
+                <TextInput 
                   name="email"
                   placeholder="Email Address"
+                  placeholderTextColor={'grey'}
+                  color={'black'}
                   onChangeText={handleChange('email')}
                   onBlur={handleBlur('email')}
                   value={values.email}
                   keyboardType="email-address"
                 />
+
                 </View>
-                <View style = {{marginTop: RF(5) ,flexDirection:'row', justifyContent:'flex-start', width:RF(350)}}>
+                </View>
+
+                <View style = {{flexDirection:'row',  width:'100%'}}>
 
                 {errors.email && 
                  <Text style={{ fontSize: RF(10), color: 'red' }}>{errors.email}</Text>
@@ -90,22 +97,27 @@ const WelcomeScreen = () => {
               </View>
 
                <View style={ styles.TextInputContainer }>
+                <View style = {{flexDirection :'row' , alignItems:'center'}}>
                 <Image source={PasswordIcon} style={styles.IconSize} />
                 <TextInput
                   name="password"
                   placeholder="Password"
+                   placeholderTextColor={'grey'}
+                color={'black'}
+
                   onChangeText={handleChange('password')}
                   onBlur={handleBlur('password')}
                   value={values.password}
                   secureTextEntry = {!showPass}
                   />
+                  </View>
 
-                  <TouchableOpacity onPress={() => setShowPass(!showPass)} style={{marginLeft:RF(330) ,position:'absolute'}} >
+                  <TouchableOpacity onPress={() => setShowPass(!showPass)} style={{  alignSelf:'center'}} >
                   <Image source={showPass ? EyeOffIcon : EyeIcon} style={styles.IconSize} />
                   </TouchableOpacity>
                 </View>
 
-                 <View style = {{marginTop: RF(5) ,flexDirection:'row', justifyContent:'flex-start', width:RF(350)}}> 
+                 <View style = {{flexDirection:'row', width:'100%'}}> 
                   {errors.password &&
                  <Text style={{ fontSize: RF(10) , color: 'red' }}>{errors.password}</Text>}
                   </View>
@@ -117,16 +129,21 @@ const WelcomeScreen = () => {
             )}
           </Formik>
           <View style={styles.SwitchContainer} >
+            <View style ={{flexDirection: 'row' ,alignItems:'center'}}>
                <Switch
                  trackColor={{false: White, true: Primary}}
-                 thumbColor={rememberMe ? Secondary : '#f4f3f4'}
+                 thumbColor={rememberMe ? Secondary : '#f4f3f4'} 
                  ios_backgroundColor="#3e3e3e"
                  onValueChange={setRememberMe}
                  value={rememberMe}
                  BorderClr = {{MidGrey}}
+                 
           
                  />
                <Text style={styles.rememberMeText}>Remember me</Text>
+               </View>
+             
+
 
                <TouchableOpacity>
 
@@ -134,6 +151,7 @@ const WelcomeScreen = () => {
 
                </TouchableOpacity>
               </View>
+              
                <Buttons text={'Login'} onPress={SignInHandler} />
 
 
@@ -175,7 +193,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: RF(20),
     alignItems: 'center',
     padding: RF(20),
-    gap:RF(10)
+    gap:RF(5)
 
   },
   welcomeBottom: {
@@ -232,17 +250,18 @@ const styles = StyleSheet.create({
     },
     ForgetText :{
       color: Link,
-      fontSize: RF(15),
-      marginLeft: RF(90)
+      fontSize: RF(13),
+      fontFamily:'Poppins-Regular'
     },
     rememberMeText:{
+      fontFamily : 'Poppins-Regular',
       color: TextClr,
-      fontSize: RF(15),
-
+      fontSize: RF(11.5),
     },
     TextInputContainer: {
     backgroundColor: '#ffffff',
     flexDirection: 'row',
+    justifyContent:'space-between',
     alignItems: 'center',
     width: '100%',
     height: RF(50),
@@ -250,7 +269,6 @@ const styles = StyleSheet.create({
     elevation: RF(1),
     paddingHorizontal:RF(10),
     gap:RF(10)
-  
   },
 
   IconSize: {

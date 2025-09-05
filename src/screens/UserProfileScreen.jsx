@@ -3,12 +3,18 @@ import React from 'react'
 
 const UserProfileScreen = () => {
   return (
-    <View>
-      <Text>UserProfileScreen</Text>
+    <View style ={styles.MainContainer}>
+
     </View>
   )
 }
 
 export default UserProfileScreen
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+ 
+  
+
+
+
+})

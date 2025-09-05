@@ -27,21 +27,25 @@ export default Buttons
 
 const styles = StyleSheet.create({
 
-    CreateButtonContainer: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'row',
-        marginTop: RF (10),
-    },
+   CreateButtonContainer:{
+            flexDirection:'row',
+            alignItems: 'center',
+            justifyContent:'center',
+            width: '100%',
+            marginTop:RF(10)
+   },
 GetStartedBtn: {
-        width: RF (375),
+       flexDirection:'row',
+            alignItems: 'center',
+            justifyContent:'center',
+            width: '100%',
         height: RF (50),
         borderRadius: RF (5),
         backgroundColor: 'Secondary',
-        alignItems: 'center',
-        justifyContent: 'center',
+        
     },
      BtnText: {
+        alignSelf: 'center',
         color: '#FFFFFF',
         fontSize: RF (14),
         fontFamily: 'Poppins-Regular',   },

@@ -1,23 +1,6 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  Image,
-  TouchableOpacity,
-  FlatList,
-  ScrollView,
-  Dimensions,
-} from 'react-native';
+import {StyleSheet,  Text,  View,  TextInput,Image,TouchableOpacity,FlatList,ScrollView,Dimensions, ImageBackground,} from 'react-native';
 import { RF } from '../Utils/Responsive';
-import {
-  Avacado,
-  Brocli,
-  CatIconApple,
-  CatIconBabyCare,
-  CatIconDrink,
-  CatIconEdible,
-  CatIconGrocery,
+import {  Avacado,Brocli,CatIconApple,CatIconBabyCare,CatIconDrink,CatIconEdible,CatIconGrocery,
   CatIconHouseHold,
   CatIconvegitable,
   FilterIcon,
@@ -42,8 +25,10 @@ import {
   SimpleText,
   White,
 } from '../styles/colors/colorsCode';
-import { NewAppScreen } from '@react-native/new-app-screen';
 import React, { useState } from 'react';
+import Swiper from 'react-native-swiper';
+import { useNavigation } from '@react-navigation/native';
+
 
 const CategoriesImages = [
   { id: '1', source: CatIconvegitable, color: '#E6F2EA', name: 'Vegitable' },
@@ -110,9 +95,17 @@ const ProductsImages = [
 ];
 
 const HomeScreen = () => {
+    const navigation = useNavigation();
+  
   const [Heart, setHeart] = useState([]);
+
+   const CategoryHandle = () => {
+
+    navigation.navigate('CategoryScreen');
+  }
+  
   return (
-    <ScrollView contentContainerStyle={styles.scrollContent}>
+    <ScrollView >
       <View style={styles.MainContainer}>
         {/* Search Bar */}
         <View style={styles.SearchInputContainer}>
@@ -120,21 +113,47 @@ const HomeScreen = () => {
           <TextInput
             style={styles.searchInput}
             placeholder=" Search Keyword..."
+            placeholderTextColor={'grey'}
+            color={'black'}
           />
           <Image source={FilterIcon} style={styles.filterIcon} />
         </View>
 
-        {/* Main Image */}
-        <Image
-          source={HomeBackGround}
-          style={styles.mainBannerImage}
-          resizeMode="cover"
-        />
+        {/* Main Image Swiper */}
+      
+        <View style={{ width: '100%',height:RF(283), alignItems: 'center',    paddingHorizontal: RF(15),
+ }}>
+          
+       <Swiper 
+            
+            autoplay ={false}
+            showsButtons={false}
+            loop
+            dot={<View style={styles.dotStyle} />}
+            activeDot={<View style={styles.activeDotStyle} />}
+            paginationStyle={styles.paginationStyle}
+          >
+            <ImageBackground
+              source={HomeBackGround}
+              style={styles.mainBannerImage}
+            />
+            <ImageBackground
+              source={HomeBackGround}
+              style={styles.mainBannerImage}
+            />
+         </Swiper>
+        </View>
+         
 
         {/* Category Section */}
+
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionHeaderText}>Categories</Text>
+
+          <TouchableOpacity onPress={CategoryHandle}>
           <Image source={RightIcon} style={styles.rightArrowIcon} />
+          </TouchableOpacity>
+
         </View>
 
         {/* Flat List For Categories */}
@@ -166,19 +185,16 @@ const HomeScreen = () => {
         </View>
 
         {/* Flat List For Products */}
+        <View style={{width:'100%',alignItems:'center',padding:10,justifyContent:'center'}}>
         <FlatList
           data={ProductsImages}
           renderItem={({ item }) => (
             <View style={styles.productCardWrapper}>
               <View style={styles.productCard}>
-                <View
-                  style={[
-                    styles.NewTagWrapper,
-                   
-                  ]}
-                >
+                <View style={[styles.NewTagWrapper]}>
                   <Text style={styles.NewTagTextWrapper}> New</Text>
                 </View>
+
                 <TouchableOpacity
                   onPress={() => {
                     if (Heart.includes(item.id)) {
@@ -197,6 +213,7 @@ const HomeScreen = () => {
                     />
                   </View>
                 </TouchableOpacity>
+
                 <View
                   style={[
                     styles.productImageWrapper,
@@ -228,6 +245,7 @@ const HomeScreen = () => {
             justifyContent: 'center',
           }}
         />
+        </View>
       </View>
     </ScrollView>
   );
@@ -236,46 +254,49 @@ const HomeScreen = () => {
 export default HomeScreen;
 
 const styles = StyleSheet.create({
-  scrollContent: {
-    flexGrow: 1,
-    alignItems: 'center',
-  },
+
   MainContainer: {
     backgroundColor: LightGrey,
     width: '100%',
-    paddingVertical: RF(10),
+    alignItems:'center',
+    
   },
   SearchInputContainer: {
-    backgroundColor: '#F7F8FB',
+ backgroundColor: '#ffffff',
     flexDirection: 'row',
+    justifyContent:'space-between',
     alignItems: 'center',
     width: '90%',
     height: RF(50),
     borderRadius: RF(5),
-    marginTop: RF(10),
-    paddingHorizontal: RF(15),
-    alignSelf: 'center',
+    elevation: RF(1),
+    paddingHorizontal:RF(10),
+    marginTop:RF(10)
   },
+
   searchInput: {
     flex: 1,
     fontFamily: 'Poppins-Medium',
-    fontSize: RF(16),
+    fontSize: RF(14),
     height: '100%',
     marginLeft: RF(10),
     marginRight: RF(10),
   },
+
   searchIcon: {
     width: RF(24),
     height: RF(24),
     resizeMode: 'contain',
   },
+
   filterIcon: {
     width: RF(24),
     height: RF(24),
     resizeMode: 'contain',
   },
+
   mainBannerImage: {
-    width: '90%',
+    width: '100%',
     height: RF(283),
     borderRadius: RF(10),
     marginTop: RF(20),
@@ -328,10 +349,11 @@ const styles = StyleSheet.create({
   },
 
   productCardWrapper: {
-    width: '45%',
+    width: '47%',
     alignItems: 'center',
     marginBottom: RF(20),
     marginHorizontal: RF(5),
+    
   },
   productCard: {
     width: '100%',
@@ -385,19 +407,17 @@ const styles = StyleSheet.create({
   MinusBar: {
     width: RF(15),
     height: RF(15),
-    tintColor: Secondary
-    
- 
+    tintColor: Secondary,
   },
 
   NewTagWrapper: {
-   paddingHorizontal:RF(10),
-   paddingVertical:RF(5),
-   backgroundColor:'#FCFFD9',
+    paddingHorizontal: RF(10),
+    paddingVertical: RF(5),
+    backgroundColor: '#FCFFD9',
     position: 'absolute',
     justifyContent: 'center',
     alignItems: 'center',
-    alignSelf:'flex-start'
+    alignSelf: 'flex-start',
   },
   NewTagTextWrapper: {
     fontSize: RF(10),
@@ -410,9 +430,28 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   HeartWrapper: {
-    marginTop: RF(5),
-    marginLeft: RF(100),
-    justifyContent: 'center',
-    alignItems: 'center',
+    width:'100%',
+    alignSelf:'flex-end',   
   },
+   dotStyle: {
+        backgroundColor: 'rgba(0,0,0,.2)',
+        width: RF(8),
+        height: RF(8),
+        borderRadius: RF(4),
+        marginLeft: RF(3),
+        marginRight: RF(3),
+
+    },
+     activeDotStyle: {
+        backgroundColor:Primary,
+        width: RF(8),
+        height: RF(8),
+        borderRadius: RF(4),
+        marginLeft: RF(3),
+        marginRight: RF(3),
+  
+    },
+      paginationStyle: {
+        position: 'absolute',
+    },
 });
