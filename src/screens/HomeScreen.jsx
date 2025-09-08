@@ -1,6 +1,24 @@
-import {StyleSheet,  Text,  View,  TextInput,Image,TouchableOpacity,FlatList,ScrollView,Dimensions, ImageBackground,} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  Image,
+  TouchableOpacity,
+  FlatList,
+  ScrollView,
+  Dimensions,
+  ImageBackground,
+} from 'react-native';
 import { RF } from '../Utils/Responsive';
-import {  Avacado,Brocli,CatIconApple,CatIconBabyCare,CatIconDrink,CatIconEdible,CatIconGrocery,
+import {
+  Avacado,
+  Brocli,
+  CatIconApple,
+  CatIconBabyCare,
+  CatIconDrink,
+  CatIconEdible,
+  CatIconGrocery,
   CatIconHouseHold,
   CatIconvegitable,
   FilterIcon,
@@ -29,9 +47,8 @@ import React, { useState } from 'react';
 import Swiper from 'react-native-swiper';
 import { useNavigation } from '@react-navigation/native';
 
-
 const CategoriesImages = [
-  { id: '1', source: CatIconvegitable, color: '#E6F2EA', name: 'Vegitable' },
+  { id: '1', source: CatIconvegitable, color: '#E6F2EA', name: 'Vegetables' },
   { id: '2', source: CatIconApple, color: '#FFE9E5', name: 'Fruits' },
   { id: '3', source: CatIconDrink, color: '#FFF6E3', name: 'Beverages' },
   { id: '4', source: CatIconGrocery, color: '#F3EFFA', name: 'Grocery' },
@@ -95,24 +112,20 @@ const ProductsImages = [
 ];
 
 const HomeScreen = () => {
-
   const navigation = useNavigation();
-  
+
   const [Heart, setHeart] = useState([]);
 
-  
-   const CategoryHandle = () => {
-
+  const CategoryHandle = () => {
     navigation.navigate('CategoryScreen');
-  }
+  };
 
-   const VegitableHandle = () => {
-
+  const VegitableHandle = () => {
     navigation.navigate('VegitableScreen');
-  }
-  
+  };
+
   return (
-    <ScrollView >
+    <ScrollView>
       <View style={styles.MainContainer}>
         {/* Search Bar */}
         <View style={styles.SearchInputContainer}>
@@ -127,31 +140,43 @@ const HomeScreen = () => {
         </View>
 
         {/* Main Image Swiper */}
-      
-        <View style={{ width: '100%',height:RF(283), alignItems: 'center',    paddingHorizontal: RF(15),
- }}>
-          
-       <Swiper 
-            
-            autoplay ={false}
+
+        <View
+          style={{
+            width: '100%',
+            height: RF(283),
+            alignItems: 'center',
+            paddingHorizontal: RF(15),
+          }}
+        >
+          <Swiper
+            autoplay={false}
             showsButtons={false}
             loop
             dot={<View style={styles.dotStyle} />}
             activeDot={<View style={styles.activeDotStyle} />}
             paginationStyle={styles.paginationStyle}
           >
-            <ImageBackground
-              source={HomeBackGround}
-              style={styles.mainBannerImage}
-            />
+            <ImageBackground  source={HomeBackGround}
+              style={styles.mainBannerImage}>
+             
+              
+                <View style={styles.offtextView}>
+                
+                 <Text style={styles.offtext}> 20% Off on your</Text>
+                  <Text style={styles.offtext}> first purchase </Text>
+                  
+                   </View>
+               
+              
+            </ImageBackground>
 
             <ImageBackground
               source={HomeBackGround}
               style={styles.mainBannerImage}
-            />
-         </Swiper>
+          />
+          </Swiper>
         </View>
-         
 
         {/* Category Section */}
 
@@ -159,9 +184,8 @@ const HomeScreen = () => {
           <Text style={styles.sectionHeaderText}>Categories</Text>
 
           <TouchableOpacity onPress={CategoryHandle}>
-          <Image source={RightIcon} style={styles.rightArrowIcon} />
+            <Image source={RightIcon} style={styles.rightArrowIcon} />
           </TouchableOpacity>
-
         </View>
 
         {/* Flat List For Categories */}
@@ -190,71 +214,78 @@ const HomeScreen = () => {
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionHeaderText}>Featured Products</Text>
           <TouchableOpacity onPress={VegitableHandle}>
-          <Image source={RightIcon} style={styles.rightArrowIcon} />
+            <Image source={RightIcon} style={styles.rightArrowIcon} />
           </TouchableOpacity>
         </View>
 
         {/* Flat List For Products */}
-        <View style={{width:'100%',alignItems:'center',padding:10,justifyContent:'center'}}>
-        <FlatList
-          data={ProductsImages}
-          renderItem={({ item }) => (
-            <View style={styles.productCardWrapper}>
-              <View style={styles.productCard}>
-                <View style={[styles.NewTagWrapper]}>
-                  <Text style={styles.NewTagTextWrapper}> New</Text>
-                </View>
-
-                <TouchableOpacity
-                  onPress={() => {
-                    if (Heart.includes(item.id)) {
-                      setHeart(Heart.filter(id => id !== item.id)); // remove if already favorited
-                    } else {
-                      setHeart([...Heart, item.id]); // add to favorites
-                    }
-                  }}
-                >
-                  <View style={styles.HeartWrapper}>
-                    <Image
-                      source={
-                        Heart.includes(item.id) ? HeartFilIcon : HeartIcon
-                      }
-                      style={styles.HeartIconStyle}
-                    />
-                  </View>
-                </TouchableOpacity>
-
-                <View
-                  style={[
-                    styles.productImageWrapper,
-                    { backgroundColor: item?.color },
-                  ]}
-                >
-                  <Image source={item.source} style={styles.productImage} />
-                </View>
-                <Text style={styles.productPrice}>{item.price}</Text>
-                <Text style={styles.productName}>{item.name}</Text>
-                <Text style={styles.productSize}>{item.Size}</Text>
-              </View>
-              <View style={styles.quantityBar}>
-                <Image source={MinusIcon} style={styles.MinusBar} />
-                <View>
-                  <Text style={styles.quantityBarText}>1</Text>
-                </View>
-                <Image source={PlusIcon} style={styles.MinusBar} />
-              </View>
-            </View>
-          )}
-          keyExtractor={item => item.id}
-          ItemSeparatorComponent={() => <View style={{ width: RF(15) }} />}
-          horizontal={false}
-          showsHorizontalScrollIndicator={false}
-          numColumns={2}
-          contentContainerStyle={{
+        <View
+          style={{
+            width: '100%',
             alignItems: 'center',
+            padding: 10,
             justifyContent: 'center',
           }}
-        />
+        >
+          <FlatList
+            data={ProductsImages}
+            renderItem={({ item }) => (
+              <View style={styles.productCardWrapper}>
+                <View style={styles.productCard}>
+                  <View style={[styles.NewTagWrapper]}>
+                    <Text style={styles.NewTagTextWrapper}> New</Text>
+                  </View>
+
+                  <TouchableOpacity
+                    onPress={() => {
+                      if (Heart.includes(item.id)) {
+                        setHeart(Heart.filter(id => id !== item.id)); // remove if already favorited
+                      } else {
+                        setHeart([...Heart, item.id]); // add to favorites
+                      }
+                    }}
+                  >
+                    <View style={styles.HeartWrapper}>
+                      <Image
+                        source={
+                          Heart.includes(item.id) ? HeartFilIcon : HeartIcon
+                        }
+                        style={styles.HeartIconStyle}
+                      />
+                    </View>
+                  </TouchableOpacity>
+
+                  <View
+                    style={[
+                      styles.productImageWrapper,
+                      { backgroundColor: item?.color },
+                    ]}
+                  >
+                    <Image source={item.source} style={styles.productImage} />
+                  </View>
+                  <Text style={styles.productPrice}>{item.price}</Text>
+                  <Text style={styles.productName}>{item.name}</Text>
+                  <Text style={styles.productSize}>{item.Size}</Text>
+                </View>
+                <View style={styles.quantityBar}>
+                  <Image source={MinusIcon} style={styles.MinusBar} />
+                  <View>
+                    <Text style={styles.quantityBarText}>1</Text>
+                  </View>
+                  <Image source={PlusIcon} style={styles.MinusBar} />
+                </View>
+              </View>
+            )}
+            keyExtractor={item => item.id}
+            ItemSeparatorComponent={() => <View style={{ width: RF(15) }} />}
+            horizontal={false}
+            showsHorizontalScrollIndicator={false}
+            numColumns={2}
+            contentContainerStyle={{
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          />
         </View>
       </View>
     </ScrollView>
@@ -264,24 +295,22 @@ const HomeScreen = () => {
 export default HomeScreen;
 
 const styles = StyleSheet.create({
-
   MainContainer: {
     backgroundColor: LightGrey,
     width: '100%',
-    alignItems:'center',
-    
+    alignItems: 'center',
   },
   SearchInputContainer: {
- backgroundColor: '#ffffff',
+    backgroundColor: '#ffffff',
     flexDirection: 'row',
-    justifyContent:'space-between',
+    justifyContent: 'space-between',
     alignItems: 'center',
     width: '90%',
     height: RF(50),
     borderRadius: RF(5),
     elevation: RF(1),
-    paddingHorizontal:RF(10),
-    marginTop:RF(10)
+    paddingHorizontal: RF(10),
+    marginTop: RF(10),
   },
 
   searchInput: {
@@ -311,6 +340,7 @@ const styles = StyleSheet.create({
     borderRadius: RF(10),
     marginTop: RF(20),
     alignSelf: 'center',
+    justifyContent:'center'
   },
   sectionHeader: {
     flexDirection: 'row',
@@ -363,7 +393,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: RF(20),
     marginHorizontal: RF(5),
-    
   },
   productCard: {
     width: '100%',
@@ -440,28 +469,38 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   HeartWrapper: {
-    width:'100%',
-    alignSelf:'flex-end',   
+    width: '100%',
+    alignSelf: 'flex-end',
   },
-   dotStyle: {
-        backgroundColor: 'rgba(0,0,0,.2)',
-        width: RF(8),
-        height: RF(8),
-        borderRadius: RF(4),
-        marginLeft: RF(3),
-        marginRight: RF(3),
+  dotStyle: {
+    backgroundColor: 'rgba(0,0,0,.2)',
+    width: RF(8),
+    height: RF(8),
+    borderRadius: RF(4),
+    marginLeft: RF(3),
+    marginRight: RF(3),
+  },
+  activeDotStyle: {
+    backgroundColor: Primary,
+    width: RF(20),
+    height: RF(8),
+    borderRadius: RF(4),
+    marginLeft: RF(3),
+    marginRight: RF(3),
+  },
+  paginationStyle: {
+    position: 'absolute',
+    alignSelf:'flex-start'
+  },
 
-    },
-     activeDotStyle: {
-        backgroundColor:Primary,
-        width: RF(8),
-        height: RF(8),
-        borderRadius: RF(4),
-        marginLeft: RF(3),
-        marginRight: RF(3),
-  
-    },
-      paginationStyle: {
-        position: 'absolute',
-    },
+  offtextView:{
+    paddingLeft: RF(25),
+    paddingTop:RF(70)
+  },
+    offtext: {
+    fontFamily: 'Poppins-Bold',
+    fontSize: RF(14),
+    justifyContent:'flex-start',
+
+  },
 });

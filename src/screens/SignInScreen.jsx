@@ -43,6 +43,11 @@ const WelcomeScreen = () => {
     navigation.navigate('SignupScreen');
     
   }
+  const ForgetScreenHandle=()=>{
+  
+    navigation.navigate("ForgetPasswordScreen")
+
+  }
 
 
 
@@ -145,7 +150,7 @@ const WelcomeScreen = () => {
              
 
 
-               <TouchableOpacity>
+               <TouchableOpacity onPress={ForgetScreenHandle}>
 
               <Text style={styles.ForgetText}> Forget Password </Text>
 

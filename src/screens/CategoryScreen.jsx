@@ -13,6 +13,8 @@ import {
   FilterIcon,
 } from '../assets/Index';
 import { useNavigation } from '@react-navigation/native';
+import  HeadertText from "../components/header/HeaderText"
+
 
 
 
@@ -37,11 +39,15 @@ const CategoryScreen = () => {
     <View style={{ flex: 1, backgroundColor: '#F4F5F9' }}>
       <View style={styles.Maincontainer}>
         <View style={styles.CategoryPageContainer}>
-            <TouchableOpacity onPress={backArrowHandle}>
-          <Image source={BackIcon} style={styles.BackArrowIcon} />
-          </TouchableOpacity>
-          <Text style={styles.CategoryText}>Categories</Text>
-          <Image source={FilterIcon} style={styles.filterIcon} />
+          
+         <HeadertText
+            onPress={backArrowHandle} 
+
+            text = " Categories"
+            Img = {FilterIcon}
+             
+          />
+
         </View>
 
         <FlatList
@@ -98,10 +104,7 @@ const styles = StyleSheet.create({
   },
 
   filterIcon: {
-    width: RF(20),
-    height: RF(20),
-    resizeMode: 'contain',
-    tintColor: 'black',
+   
   },
   flatListContainer: {
     paddingVertical: RF(15),

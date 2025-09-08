@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, FlatList, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image, FlatList, TouchableOpacity, ScrollView } from 'react-native';
 import React from 'react';
 import { BackIcon, FilterIcon , HeartIcon, Heart,HeartFilIcon, MinusIcon,PlusIcon} from '../assets/Index';
 import { RF } from '../Utils/Responsive';
@@ -13,8 +13,7 @@ const ProductsImages = [
 import { useNavigation } from '@react-navigation/native';
 import { Secondary,Primary } from '../styles/colors/colorsCode';
 import  { useState } from 'react';
-
-
+import  HeadertText from "../components/header/HeaderText"
 
 
 
@@ -31,14 +30,19 @@ const [Heart, setHeart] = useState([]);
   };
 
   return (
+    <ScrollView>
+
+
     <View style={{ flex: 1, backgroundColor: '#F4F5F9' }}>
       <View style={styles.Maincontainer}>
         <View style={styles.CategoryPageContainer}>
-            <TouchableOpacity onPress={backArrowHandle}>
-          <Image source={BackIcon} style={styles.BackArrowIcon} />
-          </TouchableOpacity>
-          <Text style={styles.CategoryText}>Vegitables</Text>
-          <Image source={FilterIcon} style={styles.filterIcon} />
+           
+         <HeadertText
+            onPress={backArrowHandle} 
+
+            text = "Vegetables"
+            Img={FilterIcon}
+          />
         </View>
 
       {/* Flat List For Products */}
@@ -105,6 +109,7 @@ const [Heart, setHeart] = useState([]);
         </View>
         </View>
     </View>
+    </ScrollView>
   );
 };
 
