@@ -62,6 +62,8 @@ export const CalndarIcon = require('../assets/images/Calendar.png');
 export const GreenCardIcon = require('../assets/images/GreenPaymentCard.png');
 export const FlagIcon = require('../assets/images/Flag.png');
 export const ArrowDownIcon = require('../assets/images/arrowDown.png');
+export const CameraIcon = require('../assets/images/Camera.png');
+
 
 //Review Screen
 export const PenIcon = require('../assets/images/Pen.png');

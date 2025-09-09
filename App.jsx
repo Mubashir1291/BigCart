@@ -11,6 +11,7 @@ import VegitableScreen from "./src/screens/VegitableScreen";
 import ForgetPasswordScreen from "./src/screens/ForgetPasswordScreen"
 import VerifyNumberScreen from "./src/screens/VerifyNumberScreen"
 import OtpScreen from "./src/screens/OtpScreen"
+import AboutMeScreen from "./src/screens/AboutMeScreen";
 
 
 
@@ -31,16 +32,18 @@ function App() {
 
 
             <Stack.Navigator screenOptions={{ headerShown: false }} >
-                <Stack.Screen name="OnBoard1" component={OnBoard1} />
+                {/* <Stack.Screen name="OnBoard1" component={OnBoard1} />
                 <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
                 <Stack.Screen name="SignInScreen" component={SignInScreen} />
-                <Stack.Screen name="SignupScreen" component={SignupScreen} />
+                <Stack.Screen name="SignupScreen" component={SignupScreen} /> */}
                 <Stack.Screen name="NavBar" component={NavBar} />
-                 <Stack.Screen name="CategoryScreen" component={CatergoryScreen} />
+                 <Stack.Screen name="AboutMeScreen" component={AboutMeScreen} />
+
+                 {/* <Stack.Screen name="CategoryScreen" component={CatergoryScreen} />
                  <Stack.Screen name="VegitableScreen" component={VegitableScreen} />
                  <Stack.Screen name="ForgetPasswordScreen" component={ForgetPasswordScreen} />
                  <Stack.Screen name="VerifyNumberScreen" component={VerifyNumberScreen} />
-                 <Stack.Screen name="OtpScreen" component={OtpScreen} />
+                 <Stack.Screen name="OtpScreen" component={OtpScreen} /> */}
 
 
 

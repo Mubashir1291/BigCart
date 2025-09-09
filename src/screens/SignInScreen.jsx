@@ -108,7 +108,8 @@ const WelcomeScreen = () => {
                   name="password"
                   placeholder="Password"
                    placeholderTextColor={'grey'}
-                color={'black'}
+                   color={'black'}
+                   width= "100%"
 
                   onChangeText={handleChange('password')}
                   onBlur={handleBlur('password')}
