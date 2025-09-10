@@ -10,7 +10,7 @@ import { LightGrey, Primary, Secondary, TextClr, White } from '../../styles/colo
  const IconSize = {
    height: RF(20),
       width: RF(20),
-  resizeMode: 'contain',
+      resizeMode: 'contain',
       tintColor:TextClr, 
 
  };
@@ -24,19 +24,16 @@ import { LightGrey, Primary, Secondary, TextClr, White } from '../../styles/colo
   fontSize: RF(12),
   fontFamily: 'Poppins-Medium',
   color: TextClr,
-  flex:1
  };
    const TextSemiBold = {
   fontSize: RF(12),
   fontFamily: 'Poppins-SemiBold',
   color: TextClr,
-  flex:1
  };
    const TextBold = {
   fontSize: RF(12),
   fontFamily: 'Poppins-Bold',
   color: TextClr,
-  flex:1
  };
 
 
@@ -44,8 +41,8 @@ import { LightGrey, Primary, Secondary, TextClr, White } from '../../styles/colo
  IconSize,
  TextRegular,
  TextMedium,
-TextSemiBold,
-TextBold
+ TextSemiBold,
+ TextBold,
 
 }
 

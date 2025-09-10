@@ -36,6 +36,14 @@ export const FilterIcon = require('../assets/images/Filter.png');
 export const RightIcon = require('../assets/images/RightArrow.png');
 export const PlusIcon = require('../assets/images/Plus.png');
 export const MinusIcon = require('../assets/images/Minus.png');
+export const AddIcon = require('../assets/images/add.png');
+export const ScrollUpIcon = require('../assets/images/ScrollUp.png');
+export const ScrollDownIcon = require('../assets/images/ScrollDown.png');
+export const LocationCircleIcon = require('../assets/images/LocationCircle.png');
+export const DefaultIcon = require('../assets/images/Default.png');
+
+
+
 
 // Product Details Screen
 export const BackIcon = require('../assets/images/BackArrow.png');

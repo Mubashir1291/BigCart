@@ -2,17 +2,19 @@ import { StyleSheet, Text, View ,Image, TextInput } from 'react-native'
 import React from 'react'
 import { RF } from '../../Utils/Responsive';
 import Buttons from '../buttons/Buttons';
+import { IconSize } from '../IconSize/Sizes';
 
 
 const InfoInput = ({Img,placeholder}) => {
 
   return (
     <View  style={styles.TextInputContainer}>
-          <Image  source = {Img} style={styles.IconSize}/>
+          <Image  source = {Img} style={IconSize}/>
         <TextInput
         placeholder={placeholder}
         placeholderTextColor={'grey'}
         color={'black'}
+        width={'90%'}
         />
     </View>
   )
