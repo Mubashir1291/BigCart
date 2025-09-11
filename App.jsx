@@ -17,6 +17,14 @@ import MyAddressScreen from "./src/screens/MyAddressScreen";
 import CreditCardScreen from "./src/screens/CreditCardScreen";
 import NotificationScreen from "./src/screens/NotificationScreen";
 import AddAddressScreen from "./src/screens/AddAddressScreen";
+import OrderSucessScreen from "./src/screens/OrderSucessScreen";
+import TrackOrderScreen from "./src/screens/TrackOrderScreen";
+import ProductDetailsScreen from "./src/screens/ProductDetailsScreen";
+import FilterScreen from "./src/screens/FilterScreen";
+
+
+
+
 
 
 
@@ -45,14 +53,22 @@ function App() {
                 {/* <Stack.Screen name="OnBoard1" component={OnBoard1} />
                 <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
                 <Stack.Screen name="SignInScreen" component={SignInScreen} />
-                <Stack.Screen name="SignupScreen" component={SignupScreen} />
-                <Stack.Screen name="NavBar" component={NavBar} /> */}
+                <Stack.Screen name="SignupScreen" component={SignupScreen} /> */}
+                {/* <Stack.Screen name="NavBar" component={NavBar} /> */}
                  {/* <Stack.Screen name="AboutMeScreen" component={AboutMeScreen} />
                 <Stack.Screen name="UserProfileScreen" component={UserProfileScreen} />
                 <Stack.Screen name="MyAddressScreen" component={MyAddressScreen} />
                 <Stack.Screen name="CreditCardScreen" component={CreditCardScreen} /> */}
-                <Stack.Screen name="NotificationScreen" component={NotificationScreen} />
+                {/* <Stack.Screen name="NotificationScreen" component={NotificationScreen} /> */}
                 {/* <Stack.Screen name="AddAddressScreen" component={AddAddressScreen} /> */}
+                {/* <Stack.Screen name="OrderSucessScreen" component={OrderSucessScreen} /> */}
+                {/* <Stack.Screen name="TrackOrderScreen" component={TrackOrderScreen} /> */}
+                 {/* <Stack.Screen name="ProductDetailsScreen" component={ProductDetailsScreen} /> */}
+                <Stack.Screen name="FilterScreen" component={FilterScreen} />
+
+
+
+
 
 
 {/* 

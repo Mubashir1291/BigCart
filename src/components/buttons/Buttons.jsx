@@ -32,7 +32,8 @@ const styles = StyleSheet.create({
             alignItems: 'center',
             justifyContent:'center',
             width: '100%',
-            marginTop:RF(10)
+            marginTop:RF(10),
+            paddingBottom:RF(10)
    },
 GetStartedBtn: {
        flexDirection:'row',

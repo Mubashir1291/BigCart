@@ -42,6 +42,15 @@ export const ScrollDownIcon = require('../assets/images/ScrollDown.png');
 export const LocationCircleIcon = require('../assets/images/LocationCircle.png');
 export const DefaultIcon = require('../assets/images/Default.png');
 
+export const OrderIcon = require('../assets/images/Order.png');
+export const OrderConfirmIcon = require('../assets/images/OrderConfirm.png');
+export const OrderDeliveredtIcon = require('../assets/images/OrderDelivered.png');
+export const OrderPlacedIcon = require('../assets/images/OrderPlaced.png');
+export const OrderShipIcon = require('../assets/images/OrderShip.png');
+export const OutOfDeliveryIcon = require('../assets/images/OutOFDelivery.png');
+export const LemonIcon = require('../assets/images/Lemon.png');
+
+
 
 
 
@@ -84,7 +93,6 @@ export const ZipCodeIcon = require('../assets/images/ZipCode.png');
 
 // Account Screen
 export const ImageIcon = require('../assets/images/Image.png');
-export const OrderIcon = require('../assets/images/Order.png');
 export const TransactionIcon = require('../assets/images/Transaction.png');
 export const BellIcon = require('../assets/images/Notification.png');
 export const LogoutIcon = require('../assets/images/Logout.png');

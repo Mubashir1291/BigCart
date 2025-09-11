@@ -230,7 +230,7 @@ const HomeScreen = () => {
           <FlatList
             data={ProductsImages}
             renderItem={({ item }) => (
-              <View style={styles.productCardWrapper}>
+              <TouchableOpacity onPress={()=>navigation.navigate("ProductDetailsScreen",{Detail:item})} style={styles.productCardWrapper}>
                 <View style={styles.productCard}>
                   <View style={[styles.NewTagWrapper]}>
                     <Text style={styles.NewTagTextWrapper}> New</Text>
@@ -274,7 +274,7 @@ const HomeScreen = () => {
                   </View>
                   <Image source={PlusIcon} style={styles.MinusBar} />
                 </View>
-              </View>
+              </TouchableOpacity>
             )}
             keyExtractor={item => item.id}
             ItemSeparatorComponent={() => <View style={{ width: RF(15) }} />}

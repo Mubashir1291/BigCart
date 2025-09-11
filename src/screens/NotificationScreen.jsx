@@ -6,6 +6,7 @@ import {
   View,
   Image,
   FlatList,
+  Alert,
 } from 'react-native';
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
@@ -54,7 +55,11 @@ const NotificationsArr = [
 ];
 
 const VerifyNumberScreen = () => {
-  const [rememberMe, setRememberMe] = React.useState(false);
+  const SaveSettingHandle = () => {
+    Alert.alert('Setting', 'Setting Saved', [
+      { text: 'OK', onPress: () => navigation.navigate('NotificationScreen') },
+    ]);
+  };
 
   const [activeSwitches, setActiveSwitches] = useState([]);
 
@@ -67,8 +72,6 @@ const VerifyNumberScreen = () => {
       setActiveSwitches([...activeSwitches, id]);
     }
   };
-
-  const [Select, setSelect] = useState();
 
   const navigation = useNavigation();
 
@@ -117,6 +120,7 @@ const VerifyNumberScreen = () => {
           keyExtractor={item => item.id.toString()}
           contentContainerStyle={{ gap: RF(10) }}
         />
+        <Buttons onPress={SaveSettingHandle} text={'Save Settings'} />
       </View>
     </View>
   );

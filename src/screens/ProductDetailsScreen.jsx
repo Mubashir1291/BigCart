@@ -1,0 +1,186 @@
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native'
+import React, { useState } from 'react'
+import { CartIcon, HeartFilIcon, HeartIcon, LemonIcon, MinusIcon, PlusIcon, StarIcon } from '../assets/Index'
+import { Primary, Secondary, White } from '../styles/colors/colorsCode'
+import { RF } from '../Utils/Responsive'
+import { IconSize, TextBold, TextMedium, TextRegular, TextSemiBold } from '../components/IconSize/Sizes'
+import { useNavigation, useRoute } from '@react-navigation/native';
+import LinearGradient from 'react-native-linear-gradient';
+
+const ProductDetailsScreen = () => {
+    const [HeartPress, setHeartPress] = useState(true);
+const route=useRoute()
+
+
+      const navigation = useNavigation();
+    
+      const AddCartHandle = () => {
+        navigation.navigate('CartScreen')
+      };
+  return (
+    <ScrollView>
+    <View style={{flex:1 }}>
+        <View  style={styles.ProductImageContainer}>
+            <View style={[styles.ImageBackgroundCon,{backgroundColor: route?.params?.Detail?.color}]}></View>
+        <Image source={route?.params?.Detail?.source} style={[IconSize,{tintColor:null,height:RF(410),width:'100%'}]}/>     
+         </View>
+         <View style ={styles.DetailsContainer}>
+
+              {/* Price Container */}
+            <View style ={styles.PriceContainer} >
+            <Text style={[TextMedium,{color:Secondary , fontSize:RF(18) ,flex:1}]}> {route?.params?.Detail?.price} </Text>
+            <TouchableOpacity  onPress={!HeartPress}>
+            <Image source={HeartPress? HeartIcon: HeartFilIcon} style={[IconSize,{tintColor:null}]}/>
+            </TouchableOpacity>
+         </View>
+            <Text style={[TextBold,{color:'black' , fontSize:RF(20)}]}> {route?.params?.Detail?.name}</Text>
+            <Text style={[TextRegular,{color:'black' , fontSize:RF(12)}]}> {route?.params?.Detail?.Size} </Text>
+
+            <View style ={styles.ReviewContainer} >
+            <Text style={[TextSemiBold,{color:Secondary ,fontSize:RF(12)}]}> 4.5 </Text>
+
+            <View style ={styles.starsContainer}>
+            <Image source={StarIcon} style={[IconSize,{tintColor:'#FFC107',width:RF(15),height:RF(15)}]}/>
+            <Image source={StarIcon} style={[IconSize,{tintColor:'#FFC107',width:RF(15),height:RF(15)}]}/>
+            <Image source={StarIcon} style={[IconSize,{tintColor:'#FFC107',width:RF(15),height:RF(15)}]}/>
+            <Image source={StarIcon} style={[IconSize,{tintColor:'#FFC107',width:RF(15),height:RF(15)}]}/>
+            <Image source={StarIcon} style={[IconSize,{tintColor:'#FFC107',width:RF(15),height:RF(15)}]}/>
+            </View>
+            <Text style={[TextRegular,{fontSize:RF(12)}]}> (89 reviews) </Text>
+
+         </View>
+         <Text style={[TextRegular,{fontSize:RF(12)}]}>Organic Mountain works as a seller for many organic growers of organic lemons. Organic lemons are easy to spot in your produce aisle. They are just like regular lemons, but they will usually have a few more scars on the outside of the lemon skin. Organic lemons are considered to be the world's finest lemon for juicing </Text>
+
+         <View style={styles.QuantityBarContainer}>  
+         <View style={styles.QuantityMinusContainer}> 
+            <Text style={[TextMedium,{flex:1}]}>Quantity</Text>
+            <Image source={MinusIcon} style={[IconSize,{tintColor:Secondary}]}/>
+         </View>
+         <View style={styles.QuantityReslutContainer}>
+        <Text style={[TextRegular,{color:'black',fontSize:RF(18)}]}>1</Text>
+        </View>
+         <View style={styles.QuantityPlusContainer}> 
+
+        <Image source={PlusIcon} style={[IconSize,{tintColor:Secondary}]}/>
+
+         </View>
+
+         </View>
+         <TouchableOpacity onPress={AddCartHandle} style={styles.CreateButtonContainer}  >
+                         <LinearGradient
+                             style={styles.GetStartedBtn}
+                             colors={[Primary, Secondary]}
+                             start={{ x: 0, y: 1 }}
+                             end={{ x: 1, y: 1 }}
+                         >
+                         <View style={styles.ButtonCont}>
+                            <View></View>
+                                                        <View></View>
+
+                         <Text style={[TextMedium,{color:White, fontSize:RF(15) }]}>Add Cart</Text>
+                                                     <View></View>
+
+                        <Image source={CartIcon} style={[IconSize,{tintColor:White }]}/>
+                        </View>
+
+                         </LinearGradient>
+                     </TouchableOpacity>
+
+    </View>
+        </View>
+</ScrollView>
+  )
+}
+
+export default ProductDetailsScreen
+
+const styles = StyleSheet.create({
+
+    ProductImageContainer:{
+        width:'100%',
+        height:RF(400),
+        backgroundColor:White,
+        alignItems:'center'
+    },
+    DetailsContainer:{
+        paddingHorizontal:RF(15),
+        paddingTop:RF(15)
+    },
+     PriceContainer:{
+     flexDirection:'row',
+     alignItems:'center'
+    },
+    starsContainer:{
+
+        flexDirection:'row',
+        gap:RF(5),
+    },
+      ReviewContainer:{
+     flexDirection:'row',
+   
+     gap:RF(5)
+    },
+    QuantityBarContainer:{
+
+      flexDirection:'row',
+      width:'100%',
+      alignItems:'center',
+gap:RF(2)
+
+    },
+    QuantityMinusContainer:{
+      flexDirection:'row',
+      width:'70%',
+      backgroundColor:White,
+      height:RF(50),
+      alignItems:'center',
+      padding:RF(15)
+      
+    },
+    QuantityReslutContainer:{
+      width:'15%',
+      backgroundColor:White,
+      height:RF(50),
+      alignItems:'center',
+      padding:RF(10)
+    },
+     QuantityPlusContainer:{
+      width:'15%',
+      backgroundColor:White,
+      height:RF(50),
+      alignItems:'center',
+      padding:RF(10)
+    },
+       CreateButtonContainer:{
+            flexDirection:'row',
+            alignItems: 'center',
+            justifyContent:'center',
+            width: '100%',
+            marginTop:RF(10),
+            paddingBottom:RF(10),
+           },
+GetStartedBtn: {
+       flexDirection:'row',
+            alignItems: 'center',
+            width: '100%',
+        height: RF (50),
+        borderRadius: RF (5),
+        backgroundColor: 'Secondary',
+        
+    },
+    ButtonCont:{
+        flex:1,
+        justifyContent:'space-around',
+        flexDirection:'row',
+    },
+    ImageBackgroundCon:{
+
+        width:'100%',
+        height:RF(300),
+        borderBottomRightRadius:RF(250),
+        borderBottomLeftRadius:RF(250),
+        position: 'absolute'
+
+    }
+    
+})
