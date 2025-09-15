@@ -43,6 +43,7 @@ GetStartedBtn: {
         height: RF (50),
         borderRadius: RF (5),
         backgroundColor: 'Secondary',
+
         
     },
      BtnText: {

@@ -49,6 +49,17 @@ export const OrderPlacedIcon = require('../assets/images/OrderPlaced.png');
 export const OrderShipIcon = require('../assets/images/OrderShip.png');
 export const OutOfDeliveryIcon = require('../assets/images/OutOFDelivery.png');
 export const LemonIcon = require('../assets/images/Lemon.png');
+export const VisaIcon = require('../assets/images/Visa.png');
+export const PaypayIcon = require('../assets/images/PaypalPayment.png');
+export const MasterIcon = require('../assets/images/Master.png');
+export const Girl1 = require('../assets/images/Girl1.png');
+
+export const Girl2 = require('../assets/images/Girl2.png');
+export const Girl3 = require('../assets/images/Girl3.png');
+export const Girl4 = require('../assets/images/Girl4.png');
+export const StarGroup = require('../assets/images/StarGroup.png');
+
+
 
 
 
