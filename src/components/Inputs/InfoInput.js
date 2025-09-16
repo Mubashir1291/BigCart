@@ -5,7 +5,7 @@ import Buttons from '../buttons/Buttons';
 import { IconSize } from '../IconSize/Sizes';
 
 
-const InfoInput = ({Img,placeholder}) => {
+const InfoInput = ({Img,placeholder,value ,onChange}) => {
 
   return (
     <View  style={styles.TextInputContainer}>
@@ -15,6 +15,8 @@ const InfoInput = ({Img,placeholder}) => {
         placeholderTextColor={'grey'}
         color={'black'}
         width={'90%'}
+        value={value}
+        onChangeText={onChange}
         />
     </View>
   )

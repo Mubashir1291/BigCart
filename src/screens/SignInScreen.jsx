@@ -3,12 +3,13 @@ import React from 'react'
 import { useNavigation } from '@react-navigation/native';
 
 import { EmailIcon, PasswordIcon, WelcomeImage, EyeIcon,EyeOffIcon} from '../assets/Index';
-import { BorderClr, LightGrey, Link, MidGrey, Primary, primaryClr, Secondary, SimpleText, TextClr, White } from '../styles/colors/colorsCode';
+import { BorderClr, LightGrey, Link, LinkClr, MidGrey, Primary, primaryClr, Secondary, SimpleText, TextClr, White } from '../styles/colors/colorsCode';
 import { RF } from '../Utils/Responsive';
 import Buttons from '../components/buttons/Buttons';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
 import { useState } from 'react';
+import { TextMedium } from '../components/IconSize/Sizes';
 
 
   
@@ -88,6 +89,7 @@ const WelcomeScreen = () => {
                   onBlur={handleBlur('email')}
                   value={values.email}
                   keyboardType="email-address"
+                  width='95%'
                 />
 
                 </View>
@@ -109,7 +111,7 @@ const WelcomeScreen = () => {
                   placeholder="Password"
                    placeholderTextColor={'grey'}
                    color={'black'}
-                   width= "100%"
+                   width= "80%"
 
                   onChangeText={handleChange('password')}
                   onBlur={handleBlur('password')}
@@ -153,7 +155,7 @@ const WelcomeScreen = () => {
 
                <TouchableOpacity onPress={ForgetScreenHandle}>
 
-              <Text style={styles.ForgetText}> Forget Password </Text>
+              <Text style={[TextMedium,{color:LinkClr}]}> Forgot Password </Text>
 
                </TouchableOpacity>
               </View>
@@ -164,7 +166,7 @@ const WelcomeScreen = () => {
 
         
       <View style={styles.BottomTextCont} >
-            <Text style={styles.SimpleText}>Already have an account? </Text>
+            <Text style={styles.SimpleText}>Don't have an account? </Text>
             <TouchableOpacity onPress={SignupHandle} >
             <Text style={styles.LoginText}>Sign up</Text>
             </TouchableOpacity>
@@ -220,7 +222,7 @@ const styles = StyleSheet.create({
 
   BottomTextCont: {
     flexDirection: 'row',
-    marginTop: RF(20),
+    marginTop: RF(10),
     marginBottom: RF(30),
     alignItems: 'center',
   },

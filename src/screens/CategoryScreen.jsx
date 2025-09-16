@@ -35,20 +35,26 @@ const CategoryScreen = () => {
   const backArrowHandle = () => {
     navigation.navigate('NavBar');
   };
+   const FilterScreenHandle = () => {
+    navigation.navigate('FilterScreen');
+  };
+
+
+
+
   return (
     <View style={{ flex: 1, backgroundColor: '#F4F5F9' }}>
       <View style={styles.Maincontainer}>
-        <View style={styles.CategoryPageContainer}>
           
          <HeadertText
             onPress={backArrowHandle} 
-
             text = " Categories"
             Img = {FilterIcon}
+            onClick={FilterScreenHandle}
              
           />
 
-        </View>
+       
 
         <FlatList
           data={CategoriesImages}

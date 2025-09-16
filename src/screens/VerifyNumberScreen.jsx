@@ -24,9 +24,9 @@ const VerifyNumberScreen = () => {
 
   return (
     <View style={{ flex: 1 }}>
-      <HeadertText onPress={backArrowHandle} text="Verify Number " />
+      <HeadertText onPress={backArrowHandle} text="Verify Number" />
       <View style={styles.Maincontainer}>
-        <Text style={styles.ForgotText}> Verify your number</Text>
+        <Text style={styles.ForgotText}>Verify your number</Text>
         <View style={styles.LoremText}>
           <Text style={styles.loremHeadings}>
             Lorem ipsum dolor sit amet, consetetur
@@ -63,7 +63,6 @@ const VerifyNumberScreen = () => {
     
       <Buttons  text={'Next '}  onPress={SendOtpScreenHandle} />
 
-      <Text style ={styles.ResendText}>Resend confirmation code (1:23)</Text>
         
 
 

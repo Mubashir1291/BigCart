@@ -6,7 +6,7 @@ import {  Primary , Secondary } from '../styles/colors/colorsCode';
 import { AppLogo,  Slide1, Slide2, Slide3, Slide4 } from '../assets/Index';
 import { RF } from '../Utils/Responsive';
 import LinearGradient from 'react-native-linear-gradient';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { TextMedium } from '../components/IconSize/Sizes';
 
 
 
@@ -31,14 +31,14 @@ const OnBoard1 = () => {
                 paginationStyle={styles.paginationStyle}
             >
                 {/* Slide 1 */}
-                <ImageBackground source={Slide1} style={styles.slide}>
+                <ImageBackground source={Slide1} style={[styles.slide]}>
                     <View style={styles.TextContainer}>
                         <Text style={styles.Heading1}>Get Discounts</Text>
                         <Text style={styles.Heading2}>on All Products</Text>
                     </View>
                     <View style={styles.Textcontainer3}>
-                        <Text style={styles.Heading3}>Lorem ipsum dolor sit amet, consetetur</Text>
-                        <Text style={styles.Heading3}> sadipscing elitr, sed diam nonumy</Text>
+                        <Text style={[TextMedium,{color:'black'}]}>Lorem ipsum dolor sit amet, consetetur</Text>
+                        <Text style={[TextMedium,{color:'black'}]}> sadipscing elitr, sed diam nonumy</Text>
                     </View>
                 </ImageBackground>
 
@@ -105,6 +105,9 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent:'flex-start',
         alignItems: 'center',
+        resizeMode:'contain',
+        width:'100%',
+        height:RF(750)
     },
     TextContainer: {
         marginTop: RF(50),
@@ -136,7 +139,7 @@ const styles = StyleSheet.create({
     },
     paginationStyle: {
         position: 'absolute',
-        bottom: RF(120),
+        bottom: RF(100),
     },
     dotStyle: {
         backgroundColor: 'rgba(0,0,0,.2)',
@@ -169,8 +172,8 @@ GetStartedBtn: {
         borderRadius: RF(5),
         backgroundColor: 'Secondary',
         alignItems: 'center',
-        justifyContent: 'center', bottom:RF(40),
-        alignSelf:'center'
+        justifyContent: 'center', bottom:RF(30),
+        alignSelf:'center',
 
     },
      BtnText: {

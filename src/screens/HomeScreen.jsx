@@ -26,6 +26,7 @@ import {
   HeartFilIcon,
   HeartIcon,
   HomeBackGround,
+  homebackImage,
   MinusIcon,
   Peach,
   Pineapple,
@@ -123,20 +124,33 @@ const HomeScreen = () => {
   const VegitableHandle = () => {
     navigation.navigate('VegitableScreen');
   };
+  const SearchScreenHandle = () => {
+    navigation.navigate('SearchScreen');
+  };
+    const FilterScreenHandle = () => {
+    navigation.navigate('FilterScreen');
+  };
+
 
   return (
     <ScrollView>
       <View style={styles.MainContainer}>
         {/* Search Bar */}
         <View style={styles.SearchInputContainer}>
+          <TouchableOpacity onPress={SearchScreenHandle}>
           <Image source={SearchIcon} style={styles.searchIcon} />
+                    </TouchableOpacity>
+
+
           <TextInput
             style={styles.searchInput}
             placeholder=" Search Keyword..."
             placeholderTextColor={'grey'}
             color={'black'}
           />
+          <TouchableOpacity onPress={FilterScreenHandle}>
           <Image source={FilterIcon} style={styles.filterIcon} />
+          </TouchableOpacity>
         </View>
 
         {/* Main Image Swiper */}
@@ -150,7 +164,7 @@ const HomeScreen = () => {
           }}
         >
           <Swiper
-            autoplay={false}
+            autoplay={true}
             showsButtons={false}
             loop
             dot={<View style={styles.dotStyle} />}
@@ -172,7 +186,7 @@ const HomeScreen = () => {
             </ImageBackground>
 
             <ImageBackground
-              source={HomeBackGround}
+              source={homebackImage}
               style={styles.mainBannerImage}
           />
           </Swiper>
@@ -340,7 +354,8 @@ const styles = StyleSheet.create({
     borderRadius: RF(10),
     marginTop: RF(20),
     alignSelf: 'center',
-    justifyContent:'center'
+    justifyContent:'center',
+    resizeMode:"contain"
   },
   sectionHeader: {
     flexDirection: 'row',

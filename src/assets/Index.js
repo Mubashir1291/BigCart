@@ -7,6 +7,8 @@
  export const Slide3 = require('../assets/images/Screen3.png');
  export const Slide4 = require('../assets/images/Screen4.jpg');
  export const WelcomeImage = require('../assets/images/WelcomeImage.png')
+  export const homebackImage = require('../assets/images/Main_fruits.jpg')
+
 
 // // APP Icons
 
@@ -58,6 +60,10 @@ export const Girl2 = require('../assets/images/Girl2.png');
 export const Girl3 = require('../assets/images/Girl3.png');
 export const Girl4 = require('../assets/images/Girl4.png');
 export const StarGroup = require('../assets/images/StarGroup.png');
+export const RectangleIcon = require('../assets/images/Rectangle.png');
+export const Masterlogo = require('../assets/images/Masterogo.png');
+
+
 
 
 
@@ -87,7 +93,6 @@ export const AppleIcon = require('../assets/images/Apple.png');
 export const GreenCircleIcon = require('../assets/images/GreenCircle.png');
 export const PolygonIcon = require('../assets/images/Polygon.png');
 export const CalndarIcon = require('../assets/images/Calendar.png');
-export const GreenCardIcon = require('../assets/images/GreenPaymentCard.png');
 export const FlagIcon = require('../assets/images/Flag.png');
 export const ArrowDownIcon = require('../assets/images/arrowDown.png');
 export const CameraIcon = require('../assets/images/Camera.png');

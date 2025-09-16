@@ -92,6 +92,7 @@ const SignupScreen = () => {
                   onBlur={handleBlur('email')}
                   value={values.email}
                   keyboardType="email-address"
+                  width='96%'
                 />
                 </View>
                 </View>
@@ -117,6 +118,8 @@ const SignupScreen = () => {
                   onChangeText={handleChange('phone')}
                   onBlur={handleBlur('phone')}
                   value={values.phone}
+                  width='96%'
+
                   keyboardType='numeric'
                 />
                 </View>
@@ -144,6 +147,8 @@ const SignupScreen = () => {
                   onBlur={handleBlur('password')}
                   value={values.password}
                   secureTextEntry = {!showPass}
+                                    width='80%'
+
                   />
                   </View>
                   

@@ -23,9 +23,11 @@ import {
   ScrollUpIcon,
   OrderPlacedIcon,
   GreenCircleIcon,
+  FilterIcon,
 } from '../assets/Index';
 import {
   LightGrey,
+  MidGrey,
   Secondary,
   SimpleText,
   TextClr,
@@ -52,7 +54,79 @@ const AddressDetailArr = [
       detailsImage: GreenCircleIcon,
       status: 'Order placed',
       date: 'Oct 19 2021',
-     
+      date2: 'Oct 20 2021',
+      orderConfirm: 'Order Confirmed',
+      orderShiped: 'Order Shipped',
+      outOfDelivery:'Out Of Delivery',
+      orderDelivered:'Order Delivered',
+      pending:'pending'
+    },
+  },
+
+   {
+    id: 2,
+    Image: OrderPlacedIcon,
+    orderNum: 'Order #90897 ',
+    placedTime: 'Placed on Octobar 19 2021',
+    item: 'Items: 10',
+    itemPrice: 'Items: $16.90',
+    details: {
+      detailsImage: GreenCircleIcon,
+      status: 'Order placed',
+      date: 'Oct 19 2021',
+      date2: 'Oct 20 2021',
+      orderConfirm: 'Order Confirmed',
+      orderShiped: 'Order Shipped',
+      outOfDelivery:'Out Of Delivery',
+      orderDelivered:'Order Delivered',
+      pending:'pending'
+    },
+  },
+   {
+    id: 3,
+    Image: OrderPlacedIcon,
+    orderNum: 'Order #90897 ',
+    placedTime: 'Placed on Octobar 19 2021',
+    item: 'Items: 10',
+    itemPrice: 'Items: $16.90',
+    details: {
+      detailsImage: GreenCircleIcon,
+      status: 'Order placed',
+      date: 'Oct 19 2021',
+      date2: 'Oct 20 2021',
+      orderConfirm: 'Order Confirmed',
+      orderShiped: 'Order Shipped',
+      outOfDelivery:'Out Of Delivery',
+      orderDelivered:'Order Delivered',
+      pending:'pending',
+      delivered: 'Order Delivered'
+    },
+  },
+   {
+    id: 4,
+    Image: OrderPlacedIcon,
+    orderNum: 'Order #90897 ',
+    placedTime: 'Placed on Octobar 19 2021',
+    item: 'Items: 10',
+    itemPrice: 'Items: $16.90',
+    details: {
+      detailsImage: GreenCircleIcon,
+      date: 'Oct 19 2021',
+      delivered: 'Order Delivered'
+    },
+  },
+   {
+    id: 5,
+    Image: OrderPlacedIcon,
+    orderNum: 'Order #90897 ',
+    placedTime: 'Placed on Octobar 19 2021',
+    item: 'Items: 10',
+    itemPrice: 'Items: $16.90',
+    details: {
+      detailsImage: GreenCircleIcon,
+      date: 'Oct 19 2021',
+      delivered: 'Order Delivered'
+
     },
   },
   
@@ -69,18 +143,18 @@ const AboutMeScreen = () => {
   const BackArrowHandle = () => {
     navigation.navigate('UserProfileScreen');
   };
-    const AddAddressHandler = () => {
-    navigation.navigate('AddAddressScreen');
+    const FilterHandler = () => {
+    navigation.navigate('FilterScreen');
   };
-
   return (
     <View style={{ flex: 1 }}>
       <HeadertText
         onPress={BackArrowHandle}
         tintColor={SimpleText}
-        text="My Address"
-        Img={AddIcon}
-        onClick={AddAddressHandler}
+        text="My Order"
+        Img={FilterIcon}
+        tintColor2={'black'}
+        onClick={FilterHandler}
       />
       <View style={styles.Maincontainer}>
         <FlatList
@@ -100,16 +174,15 @@ const AboutMeScreen = () => {
                   <Text style={[TextRegular, { color: TextClr, fontSize: RF(10) }]}>
                     {item.placedTime}
                   </Text>
-                  <View style={{flexDirection:'row', gap:RF(10)}}>
-                  <Text style={[TextRegular, { color: TextClr, fontSize: RF(10) }]}>
-                    {item.item}
-                  </Text>
-                  <Text style={[TextSemiBold, { color: SimpleText, fontSize: RF(10), }]}>
-                    {item.itemPrice}
-                  </Text>
+                  <View style={{ flexDirection: 'row', gap: RF(10) }}>
+                    <Text style={[TextMedium, { color: "black", fontSize: RF(10) }]}>
+                      {item.item}
+                    </Text>
+                    <Text style={[TextSemiBold, { color: SimpleText, fontSize: RF(10) }]}>
+                      {item.itemPrice}
+                    </Text>
+                  </View>
                 </View>
-                                </View>
-
 
                 {/* Expand / Collapse Button */}
                 <TouchableOpacity onPress={() => toggleExpand(item.id)}>
@@ -123,15 +196,57 @@ const AboutMeScreen = () => {
               {/* Expanded Section */}
               {expandedId === item.id && (
                 <View style={styles.details}>
-                  <View style={styles.Textitems}>
-                    <Image source={item.details.detailsImage} style={[IconSize,{tintColor:null,width:RF(10)}]}/>
-                    <Text style={[TextBold,{color:'black'}]}>{item.details.status}</Text>
-                    <Text style={TextMedium}>{item.details.date}</Text>
+                  {item.id === 4 || item.id === 5 ? (
+                    <View style={styles.Textitems}>
+                      <Image
+                        source={item.details.detailsImage}
+                        style={[IconSize, { tintColor: TextClr, width: RF(10) }]}
+                      />
+                      <Text
+                        style={[TextBold, { color: 'black', flex: 1, marginLeft: RF(10) }]}
+                      >
+                        {item.details.delivered}
+                      </Text>
+                      <Text style={TextMedium}>{item.details.date}</Text>
+                    </View>
+                  ) : (
+                    <>
+                      <View style={styles.Textitems}>
+                        <Image source={item.details.detailsImage} style={[IconSize, { tintColor: null, width: RF(10) }]} />
+                        <Text style={[TextBold, { color: 'black', flex: 1, marginLeft: RF(10) }]}>{item.details.status}</Text>
+                        <Text style={TextMedium}>{item.details.date}</Text>
+                      </View>
 
-                  </View>
-                  </View>
+                      <View style={{ height: RF(95), width: RF(2), justifyContent: 'flex-start', position: 'absolute', left: RF(24), top: RF(35), backgroundColor: Secondary }} />
 
-                 
+                      <View style={styles.Textitems}>
+                        <Image source={item.details.detailsImage} style={[IconSize, { tintColor: null, width: RF(10) }]} />
+                        <Text style={[TextBold, { color: 'black', flex: 1, marginLeft: RF(10) }]}>{item.details.orderConfirm}</Text>
+                        <Text style={TextMedium}>{item.details.date2}</Text>
+                      </View>
+
+                      <View style={styles.Textitems}>
+                        <Image source={item.details.detailsImage} style={[IconSize, { tintColor: null, width: RF(10) }]} />
+                        <Text style={[TextBold, { color: 'black', flex: 1, marginLeft: RF(10) }]}>{item.details.orderShiped}</Text>
+                        <Text style={TextMedium}>{item.details.date2}</Text>
+                      </View>
+
+                      <View style={{ height: RF(95), width: RF(2), justifyContent: 'flex-start', position: 'absolute', left: RF(24), top: RF(135), backgroundColor: TextClr }} />
+
+                      <View style={styles.Textitems}>
+                        <Image source={item.details.detailsImage} style={[IconSize, { tintColor: TextClr, width: RF(10) }]} />
+                        <Text style={[TextBold, { color: TextClr, flex: 1, marginLeft: RF(10) }]}>{item.details.outOfDelivery}</Text>
+                        <Text style={TextMedium}>{item.details.pending}</Text>
+                      </View>
+
+                      <View style={styles.Textitems}>
+                        <Image source={item.details.detailsImage} style={[IconSize, { tintColor: TextClr, width: RF(10) }]} />
+                        <Text style={[TextBold, { color: TextClr, flex: 1, marginLeft: RF(10) }]}>{item.details.orderDelivered}</Text>
+                        <Text style={TextMedium}>{item.details.pending}</Text>
+                      </View>
+                    </>
+                  )}
+                </View>
               )}
             </View>
           )}
@@ -141,6 +256,7 @@ const AboutMeScreen = () => {
       </View>
     </View>
   );
+
 };
 
 export default AboutMeScreen;
@@ -178,7 +294,6 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingHorizontal: RF(10),
     paddingVertical: RF(10),
-    justifyContent: 'center',
     alignItems: 'center',
     gap: RF(8),
   },

@@ -15,7 +15,7 @@ const OrderSucessScreen = () => {
     const navigation = useNavigation();
     
       const backArrowHandle = () => {
-        navigation.navigate('HomeScreen');
+        navigation.navigate('NavBar');
       };
        const FilterHandle = () => {
         navigation.navigate('FilterScreen');

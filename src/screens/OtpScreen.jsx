@@ -7,6 +7,7 @@ import { ArrowDownIcon, EmailIcon, FlagIcon } from '../assets/Index';
 import InfoInput from '../components/Inputs/InfoInput';
 import Buttons from '../components/buttons/Buttons';
 import { White } from '../styles/colors/colorsCode';
+import { TextBold, TextRegular } from '../components/IconSize/Sizes';
 
 const OtpScreen = () => {
   const navigation = useNavigation();
@@ -15,7 +16,7 @@ const OtpScreen = () => {
     navigation.navigate('ForgetPasswordScreen');
   };
   const SendOtpScreenHandle = () => {
-    navigation.navigate('OtpScreen');
+    navigation.navigate('NavBar');
   };
 
   return (
@@ -42,10 +43,10 @@ const OtpScreen = () => {
           </View>
         </View>
 
-        <Buttons text={'Next '} onPress={SendOtpScreenHandle} />
+        <Buttons text={'Next'} onPress={SendOtpScreenHandle} />
 
-        <Text style={styles.newCode}>Did'nt recieve a new code ? (1:23)</Text>
-                <Text style={styles.resendCode}>Resend a new code (1:23)</Text>
+        <Text style={[TextRegular,{alignSelf:'center',fontSize:(15)}]}>Did'nt recieve a new code ?</Text>
+                <Text style={[TextBold,{fontSize:RF(15),color:'black',alignSelf:'center'}]}>Resend a new code (1:00)</Text>
 
       </View>
     </View>

@@ -25,7 +25,7 @@ const ForgetPasswordScreen = () => {
     <View style={{ flex: 1 }}>
       <HeadertText onPress={backArrowHandle} text="Password Recovery" />
       <View style={styles.Maincontainer}>
-        <Text style={styles.ForgotText}> Forgot Password</Text>
+        <Text style={styles.ForgotText}>Forgot Password</Text>
         <View style={styles.LoremText}>
           <Text style={styles.loremHeadings}>
             Lorem ipsum dolor sit amet, consetetur

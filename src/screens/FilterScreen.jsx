@@ -12,7 +12,7 @@ import { IconSize, TextBold, TextRegular } from '../components/IconSize/Sizes';
 const FilterScreen = () => {
     const navigation = useNavigation();
      const BackArrowHandle = ()=>{
-        navigation.navigate('HomeScreen')
+        navigation.navigate('NavBar')
      }
      const RefreshHandler = ()=>{
         navigation.navigate('FilterScreen')
@@ -23,7 +23,7 @@ const FilterScreen = () => {
       <HeadertText
         onPress={BackArrowHandle}
         tintColor={SimpleText}
-        text="My Address"
+        text="Apply Filters"
         Img={RefreshIcon}
         onClick={RefreshHandler}
       />
@@ -41,6 +41,7 @@ const FilterScreen = () => {
              placeholderTextColor='grey'
               width='47%'
               style={{backgroundColor:'#F4F5F9' , paddingLeft:RF(12)}}
+              keyboardType='numeric'
                />
 
               <TextInput
@@ -50,6 +51,8 @@ const FilterScreen = () => {
               color='black'
               width='47%'
               style={ {backgroundColor:'#F4F5F9' ,paddingLeft:RF(12)}}
+                            keyboardType='numeric'
+
             />
 
           </View>
