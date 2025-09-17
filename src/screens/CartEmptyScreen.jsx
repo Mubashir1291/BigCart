@@ -7,25 +7,26 @@ import { IconSize, TextBold, TextRegular } from '../components/IconSize/Sizes';
 import { RF } from '../Utils/Responsive';
 import { Secondary, SimpleText } from '../styles/colors/colorsCode';
 import Buttons from '../components/buttons/Buttons';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
-const OrderSucessScreen = () => {
+const CartEmptyScreen = () => {
 
     const navigation = useNavigation();
     
       const backArrowHandle = () => {
-        navigation.navigate('HomeScreen');
+        navigation.navigate('NavBar');
       };
-       const TrackOrderHandler = () => {
-        navigation.navigate('TrackOrderScreen');
+       const StartShoppingHandler = () => {
+        navigation.navigate('NavBar');
       };
   return (
+    <SafeAreaView  style={{flex:1 }}>
          
-        <View  style={{flex:1 }}>
 
         
        <View style={styles.MainContainer}>
-       <HeaderText onPress={backArrowHandle} text="Shopping Cart " />
+       <HeaderText navigation={navigation} text="Shopping Cart " />
        <View style ={styles.CenterContainer}>
 
         <Image  source={CartIcon} style={[IconSize,{width:RF(99),height:RF(115),tintColor:Secondary,marginBottom:RF(20)}]}/>
@@ -35,14 +36,14 @@ const OrderSucessScreen = () => {
          {'\n'} a few minutes.</Text>
 
      </View>
-              <Buttons onPress={TrackOrderHandler} text={'Start Shopping'}/>
+              <Buttons onPress={StartShoppingHandler} text={'Start Shopping'}/>
 
      </View>
-     </View>
+     </SafeAreaView>
   )
 }
 
-export default OrderSucessScreen
+export default CartEmptyScreen
 
 const styles = StyleSheet.create({
     MainContainer:{

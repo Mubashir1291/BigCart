@@ -6,10 +6,10 @@ import  {IconSize, TextMedium, TextSemiBold } from '../../components/IconSize/Si
 import { SimpleText } from '../../styles/colors/colorsCode';
 
 
-const HeaderText = ({text , onPress,Img , tintColor1 , tintColor2 , fontSize,onClick  }) => {
+const HeaderText = ({text , onPress,Img , tintColor1 , tintColor2 , fontSize,onClick  ,navigation}) => {
   return (
     <View style= {styles. CategoryPageContainer}>
-          <TouchableOpacity onPress={onPress}>
+          <TouchableOpacity onPress={()=>navigation.goBack()}>
           <Image source={BackIcon} style={[IconSize,{tintColor:tintColor1}]} />
           </TouchableOpacity>
       <Text style={[TextSemiBold,{color:'black',fontSize:RF(16)}]}>{text}</Text>

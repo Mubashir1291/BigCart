@@ -88,9 +88,10 @@ const ProductsImages = [
 ];
 import HeadertText from '../components/header/HeaderText';
 import Buttons from '../components/buttons/Buttons';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
-const FavItemScreen = () => {
+const CartScreen = () => {
   const navigation = useNavigation();
 
   const [listData, setListData] = useState(
@@ -108,13 +109,28 @@ const FavItemScreen = () => {
     navigation.navigate('ShippingMethodScreen');
   };
 
+   const [counts, setCounts] = useState({});
+  
+  
+
+  const increaseCount = id => {
+    setCounts(prev => ({ ...prev, [id]: (prev[id] || 1) + 1 }));
+  };
+
+  const decreaseCount = id => {
+    setCounts(prev => ({
+      ...prev,[id]: prev[id] > 1 ? prev[id] - 1 : 1,}));
+  };
+
   return (
-    <ScrollView style={styles.screenContainer}>
+    <SafeAreaView>
+      <ScrollView>
+    <View style={styles.screenContainer}>
       <View style={styles.HeaderContainer}>
        <View style={styles.CategoryPageContainer}>
            
          <HeadertText
-            onPress={backArrowHandle} 
+           navigation={navigation}
 
             text = "Shopping Cart"
           />
@@ -144,17 +160,16 @@ const FavItemScreen = () => {
                         <Text style={styles.productSize}>{item.Size}</Text>
                       </View>
                       <View style={{ gap: RF(5), alignItems: 'center' }}>
-                        <Image
-                          source={PlusIcon}
-                          style={[IconSize, { tintColor: Secondary }]}
-                        />
+                        <TouchableOpacity  onPress={() => increaseCount(item.id)}>
+                      
+                              <Image source={PlusIcon} style={[IconSize,{tintColor:Secondary}]}/>
+                      </TouchableOpacity>
                         <View>
-                          <Text style={styles.quantityBarText}>1</Text>
+                          <Text style={styles.quantityBarText}>{counts[item.id] || 1}</Text>
                         </View>
-                        <Image
-                          source={MinusIcon}
-                          style={[IconSize, { tintColor: Secondary }]}
-                        />
+                      <TouchableOpacity onPress={() => decreaseCount(item.id)}>
+                                  <Image source={MinusIcon} style={[IconSize,{tintColor:Secondary}]}/>
+                                  </TouchableOpacity>
                       </View>
                     </View>
                   </View>
@@ -215,12 +230,15 @@ const FavItemScreen = () => {
           </View>
                 <Buttons onPress={ CheckoutHandler} text={'Checkout'}/>
           </View>
+                    </View>
+
 
     </ScrollView>
+    </SafeAreaView>
   );
 };
 
-export default FavItemScreen;
+export default CartScreen;
 
 const styles = StyleSheet.create({
   screenContainer: {

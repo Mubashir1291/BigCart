@@ -14,6 +14,7 @@ import { Secondary, White } from '../styles/colors/colorsCode';
 import { RF } from '../Utils/Responsive';
 import { IconSize, TextBold, TextRegular } from '../components/IconSize/Sizes';
 import { useNavigation } from '@react-navigation/native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 const TransactionsArr = [
@@ -78,12 +79,12 @@ const TransactionScreen = () => {
   };
 
   return (
+    <SafeAreaView>
     <ScrollView>
     <View style={{ flex: 1 }}>
       <View style={styles.MainContainer}>
         <HeaderText
-          onPress={backArrowHandle}
-          text={'Transactions'}
+navigation={navigation}          text={'Transactions'}
           Img={HomeIcon}
           tintColor2={White}
         />
@@ -121,6 +122,7 @@ const TransactionScreen = () => {
       </View>
     </View>
     </ScrollView>
+    </SafeAreaView>
   );
 };
 

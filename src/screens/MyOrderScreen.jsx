@@ -5,6 +5,7 @@ import {
   Image,
   TouchableOpacity,
   FlatList,
+  ScrollView,
 } from 'react-native';
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
@@ -40,6 +41,7 @@ import {
   TextRegular,
   TextMedium,
 } from '../components/IconSize/Sizes';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 // ✅ Address Data with details inside
 const AddressDetailArr = [
@@ -57,13 +59,13 @@ const AddressDetailArr = [
       date2: 'Oct 20 2021',
       orderConfirm: 'Order Confirmed',
       orderShiped: 'Order Shipped',
-      outOfDelivery:'Out Of Delivery',
-      orderDelivered:'Order Delivered',
-      pending:'pending'
+      outOfDelivery: 'Out Of Delivery',
+      orderDelivered: 'Order Delivered',
+      pending: 'pending',
     },
   },
 
-   {
+  {
     id: 2,
     Image: OrderPlacedIcon,
     orderNum: 'Order #90897 ',
@@ -77,12 +79,12 @@ const AddressDetailArr = [
       date2: 'Oct 20 2021',
       orderConfirm: 'Order Confirmed',
       orderShiped: 'Order Shipped',
-      outOfDelivery:'Out Of Delivery',
-      orderDelivered:'Order Delivered',
-      pending:'pending'
+      outOfDelivery: 'Out Of Delivery',
+      orderDelivered: 'Order Delivered',
+      pending: 'pending',
     },
   },
-   {
+  {
     id: 3,
     Image: OrderPlacedIcon,
     orderNum: 'Order #90897 ',
@@ -96,13 +98,13 @@ const AddressDetailArr = [
       date2: 'Oct 20 2021',
       orderConfirm: 'Order Confirmed',
       orderShiped: 'Order Shipped',
-      outOfDelivery:'Out Of Delivery',
-      orderDelivered:'Order Delivered',
-      pending:'pending',
-      delivered: 'Order Delivered'
+      outOfDelivery: 'Out Of Delivery',
+      orderDelivered: 'Order Delivered',
+      pending: 'pending',
+      delivered: 'Order Delivered',
     },
   },
-   {
+  {
     id: 4,
     Image: OrderPlacedIcon,
     orderNum: 'Order #90897 ',
@@ -112,10 +114,10 @@ const AddressDetailArr = [
     details: {
       detailsImage: GreenCircleIcon,
       date: 'Oct 19 2021',
-      delivered: 'Order Delivered'
+      delivered: 'Order Delivered',
     },
   },
-   {
+  {
     id: 5,
     Image: OrderPlacedIcon,
     orderNum: 'Order #90897 ',
@@ -125,31 +127,31 @@ const AddressDetailArr = [
     details: {
       detailsImage: GreenCircleIcon,
       date: 'Oct 19 2021',
-      delivered: 'Order Delivered'
-
+      delivered: 'Order Delivered',
     },
   },
-  
 ];
 
 const AboutMeScreen = () => {
   const navigation = useNavigation();
   const [expandedId, setExpandedId] = useState(null);
 
-  const toggleExpand = (id) => {
+  const toggleExpand = id => {
     setExpandedId(expandedId === id ? null : id);
   };
 
   const BackArrowHandle = () => {
     navigation.navigate('UserProfileScreen');
   };
-    const FilterHandler = () => {
+  const FilterHandler = () => {
     navigation.navigate('FilterScreen');
   };
   return (
+    <SafeAreaView>
+    <ScrollView>
     <View style={{ flex: 1 }}>
       <HeadertText
-        onPress={BackArrowHandle}
+        navigation={navigation}
         tintColor={SimpleText}
         text="My Order"
         Img={FilterIcon}
@@ -168,17 +170,28 @@ const AboutMeScreen = () => {
                   style={styles.LocationCircleIconsizes}
                 />
                 <View style={styles.TextDetails}>
-                  <Text style={[TextBold, { color: SimpleText, fontSize: RF(15) }]}>
+                  <Text
+                    style={[TextBold, { color: SimpleText, fontSize: RF(15) }]}
+                  >
                     {item.orderNum}
                   </Text>
-                  <Text style={[TextRegular, { color: TextClr, fontSize: RF(10) }]}>
+                  <Text
+                    style={[TextRegular, { color: TextClr, fontSize: RF(10) }]}
+                  >
                     {item.placedTime}
                   </Text>
                   <View style={{ flexDirection: 'row', gap: RF(10) }}>
-                    <Text style={[TextMedium, { color: "black", fontSize: RF(10) }]}>
+                    <Text
+                      style={[TextMedium, { color: 'black', fontSize: RF(10) }]}
+                    >
                       {item.item}
                     </Text>
-                    <Text style={[TextSemiBold, { color: SimpleText, fontSize: RF(10) }]}>
+                    <Text
+                      style={[
+                        TextSemiBold,
+                        { color: SimpleText, fontSize: RF(10) },
+                      ]}
+                    >
                       {item.itemPrice}
                     </Text>
                   </View>
@@ -187,7 +200,9 @@ const AboutMeScreen = () => {
                 {/* Expand / Collapse Button */}
                 <TouchableOpacity onPress={() => toggleExpand(item.id)}>
                   <Image
-                    source={expandedId === item.id ? ScrollUpIcon : ScrollDownIcon}
+                    source={
+                      expandedId === item.id ? ScrollUpIcon : ScrollDownIcon
+                    }
                     style={[IconSize, { tintColor: Secondary }]}
                   />
                 </TouchableOpacity>
@@ -200,10 +215,16 @@ const AboutMeScreen = () => {
                     <View style={styles.Textitems}>
                       <Image
                         source={item.details.detailsImage}
-                        style={[IconSize, { tintColor: TextClr, width: RF(10) }]}
+                        style={[
+                          IconSize,
+                          { tintColor: TextClr, width: RF(10) },
+                        ]}
                       />
                       <Text
-                        style={[TextBold, { color: 'black', flex: 1, marginLeft: RF(10) }]}
+                        style={[
+                          TextBold,
+                          { color: 'black', flex: 1, marginLeft: RF(10) },
+                        ]}
                       >
                         {item.details.delivered}
                       </Text>
@@ -212,36 +233,112 @@ const AboutMeScreen = () => {
                   ) : (
                     <>
                       <View style={styles.Textitems}>
-                        <Image source={item.details.detailsImage} style={[IconSize, { tintColor: null, width: RF(10) }]} />
-                        <Text style={[TextBold, { color: 'black', flex: 1, marginLeft: RF(10) }]}>{item.details.status}</Text>
+                        <Image
+                          source={item.details.detailsImage}
+                          style={[IconSize, { tintColor: null, width: RF(10) }]}
+                        />
+                        <Text
+                          style={[
+                            TextBold,
+                            { color: 'black', flex: 1, marginLeft: RF(10) },
+                          ]}
+                        >
+                          {item.details.status}
+                        </Text>
                         <Text style={TextMedium}>{item.details.date}</Text>
                       </View>
 
-                      <View style={{ height: RF(95), width: RF(2), justifyContent: 'flex-start', position: 'absolute', left: RF(24), top: RF(35), backgroundColor: Secondary }} />
+                      <View
+                        style={{
+                          height: RF(95),
+                          width: RF(2),
+                          justifyContent: 'flex-start',
+                          position: 'absolute',
+                          left: RF(24),
+                          top: RF(35),
+                          backgroundColor: Secondary,
+                        }}
+                      />
 
                       <View style={styles.Textitems}>
-                        <Image source={item.details.detailsImage} style={[IconSize, { tintColor: null, width: RF(10) }]} />
-                        <Text style={[TextBold, { color: 'black', flex: 1, marginLeft: RF(10) }]}>{item.details.orderConfirm}</Text>
+                        <Image
+                          source={item.details.detailsImage}
+                          style={[IconSize, { tintColor: null, width: RF(10) }]}
+                        />
+                        <Text
+                          style={[
+                            TextBold,
+                            { color: 'black', flex: 1, marginLeft: RF(10) },
+                          ]}
+                        >
+                          {item.details.orderConfirm}
+                        </Text>
                         <Text style={TextMedium}>{item.details.date2}</Text>
                       </View>
 
                       <View style={styles.Textitems}>
-                        <Image source={item.details.detailsImage} style={[IconSize, { tintColor: null, width: RF(10) }]} />
-                        <Text style={[TextBold, { color: 'black', flex: 1, marginLeft: RF(10) }]}>{item.details.orderShiped}</Text>
+                        <Image
+                          source={item.details.detailsImage}
+                          style={[IconSize, { tintColor: null, width: RF(10) }]}
+                        />
+                        <Text
+                          style={[
+                            TextBold,
+                            { color: 'black', flex: 1, marginLeft: RF(10) },
+                          ]}
+                        >
+                          {item.details.orderShiped}
+                        </Text>
                         <Text style={TextMedium}>{item.details.date2}</Text>
                       </View>
 
-                      <View style={{ height: RF(95), width: RF(2), justifyContent: 'flex-start', position: 'absolute', left: RF(24), top: RF(135), backgroundColor: TextClr }} />
+                      <View
+                        style={{
+                          height: RF(95),
+                          width: RF(2),
+                          justifyContent: 'flex-start',
+                          position: 'absolute',
+                          left: RF(24),
+                          top: RF(135),
+                          backgroundColor: TextClr,
+                        }}
+                      />
 
                       <View style={styles.Textitems}>
-                        <Image source={item.details.detailsImage} style={[IconSize, { tintColor: TextClr, width: RF(10) }]} />
-                        <Text style={[TextBold, { color: TextClr, flex: 1, marginLeft: RF(10) }]}>{item.details.outOfDelivery}</Text>
+                        <Image
+                          source={item.details.detailsImage}
+                          style={[
+                            IconSize,
+                            { tintColor: TextClr, width: RF(10) },
+                          ]}
+                        />
+                        <Text
+                          style={[
+                            TextBold,
+                            { color: TextClr, flex: 1, marginLeft: RF(10) },
+                          ]}
+                        >
+                          {item.details.outOfDelivery}
+                        </Text>
                         <Text style={TextMedium}>{item.details.pending}</Text>
                       </View>
 
                       <View style={styles.Textitems}>
-                        <Image source={item.details.detailsImage} style={[IconSize, { tintColor: TextClr, width: RF(10) }]} />
-                        <Text style={[TextBold, { color: TextClr, flex: 1, marginLeft: RF(10) }]}>{item.details.orderDelivered}</Text>
+                        <Image
+                          source={item.details.detailsImage}
+                          style={[
+                            IconSize,
+                            { tintColor: TextClr, width: RF(10) },
+                          ]}
+                        />
+                        <Text
+                          style={[
+                            TextBold,
+                            { color: TextClr, flex: 1, marginLeft: RF(10) },
+                          ]}
+                        >
+                          {item.details.orderDelivered}
+                        </Text>
                         <Text style={TextMedium}>{item.details.pending}</Text>
                       </View>
                     </>
@@ -250,13 +347,14 @@ const AboutMeScreen = () => {
               )}
             </View>
           )}
-          keyExtractor={(item) => item.id.toString()}
+          keyExtractor={item => item.id.toString()}
           contentContainerStyle={{ gap: RF(10) }}
         />
       </View>
     </View>
+    </ScrollView>
+    </SafeAreaView>
   );
-
 };
 
 export default AboutMeScreen;
@@ -303,5 +401,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: RF(10),
   },
-  
 });

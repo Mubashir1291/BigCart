@@ -8,6 +8,7 @@ import { RF } from '../Utils/Responsive';
 import { LightGrey, LinkClr, MidGrey, Secondary, SimpleText, TextClr, White } from '../styles/colors/colorsCode';
 import Buttons from '../components/buttons/Buttons';
 import {AirbnbRating,Rating} from 'react-native-ratings';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 const ReviewArr =[
@@ -24,12 +25,13 @@ const OrderSucessScreen = () => {
     const navigation = useNavigation();
     
       const backArrowHandle = () => {
-        navigation.navigate('HomeScreen');
+        navigation.navigate('ProducDetailsScreen');
       };
-       const StartShoppingHandle = () => {
-        navigation.navigate('HomeScreen');
+       const WriteReviewHandle = () => {
+        navigation.navigate('WriteReviewScreen');
       };
   return (
+    <SafeAreaView>
     <ScrollView>
          
         <View  style={{flex:1, paddingHorizontal:RF(10)}}>
@@ -38,9 +40,10 @@ const OrderSucessScreen = () => {
 
         <View style={styles.MainContainer}>
               <HeaderText
-        onPress={backArrowHandle}
+       navigation={navigation}
         text={'Write Reviews'}
         Img={AddIcon}
+        onClick={WriteReviewHandle}
          />
 
          <FlatList
@@ -85,6 +88,7 @@ const OrderSucessScreen = () => {
             </View>
 
       </ScrollView>
+      </SafeAreaView>
   )
 }
 

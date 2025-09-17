@@ -7,6 +7,7 @@ import HeadertText from '../components/header/HeaderText';
 import { EmailIcon } from '../assets/Index';
 import InfoInput from '../components/Inputs/InfoInput'
 import Buttons from '../components/buttons/Buttons';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 
@@ -22,8 +23,8 @@ const ForgetPasswordScreen = () => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
-      <HeadertText onPress={backArrowHandle} text="Password Recovery" />
+    <SafeAreaView style={{ flex: 1 }}>
+      <HeadertText navigation={navigation} text="Password Recovery" />
       <View style={styles.Maincontainer}>
         <Text style={styles.ForgotText}>Forgot Password</Text>
         <View style={styles.LoremText}>
@@ -46,7 +47,7 @@ const ForgetPasswordScreen = () => {
 
 
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

@@ -5,6 +5,7 @@ import {
   Image,
   TouchableOpacity,
   FlatList,
+  ScrollView,
 } from 'react-native';
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
@@ -12,13 +13,8 @@ import { RF } from '../Utils/Responsive';
 import HeadertText from '../components/header/HeaderText';
 import {
   UserIcon,
-  AddressIcon,
-  ZipCodeIcon,
-  CityIcon,
-  CountryIcon,
-  TeleIcon,
+ 
   AddIcon,
-  LocationCircleIcon,
   ScrollDownIcon,
   ScrollUpIcon,
   MasterIcon,
@@ -41,6 +37,7 @@ import {
   TextRegular,
   TextMedium,
 } from '../components/IconSize/Sizes';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 // ✅ Address Data with details inside
 const AddressDetailArr = [
@@ -102,10 +99,11 @@ const AboutMeScreen = () => {
   };
 
   return (
+    <SafeAreaView>
+    <ScrollView>
     <View style={{ flex: 1 }}>
       <HeadertText
-        onPress={BackArrowHandle}
-        tintColor={SimpleText}
+navigation={navigation}        tintColor={SimpleText}
         text="My Cards"
         Img={AddIcon}
         onClick={AddCardHandler}
@@ -217,6 +215,8 @@ const AboutMeScreen = () => {
         />
       </View>
     </View>
+    </ScrollView>
+    </SafeAreaView>
   );
 };
 

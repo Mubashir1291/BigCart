@@ -7,6 +7,7 @@ import { AppLogo,  Slide1, Slide2, Slide3, Slide4 } from '../assets/Index';
 import { RF } from '../Utils/Responsive';
 import LinearGradient from 'react-native-linear-gradient';
 import { TextMedium } from '../components/IconSize/Sizes';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 
@@ -21,7 +22,7 @@ const OnBoard1 = () => {
     };
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <Swiper
                 autoplay={true}
                 showsButtons={false}
@@ -89,7 +90,7 @@ const OnBoard1 = () => {
                        </TouchableOpacity>
 
            
-        </View>
+        </SafeAreaView>
     );
 };
 

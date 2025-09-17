@@ -32,6 +32,8 @@ import Swiper from 'react-native-swiper';
 import { useNavigation } from '@react-navigation/native';
 import { IconSize, TextSemiBold } from '../components/IconSize/Sizes';
 import { SwipeListView } from 'react-native-swipe-list-view';
+import HeaderText from '../components/header/HeaderText';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const ProductsImages = [
   {
@@ -105,13 +107,28 @@ const FavItemScreen = () => {
     navigation.navigate('VegitableScreen');
   };
 
+  const [counts, setCounts] = useState({});
+    
+    
+  
+    const increaseCount = id => {
+      setCounts(prev => ({ ...prev, [id]: (prev[id] || 1) + 1 }));
+    };
+  
+    const decreaseCount = id => {
+      setCounts(prev => ({
+        ...prev,[id]: prev[id] > 1 ? prev[id] - 1 : 1,}));
+    };
+
   return (
-    <ScrollView style={styles.screenContainer}>
+    <SafeAreaView>
+    <ScrollView>
+    <View style={styles.screenContainer}>
       <View style={styles.HeaderContainer}>
-        <Text style={[TextSemiBold, { color: 'black', fontSize: RF(15) }]}>
-          {' '}
-          Favorites{' '}
-        </Text>
+       <HeaderText
+       navigation={navigation}
+       text={'Favorites'}
+       />
       </View>
 
       <View style={styles.SwipeListContainer}>
@@ -137,23 +154,23 @@ const FavItemScreen = () => {
                         <Text style={styles.productSize}>{item.Size}</Text>
                       </View>
                       <View style={{ gap: RF(5), alignItems: 'center' }}>
-                        <Image
-                          source={PlusIcon}
-                          style={[IconSize, { tintColor: Secondary }]}
-                        />
+                        <TouchableOpacity onPress={() => increaseCount(item.id)}>
+                                           <Image source={PlusIcon} style={styles.MinusBar} />
+                                         </TouchableOpacity>
                         <View>
-                          <Text style={styles.quantityBarText}>1</Text>
+                          <Text style={styles.quantityBarText}>{counts[item.id] || 1}
+</Text>
                         </View>
-                        <Image
-                          source={MinusIcon}
-                          style={[IconSize, { tintColor: Secondary }]}
-                        />
+                        <TouchableOpacity onPress={() => decreaseCount(item.id)}>
+                                           <Image source={MinusIcon} style={styles.MinusBar} />
+                                         </TouchableOpacity>
                       </View>
                     </View>
                   </View>
                 </View>
               </View>
             </View>
+            
           )}
           renderHiddenItem={({ item, rowMap }) => (
             <View style={styles.rowBack}>
@@ -172,7 +189,9 @@ const FavItemScreen = () => {
           contentContainerStyle={{ gap: RF(10), paddingBottom: RF(20) }}
         />
       </View>
-    </ScrollView>
+            </View>
+</ScrollView>
+</SafeAreaView>
   );
 };
 

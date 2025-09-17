@@ -8,6 +8,7 @@ import { RF } from '../Utils/Responsive';
 import { LightGrey, LinkClr, MidGrey, Secondary, SimpleText, TextClr, White } from '../styles/colors/colorsCode';
 import Buttons from '../components/buttons/Buttons';
 import {AirbnbRating,Rating} from 'react-native-ratings';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 const OrderSucessScreen = () => {
@@ -18,9 +19,10 @@ const OrderSucessScreen = () => {
         navigation.navigate('HomeScreen');
       };
        const StartShoppingHandle = () => {
-        navigation.navigate('HomeScreen');
+        navigation.navigate('NavBar');
       };
   return (
+    <SafeAreaView>
     <ScrollView>
          
         <View  style={{flex:1, paddingHorizontal:RF(10)}}>
@@ -28,8 +30,8 @@ const OrderSucessScreen = () => {
       
 
         <View style={styles.MainContainer}>
-              <HeaderText
-        onPress={backArrowHandle}
+              <HeaderText navigation={navigation}
+        
         text={'Write Reviews'}
          />
 
@@ -83,6 +85,7 @@ the stars below</Text>
 
       </View>
       </ScrollView>
+      </SafeAreaView>
   )
 }
 
@@ -105,11 +108,10 @@ const styles = StyleSheet.create({
 
  paragraph:{
     width:'100%',
-    padding:RF(10),
     backgroundColor:White,
     flexDirection:'row',
     height:RF(150),
     marginTop:RF(30),
-    alignItems: 'flex-start',
+    alignItems: 'center',
     }
 })

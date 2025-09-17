@@ -8,6 +8,7 @@ import { ArrowDownIcon, EmailIcon, FlagIcon } from '../assets/Index';
 import InfoInput from '../components/Inputs/InfoInput';
 import Buttons from '../components/buttons/Buttons';
 import { White } from '../styles/colors/colorsCode';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 
@@ -23,8 +24,8 @@ const VerifyNumberScreen = () => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
-      <HeadertText onPress={backArrowHandle} text="Verify Number" />
+    <SafeAreaView style={{ flex: 1 }}>
+      <HeadertText navigation={navigation} text="Verify Number" />
       <View style={styles.Maincontainer}>
         <Text style={styles.ForgotText}>Verify your number</Text>
         <View style={styles.LoremText}>
@@ -67,7 +68,7 @@ const VerifyNumberScreen = () => {
 
 
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

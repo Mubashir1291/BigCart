@@ -1,12 +1,12 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { View, Image } from 'react-native';
-import { Primary, SimpleText, White } from '../styles/colors/colorsCode';
+import { MidGrey, Primary, SimpleText, TextClr, White } from '../styles/colors/colorsCode';
 import { CartIcon, GreenCartIcon, HeartIcon, HomeIcon, SignUpIcon, UserIcon } from '../assets/Index';
 import UserProfileScreen from './UserProfileScreen';
 import FavItemScreen from './FavItemScreen';
 import Homescreen from "./HomeScreen";
-import ShippingScreen from "./ShippingScreen";
+import CartEmptyScreen from "./CartEmptyScreen";
 import { RF } from '../Utils/Responsive';
 import { useState } from 'react';
 
@@ -110,8 +110,8 @@ const Tabs = () => {
                 }}
             />
            <Tab.Screen
-                name="ShippingScreen"
-                component={ShippingScreen}
+                name="CartEmptyScreen"
+                component={CartEmptyScreen}
                 options={{
                     tabBarIcon: ({ focused }) => (
                         <View style={{ alignItems: 'center', justifyContent:'center',
@@ -126,7 +126,7 @@ const Tabs = () => {
                                 style={{
                                     height:focused?  RF(25) : RF(25),
                                     width: focused?  RF(25):RF(25),
-                                    tintColor: focused ? White : null,
+                                    tintColor: focused ? White : TextClr,
 
                                 }}
                             />

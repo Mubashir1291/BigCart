@@ -30,6 +30,7 @@ import InfoInput from '../components/Inputs/InfoInput';
 import Buttons from '../components/buttons/Buttons';
 import { LightGrey, MidGrey, Primary, Secondary, SimpleText, TextClr, White } from '../styles/colors/colorsCode';
 import { IconSize, TextMedium, TextSemiBold } from '../components/IconSize/Sizes';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 
@@ -42,27 +43,22 @@ const ShippmentAddressScreen = () => {
 
 
   const BackArrowHandle = () => {
-    navigation.navigate('UserProfileScreen');
+    navigation.navigate('ShippingMethodScreen');
   };
 
   const AddAddressHandle = () => {
-    Alert.alert(
-      "Address",
-      "Address Added",
-      [
-        { text: "OK", onPress: () => navigation.navigate('AboutMeScreen') }
-      ]
-    );
+    navigation.navigate('PaymentMethodScreen') 
+   
   };
 
   return (
+    <SafeAreaView>
     <ScrollView>
     <View style={{ flex: 1 }}>
 
        <View style={styles.HeaderContainer}>
         <HeadertText
-          onPress={BackArrowHandle}
-          tintColor1={'black'}
+navigation={navigation}          tintColor1={'black'}
           text="Shipping Address"
           Img={FilterIcon}
           tintColor2={White}
@@ -148,13 +144,14 @@ const ShippmentAddressScreen = () => {
                        <Text style={[TextMedium,{color:'black'}]}>Save this address</Text>
                        </View>
         {/* Add Button */}
-        <Buttons onPress={AddAddressHandle} text={'Add Address'} />
+        <Buttons onPress={AddAddressHandle} text={'Next'} />
 
      </View>
 
         
       </View>
       </ScrollView>
+      </SafeAreaView>
   );
 };
 

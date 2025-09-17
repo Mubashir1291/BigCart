@@ -8,7 +8,7 @@ import {
   ImageBackground,
   TextInput,
   ScrollView,
-  Alert
+  Alert,
 } from 'react-native';
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
@@ -50,10 +50,11 @@ import {
   TextMedium,
 } from '../components/IconSize/Sizes';
 import InfoInput from '../components/Inputs/InfoInput';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 // ✅ Address Data with details inside
 
-const AboutMeScreen = () => {
+const AddCardScreen = () => {
   const navigation = useNavigation();
   const [expandedId, setExpandedId] = useState(null);
 
@@ -67,110 +68,115 @@ const AboutMeScreen = () => {
   const AddCardHandler = () => {
     navigation.navigate('AddCardScreen');
   };
-    const Backtoscreen = () => {
+  const Backtoscreen = () => {
     navigation.navigate('AddCardScreen');
   };
   const AddCreditHandler = () => {
-  Alert.alert("Success", "Your card has been added!");
-      { text: "OK", onPress=(Backtoscreen)}
-};
+    Alert.alert('Success', 'Your card has been added!');
+    {
+      text: 'OK', (onPress = Backtoscreen);
+    }
+  };
 
   const [name, setName] = useState('');
-    const [number, setNumber] = useState('');
-
-      const [date, setDate] = useState('');
-
+  const [number, setNumber] = useState('');
+  const [date, setDate] = useState('');
 
   return (
+    <SafeAreaView>
     <ScrollView>
-    <View style={{ flex: 1}}>
-         <HeadertText
-        onPress={BackArrowHandle}
-        tintColor={SimpleText}
-        text="Add Credit Card"
-        Img={AddIcon}
-        tintColor2={White}
-        onClick={AddCardHandler}
-      />
-    
-      <View style={styles.Maincontainer}>
-         
-        <View style={styles.CardContainer}>
-            <ImageBackground source ={RectangleIcon} style={styles.CardImage}>
-                <Image source={Masterlogo} style={[IconSize,{tintColor:null,width:RF(84),height:RF(84)}]}/>
-                <Text style={[TextMedium,{color:White, marginLeft:RF(5),fontSize:RF(15)}]}>  {number ? number : "XXXX XXXX XXXX 8790"}
-</Text>
-                <View style={styles.TextContainer}>
+      <View style={{ flex: 1 }}>
+        <HeadertText
+navigation={navigation}         
+ tintColor={SimpleText}
+          text="Add Credit Card"
+          Img={AddIcon}
+          tintColor2={White}
+          onClick={AddCardHandler}
+        />
 
-                <View >
-
-                    <Text style={[TextMedium,{color:White }]}>Card Holder</Text>
-                   <Text style={[TextMedium,{color:White}]}>{name ? name : "Russel"}</Text>     
+        <View style={styles.Maincontainer}>
+          <View style={styles.CardContainer}>
+            <ImageBackground source={RectangleIcon} style={styles.CardImage}>
+              <Image
+                source={Masterlogo}
+                style={[
+                  IconSize,
+                  { tintColor: null, width: RF(84), height: RF(84) },
+                ]}
+              />
+              <Text
+                style={[
+                  TextMedium,
+                  { color: White, marginLeft: RF(5), fontSize: RF(15) },
+                ]}
+              >
+                {' '}
+                {number ? number : 'XXXX XXXX XXXX 8790'}
+              </Text>
+              <View style={styles.TextContainer}>
+                <View>
+                  <Text style={[TextMedium, { color: White }]}>
+                    Card Holder
+                  </Text>
+                  <Text style={[TextMedium, { color: White }]}>
+                    {name ? name : 'Russel'}
+                  </Text>
                 </View>
 
-                 <View >
-
-                    <Text style={[TextMedium,{color:White}]}>Expire </Text>
-                   <Text style={[TextMedium,{color:White}]}>{date ? date : "01/22"}</Text>     
+                <View>
+                  <Text style={[TextMedium, { color: White }]}>Expire </Text>
+                  <Text style={[TextMedium, { color: White }]}>
+                    {date ? date : '01/22'}
+                  </Text>
                 </View>
-                </View>
-
-
+              </View>
             </ImageBackground>
-
-
-
-
-        </View>
-        <View style={styles.details}>
+          </View>
+          <View style={styles.details}>
+            <InfoInput
+              Img={UserIcon}
+              style={IconSize}
+              placeholder={'Card Holder Name'}
+              value={name}
+              onChange={name => setName(name)}
+            />
 
             <InfoInput
-            Img={UserIcon} style={IconSize}
-            placeholder={'Card Holder Name'}
-              value={name}
-            onChange={(name)=> setName(name)}
-            />
-
-          <InfoInput
-            Img={CardIcon} style={IconSize}
-            placeholder={'Card Card Number'}
-            value={number}
-            onChange={(number)=> setNumber(number)}
+              Img={CardIcon}
+              style={IconSize}
+              placeholder={'Card Card Number'}
+              value={number}
+              onChange={number => setNumber(number)}
             />
             <View style={styles.rowContainer}>
-            <View style={{flex: 1, marginLeft: RF(5)}}>
-          
-            <InfoInput 
-            Img={CalndarIcon} style={IconSize}
-            placeholder={'Month / Year'}
-              value={date}
-              onChange={(date)=> setDate(date)}
-            />
+              <View style={{ flex: 1, marginLeft: RF(5) }}>
+                <InfoInput
+                  Img={CalndarIcon}
+                  style={IconSize}
+                  placeholder={'Month / Year'}
+                  value={date}
+                  onChange={date => setDate(date)}
+                />
+              </View>
+              <View style={{ flex: 1, marginLeft: RF(5) }}>
+                <InfoInput
+                  Img={PasswordIcon}
+                  style={IconSize}
+                  placeholder={'CCV'}
+                />
+              </View>
             </View>
-            <View style={{flex: 1, marginLeft: RF(5)}}>
-
-
-            <InfoInput 
-            Img={PasswordIcon} style={IconSize}
-            placeholder={'CCV'}
-            />
-            </View>
-            </View>
-
-           
+          </View>
         </View>
-
+        <Buttons onPress={AddCreditHandler} text={'Add Credit Card'} />
       </View>
-    <Buttons onPress={AddCreditHandler} text={'Add Credit Card'}/>
-
-
-
-    </View>
     </ScrollView>
+    </SafeAreaView>
   );
 };
 
-export default AboutMeScreen;
+export default AddCardScreen;
 
 const styles = StyleSheet.create({
   Maincontainer: {
@@ -179,32 +185,26 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     paddingTop: RF(30),
     paddingHorizontal: RF(10),
-
   },
 
-  CardContainer:{
-
-    width:'100%',
-    height:RF(180),
-    backgroundColor :White,
-    borderRadius:RF(13),
-    alignItems:'center',
-    justifyContent:'center',
-    backgroundColor:Secondary
-
-
+  CardContainer: {
+    width: '100%',
+    height: RF(180),
+    backgroundColor: White,
+    borderRadius: RF(13),
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Secondary,
   },
- CardImage:{
-
-   width:'100%',
-     height:RF(160),
-
-   },
-   TextContainer:{
-    flexDirection:'row',
-    justifyContent:'space-between',
-    paddingHorizontal:RF(15)
-   },
+  CardImage: {
+    width: '100%',
+    height: RF(160),
+  },
+  TextContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: RF(15),
+  },
   DetailCard: {
     backgroundColor: White,
     flexDirection: 'row',
@@ -252,7 +252,7 @@ const styles = StyleSheet.create({
     gap: RF(10),
   },
   rowContainer: {
-  flexDirection: 'row',
-  width: '100%',
-},
+    flexDirection: 'row',
+    width: '100%',
+  },
 });

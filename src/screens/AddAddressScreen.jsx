@@ -5,7 +5,8 @@ import {
   Alert,
   Image,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
+  ScrollView
 } from 'react-native';
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
@@ -27,11 +28,12 @@ import InfoInput from '../components/Inputs/InfoInput';
 import Buttons from '../components/buttons/Buttons';
 import { SimpleText } from '../styles/colors/colorsCode';
 import { IconSize, TextSemiBold } from '../components/IconSize/Sizes';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 
 
-const AboutMeScreen = () => {
+const AddAddresScreen = () => {
   const navigation = useNavigation();
 
 
@@ -51,8 +53,10 @@ const AboutMeScreen = () => {
   };
 
   return (
+    <SafeAreaView>
+    <ScrollView>
     <View style={{ flex: 1 }}>
-      <HeadertText onPress={BackArrowHandle} text="Add Address" />
+      <HeadertText navigation={navigation} text="Add Address" />
       <View style={styles.Maincontainer}>
         
          <View style={{ gap: RF(5) }}>
@@ -61,9 +65,9 @@ const AboutMeScreen = () => {
           </Text>
           <InfoInput Img={UserIcon} placeholder={'Name'} />
           <InfoInput Img={EmailIcon} placeholder={'Email address'} />
-          <InfoInput Img={TeleIcon} placeholder={'Phone number'} />
+          <InfoInput Img={TeleIcon} placeholder={'Phone number'} keyboardType={'numeric'} />
             <InfoInput Img={AddressIcon} placeholder={'Address'} />
-          <InfoInput Img={ZipCodeIcon} placeholder={'Zip code'} />
+          <InfoInput Img={ZipCodeIcon} placeholder={'Zip code'} keyboardType={'numeric'} />
           <InfoInput Img={CityIcon} placeholder={'City'} />
           <InfoInput Img={CountryIcon} placeholder={'Country'} />
 
@@ -75,10 +79,12 @@ const AboutMeScreen = () => {
 
         
       </View>
+      </ScrollView>
+      </SafeAreaView>
   );
 };
 
-export default AboutMeScreen;
+export default AddAddresScreen;
 
 const styles = StyleSheet.create({
   Maincontainer: {

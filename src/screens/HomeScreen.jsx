@@ -47,6 +47,7 @@ import {
 import React, { useState } from 'react';
 import Swiper from 'react-native-swiper';
 import { useNavigation } from '@react-navigation/native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const CategoriesImages = [
   { id: '1', source: CatIconvegitable, color: '#E6F2EA', name: 'Vegetables' },
@@ -114,6 +115,17 @@ const ProductsImages = [
 
 const HomeScreen = () => {
   const navigation = useNavigation();
+  const [counts, setCounts] = useState({});
+
+
+  const increaseCount = id => {
+    setCounts(prev => ({ ...prev, [id]: (prev[id] || 1) + 1 }));
+  };
+
+  const decreaseCount = id => {
+    setCounts(prev => ({
+      ...prev,[id]: prev[id] > 1 ? prev[id] - 1 : 1,}));
+  };
 
   const [Heart, setHeart] = useState([]);
 
@@ -127,20 +139,19 @@ const HomeScreen = () => {
   const SearchScreenHandle = () => {
     navigation.navigate('SearchScreen');
   };
-    const FilterScreenHandle = () => {
+  const FilterScreenHandle = () => {
     navigation.navigate('FilterScreen');
   };
 
-
   return (
+    <SafeAreaView>
     <ScrollView>
       <View style={styles.MainContainer}>
         {/* Search Bar */}
         <View style={styles.SearchInputContainer}>
           <TouchableOpacity onPress={SearchScreenHandle}>
-          <Image source={SearchIcon} style={styles.searchIcon} />
-                    </TouchableOpacity>
-
+            <Image source={SearchIcon} style={styles.searchIcon} />
+          </TouchableOpacity>
 
           <TextInput
             style={styles.searchInput}
@@ -149,7 +160,7 @@ const HomeScreen = () => {
             color={'black'}
           />
           <TouchableOpacity onPress={FilterScreenHandle}>
-          <Image source={FilterIcon} style={styles.filterIcon} />
+            <Image source={FilterIcon} style={styles.filterIcon} />
           </TouchableOpacity>
         </View>
 
@@ -171,24 +182,20 @@ const HomeScreen = () => {
             activeDot={<View style={styles.activeDotStyle} />}
             paginationStyle={styles.paginationStyle}
           >
-            <ImageBackground  source={HomeBackGround}
-              style={styles.mainBannerImage}>
-             
-              
-                <View style={styles.offtextView}>
-                
-                 <Text style={styles.offtext}> 20% Off on your</Text>
-                  <Text style={styles.offtext}> first purchase </Text>
-                  
-                   </View>
-               
-              
+            <ImageBackground
+              source={HomeBackGround}
+              style={styles.mainBannerImage}
+            >
+              <View style={styles.offtextView}>
+                <Text style={styles.offtext}> 20% Off on your</Text>
+                <Text style={styles.offtext}> first purchase </Text>
+              </View>
             </ImageBackground>
 
             <ImageBackground
               source={homebackImage}
               style={styles.mainBannerImage}
-          />
+            />
           </Swiper>
         </View>
 
@@ -244,7 +251,12 @@ const HomeScreen = () => {
           <FlatList
             data={ProductsImages}
             renderItem={({ item }) => (
-              <TouchableOpacity onPress={()=>navigation.navigate("ProductDetailsScreen",{Detail:item})} style={styles.productCardWrapper}>
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate('ProductDetailsScreen', { Detail: item })
+                }
+                style={styles.productCardWrapper}
+              >
                 <View style={styles.productCard}>
                   <View style={[styles.NewTagWrapper]}>
                     <Text style={styles.NewTagTextWrapper}> New</Text>
@@ -253,9 +265,9 @@ const HomeScreen = () => {
                   <TouchableOpacity
                     onPress={() => {
                       if (Heart.includes(item.id)) {
-                        setHeart(Heart.filter(id => id !== item.id)); // remove if already favorited
+                        setHeart(Heart.filter(id => id !== item.id));
                       } else {
-                        setHeart([...Heart, item.id]); // add to favorites
+                        setHeart([...Heart, item.id]);
                       }
                     }}
                   >
@@ -282,11 +294,19 @@ const HomeScreen = () => {
                   <Text style={styles.productSize}>{item.Size}</Text>
                 </View>
                 <View style={styles.quantityBar}>
-                  <Image source={MinusIcon} style={styles.MinusBar} />
+                  <TouchableOpacity onPress={() => decreaseCount(item.id)}>
+                    <Image source={MinusIcon} style={styles.MinusBar} />
+                  </TouchableOpacity>
+
                   <View>
-                    <Text style={styles.quantityBarText}>1</Text>
+                    <Text style={styles.quantityBarText}>
+                      {counts[item.id] || 1}
+                    </Text>
                   </View>
-                  <Image source={PlusIcon} style={styles.MinusBar} />
+
+                  <TouchableOpacity onPress={() => increaseCount(item.id)}>
+                    <Image source={PlusIcon} style={styles.MinusBar} />
+                  </TouchableOpacity>
                 </View>
               </TouchableOpacity>
             )}
@@ -303,6 +323,7 @@ const HomeScreen = () => {
         </View>
       </View>
     </ScrollView>
+    </SafeAreaView>
   );
 };
 
@@ -354,8 +375,8 @@ const styles = StyleSheet.create({
     borderRadius: RF(10),
     marginTop: RF(20),
     alignSelf: 'center',
-    justifyContent:'center',
-    resizeMode:"contain"
+    justifyContent: 'center',
+    resizeMode: 'contain',
   },
   sectionHeader: {
     flexDirection: 'row',
@@ -485,7 +506,8 @@ const styles = StyleSheet.create({
   },
   HeartWrapper: {
     width: '100%',
-    alignSelf: 'flex-end',
+    position: 'absolute',
+    left: RF(50),
   },
   dotStyle: {
     backgroundColor: 'rgba(0,0,0,.2)',
@@ -505,17 +527,16 @@ const styles = StyleSheet.create({
   },
   paginationStyle: {
     position: 'absolute',
-    alignSelf:'flex-start'
+    alignSelf: 'flex-start',
   },
 
-  offtextView:{
+  offtextView: {
     paddingLeft: RF(25),
-    paddingTop:RF(70)
+    paddingTop: RF(70),
   },
-    offtext: {
+  offtext: {
     fontFamily: 'Poppins-Bold',
     fontSize: RF(14),
-    justifyContent:'flex-start',
-
+    justifyContent: 'flex-start',
   },
 });

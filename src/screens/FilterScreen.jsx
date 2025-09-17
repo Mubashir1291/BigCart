@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View,TextInput,Image } from 'react-native'
+import { StyleSheet, Text, View,TextInput,Image, ScrollView } from 'react-native'
 import React from 'react'
 import { RF } from '../Utils/Responsive'
 import HeadertText from '../components/header/HeaderText';
@@ -6,6 +6,8 @@ import { useNavigation } from '@react-navigation/native';
 import { SimpleText, White } from '../styles/colors/colorsCode';
 import { CheckIcon, DeliveryIcon, DiscountIcon, RefreshIcon, ShippmentIcon, StarIcon} from '../assets/Index';
 import { IconSize, TextBold, TextRegular } from '../components/IconSize/Sizes';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import Buttons from '../components/buttons/Buttons';
 
 
 
@@ -17,12 +19,17 @@ const FilterScreen = () => {
      const RefreshHandler = ()=>{
         navigation.navigate('FilterScreen')
      }
+        const ApplyFilter = ()=>{
+        navigation.navigate('FilterScreen')
+     }
 
   return (
+    <SafeAreaView>
+    <ScrollView>
     <View style={{flex:1}}>
       <HeadertText
-        onPress={BackArrowHandle}
-        tintColor={SimpleText}
+navigation={navigation}        
+tintColor={SimpleText}
         text="Apply Filters"
         Img={RefreshIcon}
         onClick={RefreshHandler}
@@ -109,9 +116,13 @@ const FilterScreen = () => {
 
 
       </View>
+      
+      <Buttons onPress={ApplyFilter} text={'Apply Filter'}/>
               </View>
 
     </View>
+    </ScrollView>
+    </SafeAreaView>
   )
 }
 
@@ -170,7 +181,7 @@ starsContainer:{
    justifyContent:'center', 
    marginTop:RF(5) ,
    backgroundColor:White,
-   padding:RF(5)
+   padding:RF(5),
 
      },
       OtherDetailContainer:{

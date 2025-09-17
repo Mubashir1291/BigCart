@@ -14,6 +14,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Secondary,Primary } from '../styles/colors/colorsCode';
 import  { useState } from 'react';
 import  HeadertText from "../components/header/HeaderText"
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 
@@ -30,6 +31,7 @@ const [Heart, setHeart] = useState([]);
   };
 
   return (
+    <SafeAreaView>
     <ScrollView>
 
 
@@ -38,8 +40,7 @@ const [Heart, setHeart] = useState([]);
         <View style={styles.CategoryPageContainer}>
            
          <HeadertText
-            onPress={backArrowHandle} 
-
+navigation={navigation}
             text = "Vegetables"
             Img={FilterIcon}
           />
@@ -110,6 +111,7 @@ const [Heart, setHeart] = useState([]);
         </View>
     </View>
     </ScrollView>
+    </SafeAreaView>
   );
 };
 

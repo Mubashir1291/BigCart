@@ -14,6 +14,7 @@ import {
 } from '../assets/Index';
 import { useNavigation } from '@react-navigation/native';
 import  HeadertText from "../components/header/HeaderText"
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 
@@ -43,11 +44,12 @@ const CategoryScreen = () => {
 
 
   return (
-    <View style={{ flex: 1, backgroundColor: '#F4F5F9' }}>
+      
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#F4F5F9' }}>
       <View style={styles.Maincontainer}>
           
          <HeadertText
-            onPress={backArrowHandle} 
+            navigation={navigation}
             text = " Categories"
             Img = {FilterIcon}
             onClick={FilterScreenHandle}
@@ -82,7 +84,7 @@ const CategoryScreen = () => {
           ItemSeparatorComponent={<View style={{ height: RF(10) }} />}
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

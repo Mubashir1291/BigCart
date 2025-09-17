@@ -58,6 +58,7 @@ import {
   TextMedium,
 } from '../components/IconSize/Sizes';
 import InfoInput from '../components/Inputs/InfoInput';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 // ✅ Address Data with details inside
 
@@ -86,10 +87,11 @@ const AboutMeScreen = () => {
 
 
   return (
+    <SafeAreaView>
     <ScrollView>
     <View style={{ flex: 1}}>
          <HeadertText
-        onPress={BackArrowHandle}
+       navigation={navigation}
         tintColor={SimpleText}
         text="Payment Method"
         Img={AddIcon}
@@ -252,7 +254,7 @@ const AboutMeScreen = () => {
 
 
            
-            <Buttons onPress={AddCreditHandle} text={'Add Credit Card'}/>
+            <Buttons onPress={AddCreditHandle} text={'Make a Payment'}/>
 
 
       </View>
@@ -261,6 +263,7 @@ const AboutMeScreen = () => {
 
     </View>
     </ScrollView>
+    </SafeAreaView>
   );
 };
 

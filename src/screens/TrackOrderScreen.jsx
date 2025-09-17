@@ -6,6 +6,7 @@ import { RF } from '../Utils/Responsive';
 import { useNavigation } from '@react-navigation/native';
 import { OrderConfirmIcon, OrderDeliveredtIcon, OrderIcon, OrderPlacedIcon, OrderShipIcon, OutOfDeliveryIcon } from '../assets/Index';
 import { IconSize, TextBold, TextRegular } from '../components/IconSize/Sizes';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 const TrackOrderScreen = () => {
@@ -16,9 +17,11 @@ const TrackOrderScreen = () => {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <SafeAreaView>
+    <ScrollView>
+    <View style={styles.container}>
 
-      <HeaderText onPress={OrderSectionHandle} text={'Track Order'} />
+      <HeaderText navigation={navigation} text={'Track Order'} />
       <View style={styles.MainContainer}>
 
       <View style={styles.orderCard}>
@@ -112,7 +115,10 @@ const TrackOrderScreen = () => {
         </View>
       </View>
       </View>
+            </View>
+
     </ScrollView>
+    </SafeAreaView>
   );
 };
 

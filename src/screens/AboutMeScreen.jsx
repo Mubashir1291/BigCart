@@ -5,7 +5,8 @@ import {
   Alert,
   Image,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
+  ScrollView
 } from 'react-native';
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
@@ -26,6 +27,7 @@ import { IconSize, TextSemiBold } from '../components/IconSize/Sizes';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
 import { useState } from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const loginValidationSchema = Yup.object().shape({
   password: Yup
@@ -37,10 +39,7 @@ const loginValidationSchema = Yup.object().shape({
     .min(8, ({ min }) => "Password must be at least " + min + " Characters")
     .oneOf([Yup.ref('password'), null], 'Passwords do not match')
     
-    //      ConfirmPassword: Yup
-    // .string()
-    // .min(8, ({ min }) => "Password must be at least " + min + " Characters")
-    // .required('Password is required'),
+   
 
 });
 
@@ -67,8 +66,10 @@ const AboutMeScreen = () => {
   };
 
   return (
+    <SafeAreaView>
+    <ScrollView>
     <View style={{ flex: 1 }}>
-      <HeadertText onPress={BackArrowHandle} text="About me" />
+      <HeadertText navigation={navigation} text="About me" />
       <View style={styles.Maincontainer}>
         
         {/* Personal Details */}
@@ -78,7 +79,7 @@ const AboutMeScreen = () => {
           </Text>
           <InfoInput Img={UserIcon} placeholder={'Russell Austin'} />
           <InfoInput Img={EmailIcon} placeholder={'Russell.partner@gmail.com'} />
-          <InfoInput Img={TeleIcon} placeholder={'+92 123456789'} />
+          <InfoInput Img={TeleIcon} placeholder={'+92 123456789'} keyboardType={'numeric'} />
         </View>
 
         {/* Change Password */}
@@ -169,6 +170,8 @@ const AboutMeScreen = () => {
         <Buttons onPress={SaveSettingHandle} text={'Save settings'} />
       </View>
     </View>
+    </ScrollView>
+    </SafeAreaView>
   );
 };
 

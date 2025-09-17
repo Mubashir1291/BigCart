@@ -1,55 +1,80 @@
-import { StyleSheet, Text, TextInput, View, Image } from 'react-native';
-import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import React, { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { RF } from '../Utils/Responsive';
 import HeadertText from '../components/header/HeaderText';
-import { ArrowDownIcon, EmailIcon, FlagIcon } from '../assets/Index';
-import InfoInput from '../components/Inputs/InfoInput';
 import Buttons from '../components/buttons/Buttons';
-import { White } from '../styles/colors/colorsCode';
 import { TextBold, TextRegular } from '../components/IconSize/Sizes';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const OtpScreen = () => {
   const navigation = useNavigation();
+  const [timeLeft, setTimeLeft] = useState(10); 
+  const [isResendEnabled, setIsResendEnabled] = useState(false);
 
-  const backArrowHandle = () => {
-    navigation.navigate('ForgetPasswordScreen');
+  useEffect(() => {
+    let timer;
+    if (timeLeft > 0) {
+      timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
+    } else {
+      setIsResendEnabled(true); 
+    }
+    return () => clearTimeout(timer);
+  }, [timeLeft]);
+
+  const formatTime = (seconds) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
   };
+
   const SendOtpScreenHandle = () => {
     navigation.navigate('NavBar');
   };
 
+  const resendOtpHandle = () => {
+    setTimeLeft(10); 
+    setIsResendEnabled(false);
+  };
+
   return (
-    <View style={{ flex: 1 }}>
-      <HeadertText onPress={backArrowHandle} text="Verify Number " />
+    <SafeAreaView style={{ flex: 1 }}>
+      <HeadertText navigation={navigation} text="Verify Number " />
       <View style={styles.Maincontainer}>
-        <Text style={styles.ForgotText}> Verify your number</Text>
-        <Text style={styles.loremHeadings}>Enter you OTP code below</Text>
+        <Text style={styles.ForgotText}>Verify your number</Text>
+        <Text style={styles.loremHeadings}>Enter your OTP code below</Text>
 
         <View style={styles.LinkTextContainer}>
           <View style={styles.FlagContainer}>
-
             <View style={styles.OtpContainersSize} />
-
             <View style={styles.OtpContainersSize} />
-
             <View style={styles.OtpContainersSize} />
-
             <View style={styles.OtpContainersSize} />
-
             <View style={styles.OtpContainersSize} />
-
             <View style={styles.OtpContainersSize} />
           </View>
         </View>
 
         <Buttons text={'Next'} onPress={SendOtpScreenHandle} />
 
-        <Text style={[TextRegular,{alignSelf:'center',fontSize:(15)}]}>Did'nt recieve a new code ?</Text>
-                <Text style={[TextBold,{fontSize:RF(15),color:'black',alignSelf:'center'}]}>Resend a new code (1:00)</Text>
+        <Text style={[TextRegular, { alignSelf: 'center', fontSize: 15 }]}>
+          Didn’t receive a code?
+        </Text>
 
+        {isResendEnabled ? (
+          <Text
+            style={[TextBold, { fontSize: RF(15), color: 'blue', alignSelf: 'center' }]}
+            onPress={resendOtpHandle}
+          >
+            Resend a new code
+          </Text>
+        ) : (
+          <Text style={[TextBold, { fontSize: RF(15), color: 'black', alignSelf: 'center' }]}>
+            Resend a new code ({formatTime(timeLeft)})
+          </Text>
+        )}
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -63,7 +88,6 @@ const styles = StyleSheet.create({
     paddingTop: RF(80),
     paddingHorizontal: RF(10),
   },
-
   ForgotText: {
     fontSize: RF(25),
     fontFamily: 'Poppins-Bold',
@@ -74,32 +98,17 @@ const styles = StyleSheet.create({
     fontSize: RF(15),
     alignSelf: 'center',
   },
-  LoremText: {
-    paddingBottom: RF(50),
-  },
-  newCode: {
-    fontFamily: 'Poppins-Regular',
-    paddingTop: RF(10),
-    alignSelf: 'center',
-  },
-   resendCode: {
-    fontFamily: 'Poppins-SemiBold',
-    alignSelf: 'center',
-  },
   LinkTextContainer: {
     flexDirection: 'row',
   },
   FlagContainer: {
-    width:'100%',
+    width: '100%',
     flexDirection: 'row',
     gap: RF(10),
-    paddingTop:RF(70),
-    paddingHorizontal:RF(10),
-    justifyContent:'center'
+    paddingTop: RF(70),
+    paddingHorizontal: RF(10),
+    justifyContent: 'center',
   },
-
-
-
   OtpContainersSize: {
     height: RF(60),
     width: '15%',

@@ -110,9 +110,8 @@ const FavItemScreen = () => {
     <View style={styles.screenContainer}>
       <View style={styles.HeaderContainer}>
         <HeadertText
-          onPress={backArrowHandle}
-          tintColor1={'black'}
-          text="Shopping Cart"
+navigation={navigation}          tintColor1={'black'}
+          text="Shipping Method"
           Img={FilterIcon}
           tintColor2={White}
         />

@@ -7,6 +7,7 @@ import {
   Image,
   FlatList,
   Alert,
+  ScrollView,
 } from 'react-native';
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
@@ -26,6 +27,7 @@ import {
   TextMedium,
   TextRegular,
 } from '../components/IconSize/Sizes';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const NotificationsArr = [
   {
@@ -76,15 +78,17 @@ const VerifyNumberScreen = () => {
   const navigation = useNavigation();
 
   const backArrowHandle = () => {
-    navigation.navigate('ForgetPasswordScreen');
+    navigation.navigate('UserProfileScreen');
   };
   const SendOtpScreenHandle = () => {
     navigation.navigate('OtpScreen');
   };
 
   return (
+    <SafeAreaView>
+    <ScrollView>
     <View style={{ flex: 1 }}>
-      <HeadertText onPress={backArrowHandle} text="Notifications " />
+      <HeadertText navigation={navigation} text="Notifications " />
       <View style={styles.Maincontainer}>
         <FlatList
           data={NotificationsArr}
@@ -123,6 +127,8 @@ const VerifyNumberScreen = () => {
         <Buttons onPress={SaveSettingHandle} text={'Save Settings'} />
       </View>
     </View>
+    </ScrollView>
+    </SafeAreaView>
   );
 };
 

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View,Image, TouchableOpacity, TextInput } from 'react-native'
+import { StyleSheet, Text, View,Image, TouchableOpacity, TextInput, ScrollView } from 'react-native'
 import React from 'react'
 import HeaderText from '../components/header/HeaderText'
 import { Link, useNavigation } from '@react-navigation/native';
@@ -8,6 +8,7 @@ import { RF } from '../Utils/Responsive';
 import { LinkClr, Secondary, SimpleText, TextClr, White } from '../styles/colors/colorsCode';
 import Buttons from '../components/buttons/Buttons';
 import { SearchBar } from 'react-native-screens';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 const OrderSucessScreen = () => {
@@ -21,7 +22,8 @@ const OrderSucessScreen = () => {
         navigation.navigate('FilterScreen');
       };
   return (
-         
+    <SafeAreaView>
+         <ScrollView>
         <View  style={{flex:1 }}>
         <View style={styles.MainContainer}>
 
@@ -129,6 +131,8 @@ const OrderSucessScreen = () => {
 
      </View>
      </View>
+     </ScrollView>
+     </SafeAreaView>
   )
 }
 

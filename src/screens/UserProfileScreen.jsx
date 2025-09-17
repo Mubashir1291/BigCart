@@ -5,6 +5,7 @@ import {
   Image,
   TouchableOpacity,
   FlatList,
+  ScrollView,
 } from 'react-native';
 import React from 'react';
 import { RF } from '../Utils/Responsive';
@@ -19,9 +20,11 @@ import {
   AddressIcon,
   BellIcon,
   CameraIcon,
+  CardIcon,
   CartIcon,
   HeartIcon,
   LogoutIcon,
+  orderboxIcon,
   OrderIcon,
   RightIcon,
   TransactionIcon,
@@ -37,19 +40,19 @@ import { useNavigation } from '@react-navigation/native';
 import AboutMeScreen from '../screens/AboutMeScreen';
 import MyOrderScreen from '../screens/MyOrderScreen';
 import MyAddressScreen from '../screens/MyAddressScreen';
-import CreditCardScreen from '../screens/CreditCardScreen';
 import TransactionScreen from '../screens/TransactionScreen';
 import NotificationScreen from '../screens/NotificationScreen';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 const Pages = [
   { id: '1', source: UserIcon, name: 'About me', icon: RightIcon, screen :'AboutMeScreen'},
-  { id: '2', source: OrderIcon, name: 'My orders', icon: RightIcon , screen :'MyOrderScreen'},
+  { id: '2', source: orderboxIcon, name: 'My orders', icon: RightIcon , screen :'MyOrderScreen'},
   { id: '3', source: AddressIcon, name: 'My Address', icon: RightIcon, screen :'MyAddressScreen' },
-  { id: '4', source: CartIcon, name: 'Credit card', icon: RightIcon , screen :'CreditCardScreen'},
+  { id: '4', source: CardIcon, name: 'Credit card', icon: RightIcon , screen :'MyCardScreen'},
   { id: '5', source: TransactionIcon, name: 'Transaction', icon: RightIcon, screen :'TransactionScreen' },
   { id: '6', source: BellIcon, name: 'Notification', icon: RightIcon , screen :'NotificationScreen'},
-  { id: '7', source: LogoutIcon, name: 'Logout' },
+  { id: '7', source: LogoutIcon, name: 'Logout' ,screen :'SignInScreen'},
 ];
 
 const UserProfileScreen = () => {
@@ -64,6 +67,8 @@ const UserProfileScreen = () => {
 
 
   return (
+    <SafeAreaView>
+    <ScrollView>
     <View style={styles.MainContainer}>
 
       <View style={styles.TopBar}>
@@ -74,7 +79,7 @@ const UserProfileScreen = () => {
         </View>
       </View>
       <Text style={styles.USerText}>Olivia Austin</Text>
-      <Text style={styles.USerEmailText}>oliviaaustin@gmail.com Austin</Text>
+      <Text style={styles.USerEmailText}>oliviaaustin@gmail.com</Text>
       <View style={styles.PagesContainer}>
         <FlatList
           data={Pages}
@@ -99,6 +104,8 @@ const UserProfileScreen = () => {
         />
       </View>
     </View>
+    </ScrollView>
+</SafeAreaView>
   );
 };
 
