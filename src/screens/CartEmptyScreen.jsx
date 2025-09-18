@@ -14,11 +14,9 @@ const CartEmptyScreen = () => {
 
     const navigation = useNavigation();
     
-      const backArrowHandle = () => {
-        navigation.navigate('NavBar');
-      };
+   
        const StartShoppingHandler = () => {
-        navigation.navigate('NavBar');
+        navigation.navigate('HomeScreen');
       };
   return (
     <SafeAreaView  style={{flex:1 }}>

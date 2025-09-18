@@ -194,5 +194,6 @@ const styles = StyleSheet.create({
     borderRadius: RF(5),
     elevation: RF(1),
     paddingHorizontal:RF(10),
+    marginTop:RF(5)
   },
 });

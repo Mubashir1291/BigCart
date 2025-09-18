@@ -1,24 +1,31 @@
+import React, { useState } from 'react';
 import {
-  StyleSheet,Text,TextInput,View,Image} from 'react-native';
-import React from 'react';
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { RF } from '../Utils/Responsive';
 import HeadertText from '../components/header/HeaderText';
-import { ArrowDownIcon, EmailIcon, FlagIcon } from '../assets/Index';
-import InfoInput from '../components/Inputs/InfoInput';
+import { ArrowDownIcon, FlagIcon } from '../assets/Index';
 import Buttons from '../components/buttons/Buttons';
 import { White } from '../styles/colors/colorsCode';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
-
+import { CountryPicker } from 'react-native-country-codes-picker';  // 📌 Import package
 
 const VerifyNumberScreen = () => {
-
   const navigation = useNavigation();
 
-  const backArrowHandle = () => {
-    navigation.navigate('ForgetPasswordScreen');
-  };
+  // States for picker
+  const [showPicker, setShowPicker] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState({
+    code: '+1',
+    flag: '🇺🇸',
+  });
+
   const SendOtpScreenHandle = () => {
     navigation.navigate('OtpScreen');
   };
@@ -37,36 +44,41 @@ const VerifyNumberScreen = () => {
           </Text>
         </View>
 
-        <View style={styles.LinkTextContainer} >
-            <View style ={styles.FlagContainer}>
-                <Image source = {FlagIcon} style ={styles.flagSize}/>
-                <Text style={styles.Flagtext}>+1</Text>
-                <Image source = {ArrowDownIcon} style ={styles.ArrowDownText}/>
+        {/* Flag + Code + Input */}
+        <View style={styles.LinkTextContainer}>
+          <TouchableOpacity
+            style={styles.FlagContainer}
+            onPress={() => setShowPicker(true)}>
+            <Text style={styles.flagEmoji}>{selectedCountry.flag}</Text>
+            <Text style={styles.Flagtext}>{selectedCountry.code}</Text>
+            <Image source={ArrowDownIcon} style={styles.ArrowDownText} />
+          </TouchableOpacity>
 
-
-                </View>
-            
-                 <View style={styles.MobileText}>
-                        
-                        <TextInput 
-                        placeholder='Enter Your Mobile'
-                        placeholderTextColor={'grey'}
-                        color={'black'}
-                        keyboardType='numeric'
-                        
-                        />
-                </View>
-
+          <View style={styles.MobileText}>
+            <TextInput
+              placeholder="Enter Your Mobile"
+              placeholderTextColor={'grey'}
+              color={'black'}
+              keyboardType="numeric"
+            />
+          </View>
         </View>
 
+        {/* Next Button */}
+        <Buttons text={'Next '} onPress={SendOtpScreenHandle} />
 
-        
-    
-      <Buttons  text={'Next '}  onPress={SendOtpScreenHandle} />
-
-        
-
-
+        {/* Country Picker */}
+        <CountryPicker
+          show={showPicker}
+          pickerButtonOnPress={(item) => {
+            setSelectedCountry({
+              code: item.dial_code,
+              flag: item.flag,
+            });
+            setShowPicker(false);
+          }}
+          onBackdropPress={() => setShowPicker(false)}
+        />
       </View>
     </SafeAreaView>
   );
@@ -96,49 +108,40 @@ const styles = StyleSheet.create({
   LoremText: {
     paddingBottom: RF(50),
   },
-  ResendText :{
-       fontFamily:'Poppins-Regular',
-       paddingTop: RF(10),
-       alignSelf:'center'
 
-  },
-  LinkTextContainer:{
-flexDirection:'row'    
-  },
-  FlagContainer :{
-    height:RF(60),
-    backgroundColor: White,
-    width:'30%',
+  LinkTextContainer: {
     flexDirection: 'row',
-    justifyContent:'center',
-    alignItems:'center',
-    gap:RF(5)
+  },
+  FlagContainer: {
+    height: RF(60),
+    backgroundColor: White,
+    width: '30%',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: RF(5),
   },
 
-  MobileText:{
-      
- height:RF(60),
- width:'68%',
- backgroundColor: White,
- borderLeftWidth:RF(1),
- alignSelf:'center',
- justifyContent:'center',
- paddingLeft:RF(10)
+  MobileText: {
+    height: RF(60),
+    width: '69%',
+    backgroundColor: White,
+    borderLeftWidth: RF(1),
+    alignSelf: 'center',
+    justifyContent: 'center',
+    paddingLeft: RF(10),
+  },
 
+  ArrowDownText: {
+    height: RF(10),
+    width: RF(10),
+    resizeMode: 'contain',
   },
-  flagSize:{
-height:RF(25),
-width:(25),
-resizeMode:'contain'
-
+  Flagtext: {
+    fontSize: RF(15),
+    fontFamily: 'Poppins-Medium',
   },
-  ArrowDownText:{
-    height:RF(10),
-width:(10),
-resizeMode:'contain'
+  flagEmoji: {
+    fontSize: RF(15),
   },
-  Flagtext:{
-     fontSize:RF(18),
-     fontFamily:'Font-Medium'
-  }
 });
