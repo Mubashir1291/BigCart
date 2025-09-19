@@ -14,7 +14,7 @@ import { ArrowDownIcon, FlagIcon } from '../assets/Index';
 import Buttons from '../components/buttons/Buttons';
 import { White } from '../styles/colors/colorsCode';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { CountryPicker } from 'react-native-country-codes-picker';  // 📌 Import package
+import { CountryPicker } from 'react-native-country-codes-picker';
 
 const VerifyNumberScreen = () => {
   const navigation = useNavigation();
@@ -26,8 +26,16 @@ const VerifyNumberScreen = () => {
     flag: '🇺🇸',
   });
 
+  // ➡️ Add state to hold the phone number
+  const [phoneNumber, setPhoneNumber] = useState('');
+
   const SendOtpScreenHandle = () => {
-    navigation.navigate('OtpScreen');
+    // ➡️ Use the stored phone number here
+    console.log('User entered:', selectedCountry.code + phoneNumber);
+    // ➡️ You would typically pass the full number to the next screen or an API
+    navigation.navigate('OtpScreen', {
+      fullPhoneNumber: selectedCountry.code + phoneNumber,
+    });
   };
 
   return (
@@ -60,6 +68,9 @@ const VerifyNumberScreen = () => {
               placeholderTextColor={'grey'}
               color={'black'}
               keyboardType="numeric"
+              // ➡️ Bind the TextInput to the phoneNumber state
+              value={phoneNumber}
+              onChangeText={setPhoneNumber}
             />
           </View>
         </View>
@@ -68,17 +79,36 @@ const VerifyNumberScreen = () => {
         <Buttons text={'Next '} onPress={SendOtpScreenHandle} />
 
         {/* Country Picker */}
-        <CountryPicker
-          show={showPicker}
-          pickerButtonOnPress={(item) => {
-            setSelectedCountry({
-              code: item.dial_code,
-              flag: item.flag,
-            });
-            setShowPicker(false);
-          }}
-          onBackdropPress={() => setShowPicker(false)}
-        />
+       <CountryPicker 
+  withSearch={true}
+  show={showPicker}
+  style={{
+    // Styles for the whole modal container
+    modal: {
+      height: '50%', // You can keep your half-screen height here
+    },
+    // Styles for the search input and container
+    search: {
+      height: 40, // Ensure the search bar has a visible height
+      backgroundColor: '#f0f0f0',
+      borderWidth: 1,
+      borderColor: '#ccc',
+      borderRadius: 5,
+    },
+    // Styles for the text input itself
+    searchInput: {
+      color: 'black',
+    },
+  }}
+  pickerButtonOnPress={(item) => {
+    setSelectedCountry({
+      code: item.dial_code,
+      flag: item.flag,
+    });
+    setShowPicker(false);
+  }}
+  onBackdropPress={() => setShowPicker(false)}
+/>
       </View>
     </SafeAreaView>
   );

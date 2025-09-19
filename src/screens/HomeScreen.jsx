@@ -311,13 +311,11 @@ const HomeScreen = () => {
               </TouchableOpacity>
             )}
             keyExtractor={item => item.id}
-            ItemSeparatorComponent={() => <View style={{ width: RF(15) }} />}
             horizontal={false}
             showsHorizontalScrollIndicator={false}
             numColumns={2}
             contentContainerStyle={{
               alignItems: 'center',
-              justifyContent: 'center',
             }}
           />
         </View>
@@ -429,6 +427,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: RF(20),
     marginHorizontal: RF(5),
+
   },
   productCard: {
     width: '100%',

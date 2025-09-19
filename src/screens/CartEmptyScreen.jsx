@@ -8,6 +8,7 @@ import { RF } from '../Utils/Responsive';
 import { Secondary, SimpleText } from '../styles/colors/colorsCode';
 import Buttons from '../components/buttons/Buttons';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Screen } from 'react-native-screens';
 
 
 const CartEmptyScreen = () => {
@@ -16,8 +17,9 @@ const CartEmptyScreen = () => {
     
    
        const StartShoppingHandler = () => {
-        navigation.navigate('HomeScreen');
+        navigation.navigate('VegitableScreen');
       };
+
   return (
     <SafeAreaView  style={{flex:1 }}>
          

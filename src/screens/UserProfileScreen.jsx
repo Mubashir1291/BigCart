@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   FlatList,
   ScrollView,
+  ImageBackground,
 } from 'react-native';
 import React from 'react';
 import { RF } from '../Utils/Responsive';
@@ -29,6 +30,7 @@ import {
   RightIcon,
   TransactionIcon,
   UserIcon,
+  UserProfileImage,
 } from '../assets/Index';
 import {
   IconSize,
@@ -90,6 +92,7 @@ const Pages = [
   },
   { id: '7', source: LogoutIcon, name: 'Logout', screen: 'SignInScreen' },
 ];
+import { useState } from 'react';
 
 const UserProfileScreen = () => {
   const navigation = useNavigation();
@@ -101,29 +104,43 @@ const UserProfileScreen = () => {
   // const handleCamera = async () => {
   //   const result = await launchCamera({ mediaType: 'photo' });
   // };
+    const [selectedImage, setSelectedImage] = useState(null);
 
-  const handleGallery = async () => { 
-    console.log('aaaaa')
-    const result = await launchImageLibrary({ mediaType: 'photo' });
-    return result;
-  };
+
+//   const handleGallery = async () => { 
+//     // console.log('abcd')
+//     const result = await launchImageLibrary({ mediaType: 'photo' });
+//     const uri=result.assets.uri
+// setSelectedImage =(uri);
+
+// };
   
+const handleGallery = () => {
+    launchImageLibrary(
+      { mediaType: "photo" },
+      (response) => {
+        if (!response.didCancel && !response.errorCode && response.assets?.length > 0) {
+          setSelectedImage(response.assets[0].uri); 
+        }
+      }
+    );
+  };
 
   return (
     <SafeAreaView>
       <ScrollView>
         <View style={styles.MainContainer}>
-          <View style={styles.TopBar}>
-            <View style={styles.ImageCircle}>
-
-              <TouchableOpacity onPress={handleGallery}>
-                <View>
-                  <Image  source={CameraIcon} style={styles.Camera} />
-                </View>
-                </TouchableOpacity>
-
-            </View>
-          </View>
+         <View style={styles.TopBar}>
+      <ImageBackground
+        source={selectedImage ? { uri: selectedImage } : UserProfileImage}
+        style={styles.ImageCircle}
+        imageStyle={{ borderRadius: 100 }} 
+      >
+        <TouchableOpacity onPress={handleGallery} style={styles.Camera}>
+          <Image source={CameraIcon} style={{height:RF(24),width:RF(24)}} />
+        </TouchableOpacity>
+      </ImageBackground>
+    </View>
            
          
           <Text style={styles.USerText}>Olivia Austin</Text>
@@ -184,18 +201,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#ebe6e6ff',
     paddingTop: RF(50),
     alignSelf: 'center',
-    // marginTop:RF(100)
+    marginTop:RF(100),
+    zIndex:2
     // position: 'absolute',
     // top: RF(50),
   },
   Camera: {
-    height: RF(25),
-    width: RF(25),
-    resizeMode: 'contain',
+  
+    
     alignSelf: 'flex-end',
     position: 'absolute',
-    top: RF(45),
-    right: RF(10),
+    top: RF(100),
+    right: RF(15),
   },
   USerText: {
     fontFamily: 'Poppins-SemiBold',

@@ -29,6 +29,9 @@ import Buttons from '../components/buttons/Buttons';
 import { SimpleText } from '../styles/colors/colorsCode';
 import { IconSize, TextSemiBold } from '../components/IconSize/Sizes';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useState } from 'react';
+import { CountryPicker } from 'react-native-country-codes-picker';  
+
 
 
 
@@ -52,6 +55,13 @@ const AddAddresScreen = () => {
     );
   };
 
+  const [showPicker, setShowPicker] = useState(false);
+    const [selectedCountry, setSelectedCountry] = useState({
+      flag: '🇺🇸',
+      name:'United states'
+    });
+  
+
   return (
     <SafeAreaView>
     <ScrollView>
@@ -69,12 +79,60 @@ const AddAddresScreen = () => {
             <InfoInput Img={AddressIcon} placeholder={'Address'} />
           <InfoInput Img={ZipCodeIcon} placeholder={'Zip code'} keyboardType={'numeric'} />
           <InfoInput Img={CityIcon} placeholder={'City'} />
-          <InfoInput Img={CountryIcon} placeholder={'Country'} />
+
+
+           <TouchableOpacity
+
+            style={styles.FlagContainer}
+            onPress={() => setShowPicker(true)}>
+          
+            <Text style={styles.flagEmoji}>{selectedCountry.flag}</Text>
+           
+            <Text style={{ fontSize: RF(16), color: SimpleText }}>
+          
+            {selectedCountry.name} 
+
+            </Text>                
+
+          </TouchableOpacity>
+
+
 
         </View>
         {/* Add Button */}
         <Buttons onPress={AddAddressHandle} text={'Add Address'} />
+        
 
+         <CountryPicker 
+          withSearch={true}
+          show={showPicker}
+          style={{
+            // Styles for the whole modal container
+            modal: {
+              height: '50%', // You can keep your half-screen height here
+            },
+            // Styles for the search input and container
+            search: {
+              height: 40, // Ensure the search bar has a visible height
+              backgroundColor: '#f0f0f0',
+              borderWidth: 1,
+              borderColor: '#ccc',
+              borderRadius: 5,
+            },
+            // Styles for the text input itself
+            searchInput: {
+              color: 'black',
+            },
+          }}
+          pickerButtonOnPress={(item) => {
+            setSelectedCountry({
+              code: item.dial_code,
+              flag: item.flag,
+            });
+            setShowPicker(false);
+          }}
+          onBackdropPress={() => setShowPicker(false)}
+        />
      </View>
 
         
@@ -103,5 +161,19 @@ const styles = StyleSheet.create({
     borderRadius: RF(5),
     elevation: RF(1),
     paddingHorizontal:RF(10),
+  },
+  FlagContainer:{
+      backgroundColor: '#ffffff',
+    flexDirection: 'row',
+    width: '100%',
+    height: RF(60),
+    borderRadius: RF(5),
+    elevation: RF(1),
+    paddingHorizontal:RF(10),
+    gap:RF(10),
+    alignItems:'center'
+  },
+    flagEmoji: {
+    fontSize: RF(20),
   },
 });

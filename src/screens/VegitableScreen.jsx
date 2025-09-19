@@ -40,7 +40,7 @@ const [Heart, setHeart] = useState([]);
         <View style={styles.CategoryPageContainer}>
            
          <HeadertText
-navigation={navigation}
+            navigation={navigation}
             text = "Vegetables"
             Img={FilterIcon}
           />
@@ -124,7 +124,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     height: RF(75),
-    paddingHorizontal: 10,
     backgroundColor: '#FFFFFF',
   },
 

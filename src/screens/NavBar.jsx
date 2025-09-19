@@ -26,8 +26,8 @@ const Tabs = () => {
                 headerShown: false,
                 tabBarShowLabel: false,
                 tabBarStyle: {
-                    borderTopRightRadius: RF(25),
-                    borderTopLeftRadius: RF(25),
+                    borderTopRightRadius: RF(15),
+                    borderTopLeftRadius: RF(15),
                     justifyContent: 'center',
                     alignItems: 'center',
                     height: RF(60),
@@ -51,7 +51,7 @@ const Tabs = () => {
                                 style={{
                                     height:focused?  RF(25) : RF(25),
                                     width: focused?  RF(25):RF(25),
-                                    tintColor: focused ? White : null,
+                                    tintColor: focused ? White : TextClr,
 
                                 }}
                             />
