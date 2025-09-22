@@ -32,10 +32,22 @@ import MyCardScreen from './src/screens/MyCardScreen';
 import AddCardScreen from './src/screens/AddCardScreen';
 import PaymentMethodScreen from './src/screens/PaymentMethodScreen';
 import ReviewScreen from './src/screens/ReviewScreen';
+import { useEffect } from 'react';
+import SplashScreen from 'react-native-splash-screen';
 
 const Stack = createNativeStackNavigator();
 
+
 function App() {
+
+useEffect(() => {
+  setTimeout(() => {
+    SplashScreen.hide();  
+  }, 3000); 
+}, []);
+
+
+
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
