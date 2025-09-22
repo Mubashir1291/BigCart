@@ -98,10 +98,6 @@ const FavItemScreen = () => {
   const navigation = useNavigation();
   const [selectedDelivery, setSelectedDelivery] = useState(null);
 
-  const backArrowHandle = () => {
-    navigation.navigate('CartScreen');
-  };
-
   const NextHandle = () => {
     navigation.navigate('ShippmentAddressScreen');
   };
@@ -110,7 +106,8 @@ const FavItemScreen = () => {
     <View style={styles.screenContainer}>
       <View style={styles.HeaderContainer}>
         <HeadertText
-navigation={navigation}          tintColor1={'black'}
+          navigation={navigation}
+          tintColor1={'black'}
           text="Shipping Method"
           Img={FilterIcon}
           tintColor2={White}
@@ -125,10 +122,9 @@ navigation={navigation}          tintColor1={'black'}
             padding: RF(25),
           }}
         >
-                      <View style={styles.Line}></View>
+          <View style={styles.Line}></View>
 
           <View style={styles.circle}>
-            
             <Text style={[TextMedium, { color: White, fontSize: RF(15) }]}>
               1
             </Text>
@@ -147,7 +143,12 @@ navigation={navigation}          tintColor1={'black'}
           <View style={styles.Line2}></View>
 
           <View style={styles.circle2}>
-            <Text style={[TextMedium, { color: TextClr,fontSize:RF(15), fontSize: RF(15) }]}>
+            <Text
+              style={[
+                TextMedium,
+                { color: TextClr, fontSize: RF(15), fontSize: RF(15) },
+              ]}
+            >
               2
             </Text>
           </View>
@@ -163,7 +164,7 @@ navigation={navigation}          tintColor1={'black'}
           }}
         >
           <View style={styles.circle2}>
-            <Text style={[TextMedium, { color: TextClr,fontSize: RF(15) }]}>
+            <Text style={[TextMedium, { color: TextClr, fontSize: RF(15) }]}>
               3
             </Text>
           </View>
@@ -171,13 +172,9 @@ navigation={navigation}          tintColor1={'black'}
         </View>
       </View>
 
-
       <View style={styles.DeliveryMainContainer}>
-
-      
-
-                  {/* Standard Delivery */}
- <TouchableOpacity
+        {/* Standard Delivery */}
+        <TouchableOpacity
           onPress={() => setSelectedDelivery('standard')}
           style={[
             styles.TextBar,
@@ -187,28 +184,28 @@ navigation={navigation}          tintColor1={'black'}
             },
           ]}
         >
-
           <View style={styles.TextBar}>
             <View style={styles.TextContainer}>
-              <Text style={[TextBold, {color:'black', marginTop: RF(5) }]}>
+              <Text style={[TextBold, { color: 'black', marginTop: RF(5) }]}>
                 Standard Delivery
               </Text>
-              <Text style={[TextRegular, { marginTop: RF(5),fontSize:RF(11) }]}>
+              <Text
+                style={[TextRegular, { marginTop: RF(5), fontSize: RF(11) }]}
+              >
                 Order will be delivered between 3 - 4 business
                 {'\n'}days straights to your doorstep.
               </Text>
             </View>
             <Text
-              style={[TextSemiBold, { fontSize:RF(15), color: Secondary }]}
+              style={[TextSemiBold, { fontSize: RF(15), color: Secondary }]}
             >
               $3
             </Text>
           </View>
-                </TouchableOpacity>
-
+        </TouchableOpacity>
 
         {/* Next Day Delivery */}
-         <TouchableOpacity
+        <TouchableOpacity
           onPress={() => setSelectedDelivery('nextday')}
           style={[
             styles.TextBar,
@@ -218,53 +215,47 @@ navigation={navigation}          tintColor1={'black'}
             },
           ]}
         >
-
-
           <View style={styles.TextBar}>
             <View style={styles.TextContainer}>
-              <Text style={[TextBold, {color:'black', marginTop: RF(5) }]}>
+              <Text style={[TextBold, { color: 'black', marginTop: RF(5) }]}>
                 Next Day Delivery
               </Text>
-              <Text style={[TextRegular, { marginTop: RF(5),fontSize:RF(11)  }]}>
+              <Text
+                style={[TextRegular, { marginTop: RF(5), fontSize: RF(11) }]}
+              >
                 Order will be delivered within few hours
                 {'\n'}straights to your doorstep.
               </Text>
             </View>
             <Text
-              style={[TextSemiBold, { fontSize:RF(15),  color: Secondary }]}
+              style={[TextSemiBold, { fontSize: RF(15), color: Secondary }]}
             >
               $5
             </Text>
           </View>
-
-       
-
- </TouchableOpacity>
+        </TouchableOpacity>
       </View>
-                       
 
-              <Buttons onPress={NextHandle} text={'Next'}/>
-
+      <Buttons onPress={NextHandle} text={'Next'} />
     </View>
   );
 };
 
 export default FavItemScreen;
 
-
 const styles = StyleSheet.create({
   screenContainer: {
     flex: 1,
     backgroundColor: LightGrey,
-    paddingBottom:RF(10),
-    paddingHorizontal:RF(10)
+    paddingBottom: RF(10),
+    paddingHorizontal: RF(10),
   },
   DeliveryMainContainer: {
     backgroundColor: LightGrey,
     width: '100%',
     alignItems: 'center',
-    flex:1,
-    gap:RF(20)
+    flex: 1,
+    gap: RF(20),
   },
   HeaderContainer: {
     flexDirection: 'row',
@@ -317,16 +308,14 @@ const styles = StyleSheet.create({
     left: RF(50),
   },
   TextContainer: {
-    flex:1,
+    flex: 1,
   },
-  TextBar:{
-
-    backgroundColor:White,
+  TextBar: {
+    backgroundColor: White,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent:'space-between',
-    padding:RF(10),
-    width:'100%'
-    
-  }
+    justifyContent: 'space-between',
+    padding: RF(10),
+    width: '100%',
+  },
 });

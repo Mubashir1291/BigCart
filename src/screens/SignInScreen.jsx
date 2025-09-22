@@ -77,7 +77,7 @@ const WelcomeScreen = () => {
             {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
               <>
               <View style={ styles.TextInputContainer }>
-                <View style={{flexDirection:'row', alignItems:'center'}}>
+                <View style={{flexDirection:'row', alignItems:'center', gap:RF(10)}}>
                 <Image source={EmailIcon} style={styles.IconSize} />
 
                 <TextInput 
@@ -276,7 +276,7 @@ const styles = StyleSheet.create({
     borderRadius: RF(5),
     elevation: RF(1),
     paddingHorizontal:RF(10),
-    gap:RF(10)
+    
   },
 
   IconSize: {

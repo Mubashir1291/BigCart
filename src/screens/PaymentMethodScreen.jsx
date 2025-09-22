@@ -65,7 +65,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 const AboutMeScreen = () => {
   const navigation = useNavigation();
 
-  
+  const [selectedDelivery, setSelectedDelivery] = useState(null);
 
   const BackArrowHandle = () => {
     navigation.navigate('ShippmentAddress');
@@ -90,7 +90,8 @@ const AboutMeScreen = () => {
     <SafeAreaView>
     <ScrollView>
     <View style={{ flex: 1}}>
-         <HeadertText
+      
+        <HeadertText
        navigation={navigation}
         tintColor={SimpleText}
         text="Payment Method"
@@ -152,25 +153,53 @@ const AboutMeScreen = () => {
       </View>
 
       <View  style={{flexDirection:'row',width:'100%',alignItems:'center' ,justifyContent:'space-between',paddingHorizontal:RF(10),marginBottom:RF(15)}}>
-        <View style={styles.PaymentBox}>
+       <TouchableOpacity
+                onPress={() => setSelectedDelivery('paypal')}
+                style={[
+                  styles.PaymentBox,
+                  {
+                    borderWidth: RF(1),
+                    borderColor: selectedDelivery === 'paypal' ? Secondary : White,
+                  },
+                ]}
+              >
             <Image  source={PayPalIcon} style={[IconSize,{tintColor:null,marginBottom:RF(10)}]}/>
             <Text style={TextMedium}>Paypal</Text>
 
+             </TouchableOpacity>
 
-        </View>
-         <View style={styles.PaymentBox}>
+
+          <TouchableOpacity
+                onPress={() => setSelectedDelivery('credit')}
+                style={[
+                  styles.PaymentBox,
+                  {
+                    borderWidth: RF(1),
+                    borderColor: selectedDelivery === 'credit' ? Secondary : White,
+                  },
+                ]}
+              >
             <Image  source={CardIcon} style={[IconSize,{tintColor:null,marginBottom:RF(10)}]}/>
             <Text style={TextMedium}>Credit Card</Text>
 
 
-        </View>
-         <View style={styles.PaymentBox}>
+      </TouchableOpacity>
+
+          <TouchableOpacity
+                onPress={() => setSelectedDelivery('apple')}
+                style={[
+                  styles.PaymentBox,
+                  {
+                    borderWidth: RF(1),
+                    borderColor: selectedDelivery === 'apple' ? Secondary : White,
+                  },
+                ]}
+              >
             <Image  source={AppleIcon} style={[IconSize,{tintColor:null,marginBottom:RF(10)}]}/>
             <Text style={TextMedium}>Apple Pay</Text>
 
 
-        </View>
-
+          </TouchableOpacity>
 
       </View>
         
@@ -274,7 +303,7 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
     alignSelf: 'center',
-    paddingTop: RF(30),
+    paddingTop: RF(5),
     paddingHorizontal: RF(10),
 
   },

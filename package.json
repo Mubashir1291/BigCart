@@ -34,6 +34,8 @@
     "react-native-splash-screen": "^3.3.0",
     "react-native-swipe-list-view": "^3.2.9",
     "react-native-swiper": "^1.6.0",
+    "react-redux": "^9.2.0",
+    "redux": "^5.0.1",
     "yup": "^1.7.0"
   },
   "devDependencies": {

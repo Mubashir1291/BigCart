@@ -52,8 +52,8 @@ const decreaseQuantity = () => {
         <View  style={styles.ProductImageContainer}>
             <View style={[styles.ImageBackgroundCon,{backgroundColor: route?.params?.Detail?.color}]}></View>
 
-        <ImageBackground source={route?.params?.Detail?.source} style={[IconSize,{tintColor:null,height:RF(410),width:'100%'}]}>
-        <TouchableOpacity onPress={backscreen}> <Image source={BackIcon} style={[IconSize,{tintColor:'black', marginLeft:RF(10),marginTop:RF(20)}]}/> </TouchableOpacity>  
+        <ImageBackground source={route?.params?.Detail?.source} style={[IconSize,{  marginTop:RF(30),tintColor:null,height:RF(300),width:'100%'}]}>
+        <TouchableOpacity onPress={backscreen}> <Image source={BackIcon} style={[IconSize,{tintColor:'black', marginLeft:RF(10)}]}/> </TouchableOpacity>  
          </ImageBackground > 
          </View>
          <View style ={styles.DetailsContainer}>
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     QuantityBarContainer:{
 
       flexDirection:'row',
-      width:'100%',
+      width:'99%',
       alignItems:'center',
 gap:RF(2)
 
@@ -220,10 +220,10 @@ GetStartedBtn: {
     ImageBackgroundCon:{
 
         width:'100%',
-        height:RF(300),
+        height:RF(350),
         borderBottomRightRadius:RF(250),
         borderBottomLeftRadius:RF(250),
-        position: 'absolute'
+        position: 'absolute',
 
     }
     
