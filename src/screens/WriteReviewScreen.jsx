@@ -54,6 +54,7 @@ the stars below</Text>
         reviewColor='#FFC107'
         ratingCount={5}
         ratingBackgroundColor='red'
+        startingValue={3}
         />
         
 
@@ -64,6 +65,7 @@ the stars below</Text>
         <Image source={StarIcon} style={[IconSize,{tintColor: null, width:RF(35),height:RF(33)}]}/> */}
      </View>
      <View style={styles.paragraph}>
+      <View style={{flexDirection: 'row', alignItems:'center'}}>
 
         <Image source={PenIcon} style={[IconSize,{marginLeft:RF(15),width:RF(15),height:RF(15)}]}/>
        
@@ -76,6 +78,7 @@ the stars below</Text>
         textAlignVertical='top' 
         />
 
+     </View>
 
      </View>
 
@@ -112,6 +115,6 @@ const styles = StyleSheet.create({
     flexDirection:'row',
     height:RF(150),
     marginTop:RF(30),
-    alignItems: 'center',
+    alignItems: 'flex-start',
     }
 })

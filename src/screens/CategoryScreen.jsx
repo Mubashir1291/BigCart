@@ -15,6 +15,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import  HeadertText from "../components/header/HeaderText"
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { SimpleText } from '../styles/colors/colorsCode';
 
 
 
@@ -53,6 +54,7 @@ const CategoryScreen = () => {
             text = " Categories"
             Img = {FilterIcon}
             onClick={FilterScreenHandle}
+            tintColor2={SimpleText}
              
           />
 

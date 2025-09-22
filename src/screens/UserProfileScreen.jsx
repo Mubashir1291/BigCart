@@ -164,7 +164,7 @@ const handleGallery = () => {
                       >
                         {item.name}
                       </Text>
-                      <Image source={item.icon} style={IconSize} />
+                      <Image source={item.icon} style={[IconSize,{width:RF(15) , height:RF(15)}]} />
                     </View>
                   </View>
                 </TouchableOpacity>

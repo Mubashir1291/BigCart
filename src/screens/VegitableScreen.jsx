@@ -11,7 +11,7 @@ const ProductsImages = [
   { id: '5',source: Pomgrante,color: '#FFE3E2',name: ' Pomegrante',price: '$2.09',Size: '1.50 lbs',new: 'NEW', },
   {id: '6',source: Brocli,color: '#D2FFD0',name: 'Fresh Broccoli',price: '$3.00',Size: '1.0 kg',},];
 import { useNavigation } from '@react-navigation/native';
-import { Secondary,Primary } from '../styles/colors/colorsCode';
+import { Secondary,Primary, TextClr, SimpleText } from '../styles/colors/colorsCode';
 import  { useState } from 'react';
 import  HeadertText from "../components/header/HeaderText"
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -26,8 +26,8 @@ const [Heart, setHeart] = useState([]);
     
 
   const navigation = useNavigation();
-  const backArrowHandle = () => {
-    navigation.navigate('NavBar');
+  const FilterHandler = () => {
+    navigation.navigate('FilterScreen');
   };
 
   return (
@@ -43,6 +43,8 @@ const [Heart, setHeart] = useState([]);
             navigation={navigation}
             text = "Vegetables"
             Img={FilterIcon}
+            onClick={FilterHandler}
+            tintColor2={SimpleText}
           />
         </View>
 

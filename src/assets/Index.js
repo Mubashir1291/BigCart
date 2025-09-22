@@ -45,6 +45,8 @@ export const LocationCircleIcon = require('../assets/images/LocationCircle.png')
 export const DefaultIcon = require('../assets/images/Default.png');
 export const orderboxIcon = require('../assets/images/orderbox.png');
 export const UserProfileImage = require('../assets/images/userProfileImage.jpg');
+export const Splash = require('../assets/images/a.png');
+
 
 
 
