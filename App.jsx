@@ -32,14 +32,25 @@ import MyCardScreen from './src/screens/MyCardScreen';
 import AddCardScreen from './src/screens/AddCardScreen';
 import PaymentMethodScreen from './src/screens/PaymentMethodScreen';
 import ReviewScreen from './src/screens/ReviewScreen';
+import SplashScreen from './src/screens/SplashScreen';
+
+import { useEffect, useState } from 'react';
 
 const Stack = createNativeStackNavigator();
 
 function App() {
+  const [isSplash,setIsSplash]=useState(true)
+  useEffect(()=>{  
+  setTimeout(()=>{
+  setIsSplash()
+  },3000)
+  },[])
+
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="OnBoard1" component={OnBoard1} />
+        {  isSplash?  ( <Stack.Screen name="SplashScreen" component={SplashScreen} />) : ( <Stack.Screen name="OnBoard1" component={OnBoard1}/>)}
+
         <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
         <Stack.Screen name="SignInScreen" component={SignInScreen} />
         <Stack.Screen name="SignupScreen" component={SignupScreen} />

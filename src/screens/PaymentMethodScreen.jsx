@@ -60,22 +60,41 @@ import {
 import InfoInput from '../components/Inputs/InfoInput';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import DateTimePicker from '@react-native-community/datetimepicker';
+
 // ✅ Address Data with details inside
 
 const AboutMeScreen = () => {
   const navigation = useNavigation();
 
   
+      const [ccv, setCcv] = useState('');
+        const [showDatePicker, setShowDatePicker] = useState(false);
+        
 
-  const BackArrowHandle = () => {
-    navigation.navigate('ShippmentAddress');
+      const formatCardNumber = (text) => {
+    const digitsOnly = text.replace(/\D/g, ''); 
+    const limitedDigits = digitsOnly.slice(0, 16); 
+    const groups = limitedDigits.match(/.{1,4}/g); 
+    return groups ? groups.join(' ') : '';
   };
+
+    const handleDateChange = (event, selectedDate) => {
+    setShowDatePicker(false);
+    if (selectedDate) {
+      const month = (selectedDate.getMonth() + 1).toString().padStart(2, '0');
+      const year = selectedDate.getFullYear().toString().slice(-2);
+      setDate(`${month}/${year}`);
+    }
+  };
+
   const AddCardHandler = () => {
     navigation.navigate('AddCardScreen');
   };
     const AddCreditHandle = () => {
     navigation.navigate('OrderSucessScreen');
   };
+   const [selectedDelivery, setSelectedDelivery] = useState(null);
  
 
   const [name, setName] = useState('');
@@ -152,24 +171,52 @@ const AboutMeScreen = () => {
       </View>
 
       <View  style={{flexDirection:'row',width:'100%',alignItems:'center' ,justifyContent:'space-between',paddingHorizontal:RF(10),marginBottom:RF(15)}}>
-        <View style={styles.PaymentBox}>
+     <TouchableOpacity
+               onPress={() => setSelectedDelivery('paypal')}
+               style={[
+                 styles.PaymentBox,
+                 {
+                   borderWidth: RF(1),
+                   borderColor: selectedDelivery === 'paypal' ? Secondary : White,
+                 },
+               ]}
+             >
             <Image  source={PayPalIcon} style={[IconSize,{tintColor:null,marginBottom:RF(10)}]}/>
             <Text style={TextMedium}>Paypal</Text>
 
 
-        </View>
-         <View style={styles.PaymentBox}>
-            <Image  source={CardIcon} style={[IconSize,{tintColor:null,marginBottom:RF(10)}]}/>
+</TouchableOpacity>       
+
+
+  <TouchableOpacity
+               onPress={() => setSelectedDelivery('credit')}
+               style={[
+                 styles.PaymentBox,
+                 {
+                   borderWidth: RF(1),
+                   borderColor: selectedDelivery === 'credit' ? Secondary : White,
+                 },
+               ]}
+             >            <Image  source={CardIcon} style={[IconSize,{tintColor:null,marginBottom:RF(10)}]}/>
             <Text style={TextMedium}>Credit Card</Text>
 
 
-        </View>
-         <View style={styles.PaymentBox}>
-            <Image  source={AppleIcon} style={[IconSize,{tintColor:null,marginBottom:RF(10)}]}/>
+</TouchableOpacity>       
+
+  <TouchableOpacity
+               onPress={() => setSelectedDelivery('apple')}
+               style={[
+                 styles.PaymentBox,
+                 {
+                   borderWidth: RF(1),
+                   borderColor: selectedDelivery === 'apple' ? Secondary : White,
+                 },
+               ]}
+             >            <Image  source={AppleIcon} style={[IconSize,{tintColor:null,marginBottom:RF(10)}]}/>
             <Text style={TextMedium}>Apple Pay</Text>
 
 
-        </View>
+</TouchableOpacity>       
 
 
       </View>
@@ -211,29 +258,55 @@ const AboutMeScreen = () => {
             onChange={(name)=> setName(name)}
             />
 
-          <InfoInput
-            Img={CardIcon} style={IconSize}
-            placeholder={'Card Card Number'}
-            value={number}
-            onChange={(number)=> setNumber(number)}
-            />
+           <InfoInput
+                Img={CardIcon}
+                style={IconSize}
+                placeholder={'Card Number'}
+                value={number}
+                keyboardType="number-pad"
+                maxLength={19} 
+                onChange={text => setNumber(formatCardNumber(text))}
+              />
             <View style={styles.rowContainer}>
             <View style={{flex: 1, marginLeft: RF(5)}}>
           
-            <InfoInput 
-            Img={CalndarIcon} style={IconSize}
-            placeholder={'Month / Year'}
-              value={date}
-              onChange={(date)=> setDate(date)}
-            />
+            <TouchableOpacity onPress={() => setShowDatePicker(true)}>
+                    <InfoInput
+                      Img={CalndarIcon}
+                      style={IconSize}
+                      placeholder={'Month / Year'}
+                      value={date}
+                      editable={false} 
+                      showSoftInputOnFocus={false} 
+                      pointerEvents="none" 
+                    />
+                  </TouchableOpacity>
+
+                  {showDatePicker && (
+                    <DateTimePicker
+                      value={new Date()}
+                      mode="date"
+                      display="calendar"
+                      onChange={handleDateChange}
+                    />
+                  )}
             </View>
             <View style={{flex: 1, marginLeft: RF(5)}}>
 
 
-            <InfoInput 
-            Img={PasswordIcon} style={IconSize}
-            placeholder={'CCV'}
-            />
+            <InfoInput
+                    Img={PasswordIcon}
+                    style={IconSize}
+                    placeholder={'CCV'}
+                    value={ccv}
+                    keyboardType="number-pad"
+                    maxLength={3}
+                    onChange={text => {
+                      const digitsOnly = text.replace(/\D/g, '');
+                      const finalValue = digitsOnly.slice(0, 3);
+                      setCcv(finalValue);
+                    }}
+                  />
             </View>
             </View>
           <View style={styles.SwitchContainer} >

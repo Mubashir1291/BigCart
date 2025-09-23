@@ -77,7 +77,7 @@ const WelcomeScreen = () => {
             {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
               <>
               <View style={ styles.TextInputContainer }>
-                <View style={{flexDirection:'row', alignItems:'center'}}>
+                <View style={{flexDirection:'row', alignItems:'center',gap:RF(10)}}>
                 <Image source={EmailIcon} style={styles.IconSize} />
 
                 <TextInput 
@@ -89,7 +89,7 @@ const WelcomeScreen = () => {
                   onBlur={handleBlur('email')}
                   value={values.email}
                   keyboardType="email-address"
-                  width='95%'
+                  width='90%'
                 />
 
                 </View>
@@ -104,7 +104,7 @@ const WelcomeScreen = () => {
               </View>
 
                <View style={ styles.TextInputContainer }>
-                <View style = {{flexDirection :'row' , alignItems:'center'}}>
+                <View style = {{flexDirection :'row' , alignItems:'center' ,gap:RF(10)}}>
                 <Image source={PasswordIcon} style={styles.IconSize} />
                 <TextInput
                   name="password"

@@ -26,8 +26,8 @@ const [Heart, setHeart] = useState([]);
     
 
   const navigation = useNavigation();
-  const backArrowHandle = () => {
-    navigation.navigate('NavBar');
+  const filterhandler = () => {
+    navigation.navigate('FilterScreen');
   };
 
   return (
@@ -43,6 +43,8 @@ const [Heart, setHeart] = useState([]);
             navigation={navigation}
             text = "Vegetables"
             Img={FilterIcon}
+            onClick={filterhandler}
+            tintColor2={'black'}
           />
         </View>
 

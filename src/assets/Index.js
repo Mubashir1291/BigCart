@@ -1,4 +1,10 @@
 
+export const SplashIcon = require('../assets/images/SplashLogo.png');
+
+
+
+
+
 // // App Images
 
  export const AppLogo = require('../assets/images/Bigcart.png');
@@ -10,7 +16,9 @@
   export const homebackImage = require('../assets/images/Main_fruits.jpg')
 
 
-// // APP Icons
+
+
+
 
 
 //  // welcome screen 

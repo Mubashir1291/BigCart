@@ -79,7 +79,7 @@ const SignupScreen = () => {
               {/* Email Input  */}
 
               <View style={ styles.TextInputContainer }>
-              <View style={{flexDirection:'row', alignItems:'center'}}>
+              <View style={{flexDirection:'row', alignItems:'center',gap:RF(10)}}>
                 
                 <Image source={EmailIcon} style={styles.IconSize} />
 
@@ -92,7 +92,7 @@ const SignupScreen = () => {
                   onBlur={handleBlur('email')}
                   value={values.email}
                   keyboardType="email-address"
-                  width='96%'
+                  width='90%'
                 />
                 </View>
                 </View>
@@ -106,7 +106,7 @@ const SignupScreen = () => {
 
               {/* Phone Number Input */}
                <View style={ styles.TextInputContainer }>
-              <View style={{flexDirection:'row', alignItems:'center'}}>
+              <View style={{flexDirection:'row', alignItems:'center',gap:RF(10)}}>
                 
                 <Image source={TeleIcon} style={styles.IconSize} />
 
@@ -135,7 +135,7 @@ const SignupScreen = () => {
               {/* Password Input */}
 
                <View style={ styles.TextInputContainer }>
-                <View style={{flexDirection:'row', alignItems:'center'}}>
+                <View style={{flexDirection:'row', alignItems:'center' ,gap:RF(10)}}>
                 
                 <Image source={PasswordIcon} style={styles.IconSize} />
                 <TextInput

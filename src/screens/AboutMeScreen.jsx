@@ -84,7 +84,7 @@ const AboutMeScreen = () => {
 
         {/* Change Password */}
         <View style={{ gap: RF(2) , paddingTop:RF(20)}}>
-           <Text style={[TextSemiBold, { color: SimpleText, fontSize: RF(16) }]}>Change password </Text>
+           <Text style={[TextSemiBold, { color: SimpleText, fontSize: RF(16) }]}>Change password</Text>
            <InfoInput
            Img={PasswordIcon}
            placeholder={'Current Password'}           
@@ -98,14 +98,14 @@ const AboutMeScreen = () => {
                     {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
                       <>
                       <View style={ styles.TextInputContainer }>
-                        <View style={{flexDirection:'row', alignItems:'center'}}>
+                        <View style={{flexDirection:'row', alignItems:'center',gap:RF(10)}}>
                         <Image source={PasswordIcon} style={IconSize} />
                          <TextInput
                           name="password"
                           placeholder="Password"
                            placeholderTextColor={'grey'}
                            color={'black'}
-                           width= "85%"
+                           width= "80%"
         
                           onChangeText={handleChange('password')}
                           onBlur={handleBlur('password')}
@@ -132,14 +132,14 @@ const AboutMeScreen = () => {
                       </View>
         
                        <View style={ styles.TextInputContainer }>
-                        <View style = {{flexDirection :'row' , alignItems:'center'}}>
+                        <View style = {{flexDirection :'row' , alignItems:'center',gap:RF(10)}}>
                         <Image source={PasswordIcon} style={IconSize} />
                         <TextInput
                           name="ConfirmPassword"
                           placeholder="Confirm Password"
                            placeholderTextColor={'grey'}
                            color={'black'}
-                           width= "85%"
+                           width= "80%"
                           onChangeText={handleChange('ConfirmPassword')}
                           onBlur={handleBlur('ConfirmPassword')}
                           value={values.ConfirmPassword}
