@@ -33,6 +33,8 @@ import AddCardScreen from './src/screens/AddCardScreen';
 import PaymentMethodScreen from './src/screens/PaymentMethodScreen';
 import ReviewScreen from './src/screens/ReviewScreen';
 import SplashScreen from './src/screens/SplashScreen';
+import CheckoutScreen from './src/screens/CheckoutScreen';
+
 
 import { useEffect, useState } from 'react';
 
@@ -89,6 +91,8 @@ function App() {
         />
         <Stack.Screen name="VerifyNumberScreen"component={VerifyNumberScreen}
         />
+        <Stack.Screen name="CheckoutScreen" component={CheckoutScreen} />
+
         <Stack.Screen name="OtpScreen" component={OtpScreen} />
       </Stack.Navigator>
     </NavigationContainer>

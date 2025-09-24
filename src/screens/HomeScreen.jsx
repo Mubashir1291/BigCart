@@ -1,3 +1,4 @@
+
 import {
   StyleSheet,
   Text,
@@ -46,7 +47,11 @@ import React, { useState } from 'react';
 import Swiper from 'react-native-swiper';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { TextBold, TextMedium, TextSemiBold } from '../components/IconSize/Sizes';
+import {
+  TextBold,
+  TextMedium,
+  TextSemiBold,
+} from '../components/IconSize/Sizes';
 
 const CategoriesImages = [
   { id: '1', source: CatIconvegitable, color: '#E6F2EA', name: 'Vegetables' },
@@ -115,243 +120,219 @@ const ProductsImages = [
 const HomeScreen = () => {
   const navigation = useNavigation();
   const [counts, setCounts] = useState({});
-  const [selectedItem, setSelectedItem] = useState(null);
   const [Heart, setHeart] = useState([]);
 
-  const increaseCount = (item) => {
+
+  // ✅ CHANGED: replaced single `selectedItem` with selectedItems array
+
+  const [selectedItems, setSelectedItems] = useState([]);
+
+  // ✅ CHANGED: replaced single expandedId with array expandedIds
+
+  const [expandedIds, setExpandedIds] = useState([]);
+
+  // ✅ CHANGED: add/remove items in counts + selectedItems
+
+  const increaseCount = item => {
     setCounts(prev => ({ ...prev, [item.id]: (prev[item.id] || 0) + 1 }));
-    setSelectedItem(item);
+    if (!selectedItems.some(i => i.id === item.id)) {
+      setSelectedItems(prev => [...prev, item]);
+    }
+    if (!expandedIds.includes(item.id)) {
+      setExpandedIds(prev => [...prev, item.id]);
+    }
   };
 
-  const decreaseCount = (item) => {
-    setCounts(prev => ({
-      ...prev,
-      [item.id]: prev[item.id] > 1 ? prev[item.id] - 1 : 1,
-    }));
-    setSelectedItem(item);
+  const decreaseCount = item => {
+    setCounts(prev => {
+      const updated = { ...prev };
+      if ((updated[item.id] || 1) > 1) {
+        updated[item.id] = updated[item.id] - 1;
+      } else {
+        delete updated[item.id];
+        setSelectedItems(prev => prev.filter(i => i.id !== item.id));
+        setExpandedIds(prev => prev.filter(id => id !== item.id)); // ✅ CHANGED
+      }
+      return updated;
+    });
   };
+
+  // ✅ CHANGED: functions for total items and total price
+  const getTotalQuantity = () =>
+    Object.values(counts).reduce((a, b) => a + b, 0);
+
+   console.log(JSON.stringify(counts),'this is calling')
+
+    const getTotalPrice = () =>
+    selectedItems.reduce(
+    (sum, item) =>
+        sum + parseFloat(item.price) * (counts[item.id] || 1),
+      0
+    );
 
   const CategoryHandle = () => navigation.navigate('CategoryScreen');
   const VegitableHandle = () => navigation.navigate('VegitableScreen');
   const SearchScreenHandle = () => navigation.navigate('SearchScreen');
   const FilterScreenHandle = () => navigation.navigate('FilterScreen');
-    const [expandedId, setExpandedId] = useState(null);
-
-    
-  
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView>
         <View style={styles.MainContainer}>
-          {/* Search Bar */}
-          <View style={styles.SearchInputContainer}>
-            <TouchableOpacity onPress={SearchScreenHandle}>
-              <Image source={SearchIcon} style={styles.searchIcon} />
-            </TouchableOpacity>
 
-            <TextInput
-              style={styles.searchInput}
-              placeholder=" Search Keyword..."
-              placeholderTextColor={'grey'}
-              color={'black'}
-            />
-            <TouchableOpacity onPress={FilterScreenHandle}>
-              <Image source={FilterIcon} style={styles.filterIcon} />
-            </TouchableOpacity>
-          </View>
-
-          {/* Main Image Swiper */}
-          <View style={{ width: '100%', height: RF(283), alignItems: 'center', paddingHorizontal: RF(15) }}>
-            <Swiper
-              autoplay={true}
-              showsButtons={false}
-              loop
-              dot={<View style={styles.dotStyle} />}
-              activeDot={<View style={styles.activeDotStyle} />}
-              paginationStyle={styles.paginationStyle}
-            >
-              <ImageBackground source={HomeBackGround} style={styles.mainBannerImage}>
-                <View style={styles.offtextView}>
-                  <Text style={styles.offtext}> 20% Off on your</Text>
-                  <Text style={styles.offtext}> first purchase </Text>
-                </View>
-              </ImageBackground>
-
-              <ImageBackground source={homebackImage} style={styles.mainBannerImage} />
-            </Swiper>
-          </View>
-
-          {/* Category Section */}
-          <View style={styles.sectionHeader}>
-            <Text style={styles.sectionHeaderText}>Categories</Text>
-            <TouchableOpacity onPress={CategoryHandle}>
-              <Image source={RightIcon} style={styles.rightArrowIcon} />
-            </TouchableOpacity>
-          </View>
-
-          <FlatList
-            data={CategoriesImages}
-            renderItem={({ item }) => (
-              <View style={styles.categoryItem}>
-                <View style={[styles.categoryImageWrapper, { backgroundColor: item?.color }]}>
-                  <Image source={item.source} style={styles.categoryImage} />
-                </View>
-                <Text style={styles.categoryNameText}>{item.name}</Text>
-              </View>
-            )}
-            keyExtractor={item => item.id}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.flatListContainer}
-          />
-
-          {/* Featured Products Section */}
-          <View style={styles.sectionHeader}>
-            <Text style={styles.sectionHeaderText}>Featured Products</Text>
-            <TouchableOpacity onPress={VegitableHandle}>
-              <Image source={RightIcon} style={styles.rightArrowIcon} />
-            </TouchableOpacity>
-          </View>
-
-          <View style={{ width: '100%', alignItems: 'center', padding: 10, justifyContent: 'center' }}>
-          <FlatList
-  data={ProductsImages}
-  renderItem={({ item }) => (
-    <TouchableOpacity
-      onPress={() => navigation.navigate('ProductDetailsScreen', { Detail: item })}
-      style={styles.productCardWrapper}
-    >
-      <View style={styles.productCard}>
-        <View style={styles.NewTagWrapper}>
-          <Text style={styles.NewTagTextWrapper}> New</Text>
-        </View>
-
-        <TouchableOpacity
-          onPress={() => {
-            if (Heart.includes(item.id)) {
-              setHeart(Heart.filter(id => id !== item.id));
-            } else {
-              setHeart([...Heart, item.id]);
-            }
-          }}
-        >
-          <View style={styles.HeartWrapper}>
-            <Image
-              source={Heart.includes(item.id) ? HeartFilIcon : HeartIcon}
-              style={styles.HeartIconStyle}
-            />
-          </View>
-        </TouchableOpacity>
-
-        <View style={[styles.productImageWrapper, { backgroundColor: item?.color }]}>
-          <Image source={item.source} style={styles.productImage} />
-        </View>
-        <Text style={styles.productPrice}>${item.price}</Text>
-        <Text style={styles.productName}>{item.name}</Text>
-        <Text style={styles.productSize}>{item.Size}</Text>
-      </View>
-
-      {/* Quantity / Plus Button */}
-      {expandedId === item.id ? (
-        <View style={styles.quantityBar}>
-          <TouchableOpacity
-            onPress={() => {
-              decreaseCount(item);
-              if ((counts[item.id] || 1) <= 1) {
-                setExpandedId(null); 
-                
-              }
-              else if (
-                counts[item.id]===0
-              )
-              {
-               setSelectedItem(null)
-
-              }
+          <View
+            style={{
+              width: '100%',
+              alignItems: 'center',
+              padding: 10,
+              justifyContent: 'center',
             }}
           >
-<Image 
-  source={counts[item.id] === 1 ? DeleteIcon : MinusIcon} 
-  style={styles.MinusBar} 
-/>          </TouchableOpacity>
+            <FlatList
+              data={ProductsImages}
+              renderItem={({ item }) => (
+                <View style={styles.productCardWrapper}>
+                  {/* Product Card */}
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate('ProductDetailsScreen', {
+                        Detail: item,
+                      })
+                    }
+                    style={styles.productCard}
+                  >
+                    <View style={styles.NewTagWrapper}>
+                      <Text style={styles.NewTagTextWrapper}> New</Text>
+                    </View>
 
-
-          <Text style={styles.quantityBarText}>{counts[item.id] || 1}</Text>
-
-          <TouchableOpacity onPress={() => increaseCount(item)}>
-            <Image source={PlusIcon} style={styles.MinusBar} />
-          </TouchableOpacity>
-        </View>
-      ) : (
-        <TouchableOpacity
-          style={styles.singlePlusWrapper}
-          onPress={() => {
-            increaseCount(item);
-            setExpandedId(item.id);
-          }}
-        >
-          <Image source={PlusIcon} style={styles.MinusBar} />
-        </TouchableOpacity>
-      )}
-    </TouchableOpacity>
-    
-  
-  )}
-  
-  keyExtractor={item => item.id}
-  horizontal={false}
-  showsHorizontalScrollIndicator={false}
-  numColumns={2}
-  contentContainerStyle={{ alignItems: 'center' }}
-/>
-
-          </View>
-          <View style ={{ height:RF(70)}}/>
-        </View>
-      </ScrollView>
-
-      {selectedItem && (
-        <View style={styles.BottomContainer}>
-          <View style={styles.viewButton}>
-          <View style={styles.itemCircle}>
-          <Text style={{ fontSize: RF(15), fontFamily: 'Poppins-Regular', color: White , alignSelf:'center',lineHeight:30}}>
-          {counts[selectedItem.id] || 1}
-          </Text>
-          </View>
-           <Text style={[ TextBold,{ color: White, fontSize:RF(15)}]}>View you cart</Text>
-
-          <Text style={{ fontSize: RF(14), fontFamily: 'Poppins-Bold', color:White }}>
-          ${(parseFloat(selectedItem.price) * (counts[selectedItem.id] || 1)).toFixed(2)}
-          </Text>
-          </View>
-        </View>
-      )}
-
-        {/* {expandedId === item.id && (
-
-        <View style={styles.quantityBar}>
-                    <TouchableOpacity onPress={() => decreaseCount(item)}>
-                      <Image source={MinusIcon} style={styles.MinusBar} />
+                    <TouchableOpacity
+                      onPress={() => {
+                        if (Heart.includes(item.id)) {
+                          setHeart(Heart.filter(id => id !== item.id));
+                        } else {
+                          setHeart([...Heart, item.id]);
+                        }
+                      }}
+                      style={styles.HeartWrapper}
+                    >
+                      <Image
+                        source={
+                          Heart.includes(item.id)
+                            ? HeartFilIcon
+                            : HeartIcon
+                        }
+                        style={styles.HeartIconStyle}
+                      />
                     </TouchableOpacity>
 
-                    <View>
+                    <View
+                      style={[
+                        styles.productImageWrapper,
+                        { backgroundColor: item?.color },
+                      ]}
+                    >
+                      <Image
+                        source={item.source}
+                        style={styles.productImage}
+                      />
+                    </View>
+
+                    <Text style={styles.productPrice}>${item.price}</Text>
+                    <Text style={styles.productName}>{item.name}</Text>
+                    <Text style={styles.productSize}>{item.Size}</Text>
+                  </TouchableOpacity>
+
+                  {/* ✅ CHANGED: expandedIds used instead of expandedId */}
+                  {expandedIds.includes(item.id) ? (
+                    <View style={styles.quantityBar}>
+                      <TouchableOpacity
+                        onPress={() => {
+                          if ((counts[item.id] || 1) <= 1) {
+                            decreaseCount(item);
+                          } else {
+                            decreaseCount(item);
+                          }
+                        }}
+                      >
+                        <Image
+                          source={
+                            (counts[item.id] || 1) <= 1
+                              ? DeleteIcon
+                              : MinusIcon
+                          }
+                          style={[
+                            styles.MinusBar,
+                            (counts[item.id] || 1) <= 1 && {
+                              tintColor: 'red',
+                              width: RF(20),
+                              height: RF(20),
+                            },
+                          ]}
+                        />
+                      </TouchableOpacity>
+
                       <Text style={styles.quantityBarText}>
                         {counts[item.id] || 1}
                       </Text>
-                    </View>
 
-                    <TouchableOpacity onPress={() => increaseCount(item)}>
+                      <TouchableOpacity
+                        onPress={() => increaseCount(item)}
+                      >
+                        <Image source={PlusIcon} style={styles.MinusBar} />
+                      </TouchableOpacity>
+                    </View>
+                  ) : (
+                    <TouchableOpacity
+                      style={styles.singlePlusWrapper}
+                      onPress={() => increaseCount(item)} // ✅ simplified
+                    >
                       <Image source={PlusIcon} style={styles.MinusBar} />
                     </TouchableOpacity>
-                  </View> 
-                
-                )} */}
-      
-      
+                  )}
+                </View>
+              )}
+              keyExtractor={item => item.id}
+              numColumns={2}
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{ alignItems: 'center' }}
+            />
+          </View>
+          <View style={{ height: RF(70) }} />
+        </View>
+      </ScrollView>
+
+      {/* ✅ CHANGED: Single bottom cart view showing total items + price */}
+      {selectedItems.length > 0 && (
+        <View style={styles.BottomContainer}>
+         <TouchableOpacity
+  style={styles.viewButton}
+  onPress={() =>
+    navigation.navigate('CheckoutScreen', {
+      selectedItems,
+      counts,
+    })
+  }
+>
+  <View style={styles.itemCircle}>
+    <Text style={{ fontSize: RF(15), color: White, lineHeight: 30 }}>
+      {getTotalQuantity()}
+    </Text>
+  </View>
+  <Text style={[TextBold, { color: White, fontSize: RF(15) }]}>
+    View your cart
+  </Text>
+  <Text style={{ fontSize: RF(14), fontFamily: 'Poppins-Bold', color: White }}>
+    ${getTotalPrice().toFixed(2)}
+  </Text>
+</TouchableOpacity>
+
+          </View>
+      )}
     </SafeAreaView>
   );
 };
+
+
 
 export default HomeScreen;
 
@@ -366,7 +347,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: '90%',
+    width: '95%',
     height: RF(50),
     borderRadius: RF(5),
     elevation: RF(1),
@@ -489,8 +470,7 @@ const styles = StyleSheet.create({
   },
   quantityBar: {
     width: '100%',
-    height: RF(30),
-    backgroundColor: White,
+    height: RF(30),    backgroundColor: White,
     marginTop: RF(5),
     alignItems: 'center',
     flexDirection: 'row',
@@ -504,6 +484,7 @@ const styles = StyleSheet.create({
     width: RF(15),
     height: RF(15),
     tintColor: Secondary,
+    resizeMode: 'contain',
   },
   NewTagWrapper: {
     paddingHorizontal: RF(10),
@@ -527,7 +508,8 @@ const styles = StyleSheet.create({
   HeartWrapper: {
     width: '100%',
     position: 'absolute',
-    left: RF(50),
+    left: RF(150),
+    top:RF(7)
   },
   dotStyle: {
     backgroundColor: 'rgba(0,0,0,.2)',
@@ -566,42 +548,38 @@ const styles = StyleSheet.create({
     backgroundColor: White,
     padding: RF(15),
     borderTopLeftRadius: RF(15),
-    borderTopRightRadius: RF(15), 
+    borderTopRightRadius: RF(15),
     alignItems: 'center',
-borderWidth:RF(1),
-borderColor:Primary,
-borderBottomWidth:RF(0)
-
-
-},
-  viewButton:{
-    width:'100%',
-     flexDirection:'row',
-     backgroundColor: Secondary,
-     paddingHorizontal:RF(20),
-     paddingVertical:RF(10),
-     borderRadius:RF(10),
-     alignItems:'center',
-     justifyContent:'space-between'
-
-
+    borderWidth: RF(1),
+    borderColor: Primary,
+    borderBottomWidth: RF(0),
   },
-  itemCircle:
-  {
-    width:RF(30),
-    height:RF(30), 
-    borderRadius:RF(25),
-    borderColor:'#fFFFFF',
-    borderWidth:RF(1.5),
-    alignItems:'center',
-    justifyContent:'center'},
+  viewButton: {
+    width: '100%',
+    flexDirection: 'row',
+    backgroundColor: Secondary,
+    paddingHorizontal: RF(20),
+    paddingVertical: RF(10),
+    borderRadius: RF(10),
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  itemCircle: {
+    width: RF(30),
+    height: RF(30),
+    borderRadius: RF(25),
+    borderColor: '#fFFFFF',
+    borderWidth: RF(1.5),
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 
-    singlePlusWrapper: {
-  width: '100%',
-  height: RF(30),
-  backgroundColor: White,
-  marginTop: RF(5),
-  alignItems: 'center',
-  justifyContent: 'center',
-},
+  singlePlusWrapper: {
+    width: '100%',
+    height: RF(30),
+    backgroundColor: White,
+    marginTop: RF(5),
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });

@@ -6,7 +6,6 @@ import { RF } from '../Utils/Responsive'
 import { IconSize, TextBold, TextMedium, TextRegular, TextSemiBold } from '../components/IconSize/Sizes'
 import { useNavigation, useRoute } from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
-import HeaderText from '../components/header/HeaderText'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 const ProductDetailsScreen = () => {
@@ -52,8 +51,8 @@ const decreaseQuantity = () => {
         <View  style={styles.ProductImageContainer}>
             <View style={[styles.ImageBackgroundCon,{backgroundColor: route?.params?.Detail?.color}]}></View>
 
-        <ImageBackground source={route?.params?.Detail?.source} style={[IconSize,{tintColor:null,height:RF(410),width:'100%'}]}>
-        <TouchableOpacity onPress={backscreen}> <Image source={BackIcon} style={[IconSize,{tintColor:'black', marginLeft:RF(10),marginTop:RF(20)}]}/> </TouchableOpacity>  
+        <ImageBackground source={route?.params?.Detail?.source} style={[IconSize,{tintColor:null,height:RF(300),width:'100%',marginTop:RF(30)}]}>
+        <TouchableOpacity onPress={backscreen}> <Image source={BackIcon} style={[IconSize,{tintColor:'black', marginLeft:RF(10)}]}/> </TouchableOpacity>  
          </ImageBackground > 
          </View>
          <View style ={styles.DetailsContainer}>
@@ -144,7 +143,7 @@ const styles = StyleSheet.create({
         width:'100%',
         height:RF(400),
         backgroundColor:White,
-        alignItems:'center'
+        alignItems:'center',
     },
     DetailsContainer:{
         paddingHorizontal:RF(15),
@@ -169,7 +168,7 @@ const styles = StyleSheet.create({
       flexDirection:'row',
       width:'100%',
       alignItems:'center',
-gap:RF(2)
+      gap:RF(2)
 
     },
     QuantityMinusContainer:{
@@ -220,10 +219,11 @@ GetStartedBtn: {
     ImageBackgroundCon:{
 
         width:'100%',
-        height:RF(300),
+        height:RF(380),
         borderBottomRightRadius:RF(250),
         borderBottomLeftRadius:RF(250),
-        position: 'absolute'
+        position: 'absolute',
+
 
     }
     
