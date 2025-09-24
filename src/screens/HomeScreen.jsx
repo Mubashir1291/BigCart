@@ -21,6 +21,7 @@ import {
   CatIconGrocery,
   CatIconHouseHold,
   CatIconvegitable,
+  DeleteIcon,
   FilterIcon,
   Grapes,
   HeartFilIcon,
@@ -118,7 +119,7 @@ const HomeScreen = () => {
   const [Heart, setHeart] = useState([]);
 
   const increaseCount = (item) => {
-    setCounts(prev => ({ ...prev, [item.id]: (prev[item.id] || 1) + 1 }));
+    setCounts(prev => ({ ...prev, [item.id]: (prev[item.id] || 0) + 1 }));
     setSelectedItem(item);
   };
 
@@ -134,6 +135,10 @@ const HomeScreen = () => {
   const VegitableHandle = () => navigation.navigate('VegitableScreen');
   const SearchScreenHandle = () => navigation.navigate('SearchScreen');
   const FilterScreenHandle = () => navigation.navigate('FilterScreen');
+    const [expandedId, setExpandedId] = useState(null);
+
+    
+  
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -210,68 +215,99 @@ const HomeScreen = () => {
           </View>
 
           <View style={{ width: '100%', alignItems: 'center', padding: 10, justifyContent: 'center' }}>
-            <FlatList
-              data={ProductsImages}
-              renderItem={({ item }) => (
-                <TouchableOpacity
-                  onPress={() => navigation.navigate('ProductDetailsScreen', { Detail: item })}
-                  style={styles.productCardWrapper}
-                >
-                  <View style={styles.productCard}>
-                    <View style={styles.NewTagWrapper}>
-                      <Text style={styles.NewTagTextWrapper}> New</Text>
-                    </View>
+          <FlatList
+  data={ProductsImages}
+  renderItem={({ item }) => (
+    <TouchableOpacity
+      onPress={() => navigation.navigate('ProductDetailsScreen', { Detail: item })}
+      style={styles.productCardWrapper}
+    >
+      <View style={styles.productCard}>
+        <View style={styles.NewTagWrapper}>
+          <Text style={styles.NewTagTextWrapper}> New</Text>
+        </View>
 
-                    <TouchableOpacity
-                      onPress={() => {
-                        if (Heart.includes(item.id)) {
-                          setHeart(Heart.filter(id => id !== item.id));
-                        } else {
-                          setHeart([...Heart, item.id]);
-                        }
-                      }}
-                    >
-                      <View style={styles.HeartWrapper}>
-                        <Image
-                          source={Heart.includes(item.id) ? HeartFilIcon : HeartIcon}
-                          style={styles.HeartIconStyle}
-                        />
-                      </View>
-                    </TouchableOpacity>
-
-                    <View style={[styles.productImageWrapper, { backgroundColor: item?.color }]}>
-                      <Image source={item.source} style={styles.productImage} />
-                    </View>
-                    <Text style={styles.productPrice}>${item.price}</Text>
-                    <Text style={styles.productName}>{item.name}</Text>
-                    <Text style={styles.productSize}>{item.Size}</Text>
-                  </View>
-
-                  <View style={styles.quantityBar}>
-                    <TouchableOpacity onPress={() => decreaseCount(item)}>
-                      <Image source={MinusIcon} style={styles.MinusBar} />
-                    </TouchableOpacity>
-
-                    <View>
-                      <Text style={styles.quantityBarText}>
-                        {counts[item.id] || 1}
-                      </Text>
-                    </View>
-
-                    <TouchableOpacity onPress={() => increaseCount(item)}>
-                      <Image source={PlusIcon} style={styles.MinusBar} />
-                    </TouchableOpacity>
-                  </View>
-                </TouchableOpacity>
-                
-              )}
-              keyExtractor={item => item.id}
-              horizontal={false}
-              showsHorizontalScrollIndicator={false}
-              numColumns={2}
-              contentContainerStyle={{ alignItems: 'center' }}
+        <TouchableOpacity
+          onPress={() => {
+            if (Heart.includes(item.id)) {
+              setHeart(Heart.filter(id => id !== item.id));
+            } else {
+              setHeart([...Heart, item.id]);
+            }
+          }}
+        >
+          <View style={styles.HeartWrapper}>
+            <Image
+              source={Heart.includes(item.id) ? HeartFilIcon : HeartIcon}
+              style={styles.HeartIconStyle}
             />
           </View>
+        </TouchableOpacity>
+
+        <View style={[styles.productImageWrapper, { backgroundColor: item?.color }]}>
+          <Image source={item.source} style={styles.productImage} />
+        </View>
+        <Text style={styles.productPrice}>${item.price}</Text>
+        <Text style={styles.productName}>{item.name}</Text>
+        <Text style={styles.productSize}>{item.Size}</Text>
+      </View>
+
+      {/* Quantity / Plus Button */}
+      {expandedId === item.id ? (
+        <View style={styles.quantityBar}>
+          <TouchableOpacity
+            onPress={() => {
+              decreaseCount(item);
+              if ((counts[item.id] || 1) <= 1) {
+                setExpandedId(null); 
+                
+              }
+              else if (
+                counts[item.id]===0
+              )
+              {
+               setSelectedItem(null)
+
+              }
+            }}
+          >
+<Image 
+  source={counts[item.id] === 1 ? DeleteIcon : MinusIcon} 
+  style={styles.MinusBar} 
+/>          </TouchableOpacity>
+
+
+          <Text style={styles.quantityBarText}>{counts[item.id] || 1}</Text>
+
+          <TouchableOpacity onPress={() => increaseCount(item)}>
+            <Image source={PlusIcon} style={styles.MinusBar} />
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <TouchableOpacity
+          style={styles.singlePlusWrapper}
+          onPress={() => {
+            increaseCount(item);
+            setExpandedId(item.id);
+          }}
+        >
+          <Image source={PlusIcon} style={styles.MinusBar} />
+        </TouchableOpacity>
+      )}
+    </TouchableOpacity>
+    
+  
+  )}
+  
+  keyExtractor={item => item.id}
+  horizontal={false}
+  showsHorizontalScrollIndicator={false}
+  numColumns={2}
+  contentContainerStyle={{ alignItems: 'center' }}
+/>
+
+          </View>
+          <View style ={{ height:RF(70)}}/>
         </View>
       </ScrollView>
 
@@ -291,6 +327,27 @@ const HomeScreen = () => {
           </View>
         </View>
       )}
+
+        {/* {expandedId === item.id && (
+
+        <View style={styles.quantityBar}>
+                    <TouchableOpacity onPress={() => decreaseCount(item)}>
+                      <Image source={MinusIcon} style={styles.MinusBar} />
+                    </TouchableOpacity>
+
+                    <View>
+                      <Text style={styles.quantityBarText}>
+                        {counts[item.id] || 1}
+                      </Text>
+                    </View>
+
+                    <TouchableOpacity onPress={() => increaseCount(item)}>
+                      <Image source={PlusIcon} style={styles.MinusBar} />
+                    </TouchableOpacity>
+                  </View> 
+                
+                )} */}
+      
       
     </SafeAreaView>
   );
@@ -537,5 +594,14 @@ borderBottomWidth:RF(0)
     borderColor:'#fFFFFF',
     borderWidth:RF(1.5),
     alignItems:'center',
-    justifyContent:'center'}
+    justifyContent:'center'},
+
+    singlePlusWrapper: {
+  width: '100%',
+  height: RF(30),
+  backgroundColor: White,
+  marginTop: RF(5),
+  alignItems: 'center',
+  justifyContent: 'center',
+},
 });

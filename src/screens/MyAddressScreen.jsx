@@ -93,7 +93,8 @@ const AboutMeScreen = () => {
     <ScrollView>
     <View style={{ flex: 1 }}>
       <HeadertText
-navigation={navigation}        tintColor={SimpleText}
+navigation={navigation}    
+    tintColor={SimpleText}
         text="My Address"
         Img={AddIcon}
         onClick={AddAddressHandler}
