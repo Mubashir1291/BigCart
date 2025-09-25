@@ -8,16 +8,21 @@ import { RF } from '../Utils/Responsive';
 import LinearGradient from 'react-native-linear-gradient';
 import { TextMedium } from '../components/IconSize/Sizes';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { store } from '../redux/store';
+import { setIsOnBoarding } from '../redux/Reducers/userReducer';
 
 
 
 
 
 const OnBoard1 = () => {
+    
     const navigation = useNavigation();
 
     const welcomeScreenHandle = () => {
-         navigation.navigate('WelcomeScreen');
+        console.log('this is calling')
+        store.dispatch(setIsOnBoarding(false))
+        //  navigation.navigate('WelcomeScreen');
        
     };
 

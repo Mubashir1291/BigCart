@@ -10,6 +10,8 @@ import {Formik} from 'formik';
 import * as Yup from 'yup';
 import { useState } from 'react';
 import { TextMedium } from '../components/IconSize/Sizes';
+import { store } from '../redux/store';
+import { setIsLogin } from '../redux/Reducers/userReducer';
 
 
   
@@ -37,7 +39,7 @@ const WelcomeScreen = () => {
 
   const SignInHandler = () => {
 
-    navigation.navigate('NavBar');
+ store.dispatch(setIsLogin(true))
   }
     const SignupHandle = () => {
 

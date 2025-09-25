@@ -93,12 +93,17 @@ const Pages = [
   { id: '7', source: LogoutIcon, name: 'Logout', screen: 'SignInScreen' },
 ];
 import { useState } from 'react';
+import { store } from '../redux/store';
+import { setIsLogin } from '../redux/Reducers/userReducer';
 
 const UserProfileScreen = () => {
+  
   const navigation = useNavigation();
 
   const backArrowHandle = item => {
-    navigation.navigate(item?.screen);
+    if(item?.name==='Logout'){
+      store.dispatch(setIsLogin(false))
+    }
   };
 
   // const handleCamera = async () => {
