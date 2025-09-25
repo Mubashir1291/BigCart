@@ -2,11 +2,22 @@ import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
 import { RF } from '../Utils/Responsive';
 import { White, Secondary } from '../styles/colors/colorsCode';
-import { MinusIcon, PlusIcon, DeleteIcon } from '../assets/Index';
+import { MinusIcon, PlusIcon, DeleteIcon, FilterIcon } from '../assets/Index';
+import HeadertText from '../components/header/HeaderText';
+import { useNavigation } from '@react-navigation/native';
+import Buttons from '../components/buttons/Buttons';
+
+
 
 const CheckoutScreen = ({ route }) => {
   const { selectedItems, counts } = route.params;
+
   const [cartCounts, setCartCounts] = useState(counts);
+  const navigation = useNavigation();
+  const checkouthandler =()=>{
+    navigation.navigate('ShippingMethodScreen')
+  }
+  
 
   const increaseCount = item => {
     setCartCounts(prev => ({ ...prev, [item.id]: (prev[item.id] || 0) + 1 }));
@@ -32,9 +43,22 @@ const CheckoutScreen = ({ route }) => {
 
   return (
     <View style={{ flex: 1, backgroundColor: White, padding: RF(15) }}>
+       <View style={styles.HeaderContainer}>
+            <View style={styles.CategoryPageContainer}>
+              <HeadertText
+                navigation={navigation}
+                text="Shopping Cart"
+                Img={FilterIcon}
+                tintColor2={White}
+
+              />
+            </View>
+          </View>
+
       <FlatList
         data={selectedItems}
         keyExtractor={item => item.id}
+        showsVerticalScrollIndicator={false}
         renderItem={({ item }) =>
           cartCounts[item.id] ? (
             <View style={styles.cartItem}>
@@ -62,10 +86,12 @@ const CheckoutScreen = ({ route }) => {
       />
 
       <View style={styles.footer}>
-        <Text style={styles.totalText}>Total: ${getTotalPrice().toFixed(2)}</Text>
-        <TouchableOpacity style={styles.checkoutBtn}>
-          <Text style={{ color: White, fontSize: RF(16), fontWeight: '600' }}>Proceed to Checkout</Text>
-        </TouchableOpacity>
+        <View style={{flexDirection:'row' , width:'100%', justifyContent:'space-between'}}>
+        <Text style={styles.totalText}>Total</Text>
+
+        <Text style={styles.totalText}>${getTotalPrice().toFixed(2)}</Text>
+        </View>
+       <Buttons onPress={checkouthandler} text={'Proceed to Checkout'}/>
       </View>
     </View>
   );
@@ -81,10 +107,11 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#ddd',
     paddingBottom: RF(10),
+
   },
   cartImage: {
-    width: RF(50),
-    height: RF(50),
+    width: RF(75),
+    height: RF(75),
     resizeMode: 'contain',
     marginRight: RF(10),
   },
@@ -116,6 +143,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderColor: '#ddd',
     paddingTop: RF(10),
+    
   },
   totalText: {
     fontSize: RF(16),

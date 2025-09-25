@@ -1,43 +1,187 @@
-import { StyleSheet, Text, View, Image, FlatList, TouchableOpacity, ScrollView } from 'react-native';
-import React from 'react';
-import { BackIcon, FilterIcon , HeartIcon, Heart,HeartFilIcon, MinusIcon,PlusIcon} from '../assets/Index';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  Image,
+  TouchableOpacity,
+  FlatList,
+  ScrollView,
+  Dimensions,
+  ImageBackground,
+} from 'react-native';
 import { RF } from '../Utils/Responsive';
-import {Peach,Avacado,Pomgrante,Grapes,Brocli,Pineapple} from '../assets/Index';
-const ProductsImages = [
-  {id: '1', source: Peach,color: '#FFCEC1',name: 'Fresh Peach',price: '$8.00',Size: 'Dozen',},
-  {id: '2',source: Avacado,color: '#FCFFD9',name: 'Avacado',price: '$7.00',Size: '2.0 lbs',new: 'NEW',},
-  {id: '3',source: Pineapple,color: '#FFE6C2',name: 'Pineapple',price: '$9.90',Size: '1.50 lbs',},
-  {id: '4',source: Grapes,color: '#FEE1ED',name: 'Black Grapes',price: '$7.05',Size: '5.0 lbs',new: '-16%',},
-  { id: '5',source: Pomgrante,color: '#FFE3E2',name: ' Pomegrante',price: '$2.09',Size: '1.50 lbs',new: 'NEW', },
-  {id: '6',source: Brocli,color: '#D2FFD0',name: 'Fresh Broccoli',price: '$3.00',Size: '1.0 kg',},];
+import {
+  Avacado,
+  Brocli,
+  CatIconApple,
+  CatIconBabyCare,
+  CatIconDrink,
+  CatIconEdible,
+  CatIconGrocery,
+  CatIconHouseHold,
+  CatIconvegitable,
+  DeleteIcon,
+  FilterIcon,
+  Grapes,
+  HeartFilIcon,
+  HeartIcon,
+  HomeBackGround,
+  homebackImage,
+  MinusIcon,
+  Peach,
+  Pineapple,
+  PlusIcon,
+  Pomgrante,
+  RightIcon,
+  SearchIcon,
+} from '../assets/Index';
+import {
+  LightGrey,
+  Primary,
+  Secondary,
+  White,
+} from '../styles/colors/colorsCode';
+import React, { useState } from 'react';
+import Swiper from 'react-native-swiper';
 import { useNavigation } from '@react-navigation/native';
-import { Secondary,Primary } from '../styles/colors/colorsCode';
-import  { useState } from 'react';
-import  HeadertText from "../components/header/HeaderText"
 import { SafeAreaView } from 'react-native-safe-area-context';
+import {
+  TextBold,
+  TextMedium,
+  TextSemiBold,
+} from '../components/IconSize/Sizes';
+import  HeadertText from "../components/header/HeaderText"
 
 
+const CategoriesImages = [
+  { id: '1', source: CatIconvegitable, color: '#E6F2EA', name: 'Vegetables' },
+  { id: '2', source: CatIconApple, color: '#FFE9E5', name: 'Fruits' },
+  { id: '3', source: CatIconDrink, color: '#FFF6E3', name: 'Beverages' },
+  { id: '4', source: CatIconGrocery, color: '#F3EFFA', name: 'Grocery' },
+  { id: '5', source: CatIconEdible, color: '#DCF4F5', name: 'Edible Oil' },
+  { id: '6', source: CatIconHouseHold, color: '#FFE8F2', name: 'Household' },
+  { id: '7', source: CatIconBabyCare, color: '#D2EFFF', name: 'Baby Care' },
+];
 
+const ProductsImages = [
+  {
+    id: '1',
+    source: Peach,
+    color: '#FFCEC1',
+    name: 'Fresh Peach',
+    price: '8.00',
+    Size: 'Dozen',
+  },
+  {
+    id: '2',
+    source: Avacado,
+    color: '#FCFFD9',
+    name: 'Avacado',
+    price: '7.00',
+    Size: '2.0 lbs',
+    new: 'NEW',
+  },
+  {
+    id: '3',
+    source: Pineapple,
+    color: '#FFE6C2',
+    name: 'Pineapple',
+    price: '9.90',
+    Size: '1.50 lbs',
+  },
+  {
+    id: '4',
+    source: Grapes,
+    color: '#FEE1ED',
+    name: 'Black Grapes',
+    price: '7.05',
+    Size: '5.0 lbs',
+    new: '-16%',
+  },
+  {
+    id: '5',
+    source: Pomgrante,
+    color: '#FFE3E2',
+    name: ' Pomegrante',
+    price: '2.09',
+    Size: '1.50 lbs',
+    new: 'NEW',
+  },
+  {
+    id: '6',
+    source: Brocli,
+    color: '#D2FFD0',
+    name: 'Fresh Broccoli',
+    price: '3',
+    Size: '1.0 kg',
+  },
+];
 
-
-
-const VegitableScreen = () => {
-const [Heart, setHeart] = useState([]);
-    
-
+const HomeScreen = () => {
   const navigation = useNavigation();
-  const filterhandler = () => {
+  const [counts, setCounts] = useState({});
+  const [Heart, setHeart] = useState([]);
+    const filterhandler = () => {
     navigation.navigate('FilterScreen');
   };
 
+  // ✅ CHANGED: replaced single `selectedItem` with selectedItems array
+
+  const [selectedItems, setSelectedItems] = useState([]);
+
+  // ✅ CHANGED: replaced single expandedId with array expandedIds
+
+  const [expandedIds, setExpandedIds] = useState([]);
+
+  // ✅ CHANGED: add/remove items in counts + selectedItems
+
+  const increaseCount = item => {
+    setCounts(prev => ({ ...prev, [item.id]: (prev[item.id] || 0) + 1 }));
+    if (!selectedItems.some(i => i.id === item.id)) {
+      setSelectedItems(prev => [...prev, item]);
+    }
+    if (!expandedIds.includes(item.id)) {
+      setExpandedIds(prev => [...prev, item.id]);
+    }
+  };
+
+  const decreaseCount = item => {
+    setCounts(prev => {
+      const updated = { ...prev };
+      if ((updated[item.id] || 1) > 1) {
+        updated[item.id] = updated[item.id] - 1;
+      } else {
+        delete updated[item.id];
+        setSelectedItems(prev => prev.filter(i => i.id !== item.id));
+        setExpandedIds(prev => prev.filter(id => id !== item.id)); // ✅ CHANGED
+      }
+      return updated;
+    });
+  };
+
+  // ✅ CHANGED: functions for total items and total price
+  const getTotalQuantity = () =>
+    Object.values(counts).reduce((a, b) => a + b, 0);
+
+  console.log(JSON.stringify(counts), 'this is calling');
+
+  const getTotalPrice = () =>
+    selectedItems.reduce(
+      (sum, item) => sum + parseFloat(item.price) * (counts[item.id] || 1),
+      0,
+    );
+
+  const CategoryHandle = () => navigation.navigate('CategoryScreen');
+  const VegitableHandle = () => navigation.navigate('VegitableScreen');
+  const SearchScreenHandle = () => navigation.navigate('SearchScreen');
+  const FilterScreenHandle = () => navigation.navigate('FilterScreen');
+
   return (
-    <SafeAreaView>
-    <ScrollView>
-
-
-    <View style={{ flex: 1, backgroundColor: '#F4F5F9' }}>
-      <View style={styles.Maincontainer}>
-        <View style={styles.CategoryPageContainer}>
+    <SafeAreaView style={{ flex: 1 }}>
+      <ScrollView>
+        <View style={styles.MainContainer}>
+         <View style={styles.CategoryPageContainer}>
            
          <HeadertText
             navigation={navigation}
@@ -48,117 +192,183 @@ const [Heart, setHeart] = useState([]);
           />
         </View>
 
-      {/* Flat List For Products */}
-        <View style={{width:'100%',alignItems:'center',padding:10,justifyContent:'center'}}>
-        <FlatList
-          data={ProductsImages}
-          renderItem={({ item }) => (
-            <View style={styles.productCardWrapper}>
-              <View style={styles.productCard}>
-                <View style={[styles.NewTagWrapper]}>
-                  <Text style={styles.NewTagTextWrapper}> New</Text>
-                </View>
+          
 
-                <TouchableOpacity
-                  onPress={() => {
-                    if (Heart.includes(item.id)) {
-                      setHeart(Heart.filter(id => id !== item.id)); // remove if already favorited
-                    } else {
-                      setHeart([...Heart, item.id]); // add to favorites
+          {/* Featured Products Section */}
+      
+
+          <View
+            style={{
+              width: '100%',
+              alignItems: 'center',
+              padding: 10,
+              justifyContent: 'center',
+            }}
+          >
+            <FlatList
+              data={ProductsImages}
+              renderItem={({ item }) => (
+                <View style={styles.productCardWrapper}>
+                  {/* Product Card */}
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate('ProductDetailsScreen', {
+                        Detail: item,
+                      })
                     }
-                  }}
-                >
-                  <View style={styles.HeartWrapper}>
-                    <Image
-                      source={
-                        Heart.includes(item.id) ? HeartFilIcon : HeartIcon
-                      }
-                      style={styles.HeartIconStyle}
-                    />
-                  </View>
-                </TouchableOpacity>
+                    style={styles.productCard}
 
-                <View
-                  style={[
-                    styles.productImageWrapper,
-                    { backgroundColor: item?.color },
-                  ]}
-                >
-                  <Image source={item.source} style={styles.productImage} />
+                  >
+                    <View  style={styles.topContainer}>
+
+                    <View style={styles.NewTagWrapper}>
+                      <Text style={styles.NewTagTextWrapper}> New</Text>
+                        </View>
+
+                        <TouchableOpacity
+                      onPress={() => {
+                        if (Heart.includes(item.id)) {
+                          setHeart(Heart.filter(id => id !== item.id));
+                        } else {
+                          setHeart([...Heart, item.id]);
+                        }
+                      }}
+                    >
+                      <Image
+                        source={
+                          Heart.includes(item.id) ? HeartFilIcon : HeartIcon
+                        }
+                        style={styles.HeartIconStyle}
+                      />
+                    </TouchableOpacity>
+                  
+                    </View>
+
+                  
+
+                    <View
+                      style={[
+                        styles.productImageWrapper,
+                        { backgroundColor: item?.color },
+                      ]}
+                    >
+                      <Image source={item.source} style={styles.productImage} />
+                    </View>
+
+                    <Text style={styles.productPrice}>${item.price}</Text>
+                    <Text style={styles.productName}>{item.name}</Text>
+                    <Text style={styles.productSize}>{item.Size}</Text>
+                  </TouchableOpacity>
+
+                  {/* ✅ CHANGED: expandedIds used instead of expandedId */}
+                  {expandedIds.includes(item.id) ? (
+                    <View style={styles.quantityBar}>
+                      <TouchableOpacity
+                        onPress={() => {
+                          if ((counts[item.id] || 1) <= 1) {
+                            decreaseCount(item);
+                          } else {
+                            decreaseCount(item);
+                          }
+                        }}
+                      >
+                        <Image
+                          source={
+                            (counts[item.id] || 1) <= 1 ? DeleteIcon : MinusIcon
+                          }
+                          style={[
+                            styles.MinusBar,
+                            (counts[item.id] || 1) <= 1 && {
+                              tintColor: 'red',
+                              width: RF(20),
+                              height: RF(20),
+                            },
+                          ]}
+                        />
+                      </TouchableOpacity>
+
+                      <Text style={styles.quantityBarText}>
+                        {counts[item.id] || 1}
+                      </Text>
+
+                      <TouchableOpacity onPress={() => increaseCount(item)}>
+                        <Image source={PlusIcon} style={styles.MinusBar} />
+                      </TouchableOpacity>
+                    </View>
+                  ) : (
+                    <TouchableOpacity
+                      style={styles.singlePlusWrapper}
+                      onPress={() => increaseCount(item)} // ✅ simplified
+                    >
+                      <Image source={PlusIcon} style={styles.MinusBar} />
+                    </TouchableOpacity>
+                  )}
                 </View>
-                <Text style={styles.productPrice}>{item.price}</Text>
-                <Text style={styles.productName}>{item.name}</Text>
-                <Text style={styles.productSize}>{item.Size}</Text>
-              </View>
-              <View style={styles.quantityBar}>
-                <Image source={MinusIcon} style={styles.MinusBar} />
-                <View>
-                  <Text style={styles.quantityBarText}>1</Text>
-                </View>
-                <Image source={PlusIcon} style={styles.MinusBar} />
-              </View>
+              )}
+              keyExtractor={item => item.id}
+              numColumns={2}
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{ alignItems: 'center' }}
+            />
+          </View>
+          <View style={{ height: RF(70) }} />
+        </View>
+      </ScrollView>
+
+      {/* ✅ CHANGED: Single bottom cart view showing total items + price */}
+      {selectedItems.length > 0 && (
+        <View style={styles.BottomContainer}>
+          <TouchableOpacity
+            style={styles.viewButton}
+            onPress={() =>
+              navigation.navigate('CheckoutScreen', {
+                selectedItems,
+                counts,
+              })
+            }
+          >
+            <View style={styles.itemCircle}>
+              <Text style={{ fontSize: RF(15), color: White, lineHeight: 30 }}>
+                {getTotalQuantity()}
+              </Text>
             </View>
-          )}
-          keyExtractor={item => item.id}
-          ItemSeparatorComponent={() => <View style={{ width: RF(15) }} />}
-          horizontal={false}
-          showsHorizontalScrollIndicator={false}
-          numColumns={2}
-          contentContainerStyle={{
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        />
+            <Text style={[TextBold, { color: White, fontSize: RF(15) }]}>
+              View your cart
+            </Text>
+            <Text
+              style={{
+                fontSize: RF(14),
+                fontFamily: 'Poppins-Bold',
+                color: White,
+              }}
+            >
+              ${getTotalPrice().toFixed(2)}
+            </Text>
+          </TouchableOpacity>
         </View>
-        </View>
-    </View>
-    </ScrollView>
+      )}
     </SafeAreaView>
   );
 };
 
-export default VegitableScreen;
+export default HomeScreen;
 
 const styles = StyleSheet.create({
-  CategoryPageContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+  MainContainer: {
+    backgroundColor: LightGrey,
     width: '100%',
-    height: RF(75),
-    backgroundColor: '#FFFFFF',
+    alignItems: 'center',
   },
-
-  BackArrowIcon: {
-    width: RF(20),
-    height: RF(20),
-    resizeMode: 'contain',
-  },
-  CategoryText: {
-    fontSize: RF(18),
-    fontFamily: 'Poppins-Medium',
-  },
-
-  filterIcon: {
-    width: RF(20),
-    height: RF(20),
-    resizeMode: 'contain',
-    tintColor: 'black',
-  },
-  flatListContainer: {
-    paddingVertical: RF(15),
-    paddingHorizontal: RF(15),
-  },
-productCardWrapper: {
+ 
+  productCardWrapper: {
     width: '47%',
     alignItems: 'center',
     marginBottom: RF(20),
     marginHorizontal: RF(5),
-    
   },
   productCard: {
     width: '100%',
-    backgroundColor: 'white',
+    backgroundColor: White,
     padding: RF(10),
     alignItems: 'center',
   },
@@ -195,7 +405,7 @@ productCardWrapper: {
   quantityBar: {
     width: '100%',
     height: RF(30),
-    backgroundColor: 'white',
+    backgroundColor: White,
     marginTop: RF(5),
     alignItems: 'center',
     flexDirection: 'row',
@@ -209,29 +419,101 @@ productCardWrapper: {
     width: RF(15),
     height: RF(15),
     tintColor: Secondary,
-  },
-
-  NewTagWrapper: {
-    paddingHorizontal: RF(10),
-    paddingVertical: RF(5),
-    backgroundColor: '#FCFFD9',
-    position: 'absolute',
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignSelf: 'flex-start',
-  },
-  NewTagTextWrapper: {
-    fontSize: RF(10),
-    color: '#E8AD41',
-    fontFamily: 'Poppins-Regular',
-  },
-  HeartIconStyle: {
-    height: RF(15),
-    width: RF(15),
     resizeMode: 'contain',
   },
-  HeartWrapper: {
-    width:'100%',
-    alignSelf:'flex-end',   
+  topContainer:{
+  
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  width:'100%'
+},
+
+  NewTagWrapper: {
+ backgroundColor: Secondary,
+  paddingHorizontal: RF(6),
+  paddingVertical: RF(2),
   },
-})
+  NewTagTextWrapper: {
+    color: White,
+  fontSize: RF(10),
+  fontFamily: 'Poppins-Bold',
+  },
+  HeartIconStyle: {
+  width: RF(18),
+  height: RF(18),
+  resizeMode: 'contain',
+  },
+ 
+  dotStyle: {
+    backgroundColor: 'rgba(0,0,0,.2)',
+    width: RF(8),
+    height: RF(8),
+    borderRadius: RF(4),
+    marginLeft: RF(3),
+    marginRight: RF(3),
+  },
+  activeDotStyle: {
+    backgroundColor: Primary,
+    width: RF(20),
+    height: RF(8),
+    borderRadius: RF(4),
+    marginLeft: RF(3),
+    marginRight: RF(3),
+  },
+  paginationStyle: {
+    position: 'absolute',
+    alignSelf: 'flex-start',
+  },
+  offtextView: {
+    paddingLeft: RF(25),
+    paddingTop: RF(70),
+  },
+  offtext: {
+    fontFamily: 'Poppins-Bold',
+    fontSize: RF(14),
+    justifyContent: 'flex-start',
+  },
+  BottomContainer: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: White,
+    padding: RF(15),
+    borderTopLeftRadius: RF(15),
+    borderTopRightRadius: RF(15),
+    alignItems: 'center',
+    borderWidth: RF(1),
+    borderColor: Primary,
+    borderBottomWidth: RF(0),
+  },
+  viewButton: {
+    width: '100%',
+    flexDirection: 'row',
+    backgroundColor: Secondary,
+    paddingHorizontal: RF(20),
+    paddingVertical: RF(10),
+    borderRadius: RF(10),
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  itemCircle: {
+    width: RF(30),
+    height: RF(30),
+    borderRadius: RF(25),
+    borderColor: '#fFFFFF',
+    borderWidth: RF(1.5),
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  singlePlusWrapper: {
+    width: '100%',
+    height: RF(30),
+    backgroundColor: White,
+    marginTop: RF(5),
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});

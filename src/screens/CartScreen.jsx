@@ -5,240 +5,213 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
-
 } from 'react-native';
 import { RF } from '../Utils/Responsive';
 import {
   Avacado,
   Brocli,
-
   Grapes,
-
   MinusIcon,
   Peach,
   Pineapple,
   PlusIcon,
   Pomgrante,
-
 } from '../assets/Index';
 import {
   LightGrey,
-
   Secondary,
   White,
 } from '../styles/colors/colorsCode';
 import React, { useState } from 'react';
-import Swiper from 'react-native-swiper';
 import { useNavigation } from '@react-navigation/native';
-import { IconSize, TextBold, TextRegular, TextSemiBold } from '../components/IconSize/Sizes';
+import {
+  IconSize,
+  TextBold,
+  TextRegular,
+} from '../components/IconSize/Sizes';
 import { SwipeListView } from 'react-native-swipe-list-view';
-
-const ProductsImages = [
-  {
-    id: '1',
-    source: Peach,
-    color: '#FFCEC1',
-    name: 'Fresh Peach',
-    price: '$8.00',
-    Size: 'Dozen',
-  },
-  {
-    id: '2',
-    source: Avacado,
-    color: '#FCFFD9',
-    name: 'Avacado',
-    price: '$7.00',
-    Size: '2.0 lbs',
-    new: 'NEW',
-  },
-  {
-    id: '3',
-    source: Pineapple,
-    color: '#FFE6C2',
-    name: 'Pineapple',
-    price: '$9.90',
-    Size: '1.50 lbs',
-  },
-  {
-    id: '4',
-    source: Grapes,
-    color: '#FEE1ED',
-    name: 'Black Grapes',
-    price: '$7.05',
-    Size: '5.0 lbs',
-    new: '-16%',
-  },
-  {
-    id: '5',
-    source: Pomgrante,
-    color: '#FFE3E2',
-    name: ' Pomegrante',
-    price: '$2.09',
-    Size: '1.50 lbs',
-    new: 'NEW',
-  },
-  {
-    id: '6',
-    source: Brocli,
-    color: '#D2FFD0',
-    name: 'Fresh Broccoli',
-    price: '$3.00',
-    Size: '1.0 kg',
-  },
-];
 import HeadertText from '../components/header/HeaderText';
 import Buttons from '../components/buttons/Buttons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+// ✅ Product list
+const ProductsImages = [
+  { id: '1', source: Peach, color: '#FFCEC1', name: 'Fresh Peach', price: '$8.00', Size: 'Dozen' },
+  { id: '2', source: Avacado, color: '#FCFFD9', name: 'Avacado', price: '$7.00', Size: '2.0 lbs', new: 'NEW' },
+  { id: '3', source: Pineapple, color: '#FFE6C2', name: 'Pineapple', price: '$9.90', Size: '1.50 lbs' },
+  { id: '4', source: Grapes, color: '#FEE1ED', name: 'Black Grapes', price: '$7.05', Size: '5.0 lbs', new: '-16%' },
+  { id: '5', source: Pomgrante, color: '#FFE3E2', name: 'Pomegrante', price: '$2.09', Size: '1.50 lbs', new: 'NEW' },
+  { id: '6', source: Brocli, color: '#D2FFD0', name: 'Fresh Broccoli', price: '$3.00', Size: '1.0 kg' },
+];
 
 const CartScreen = () => {
   const navigation = useNavigation();
 
   const [listData, setListData] = useState(
-    ProductsImages.map((item, index) => ({
-      ...item,
-      key: `${item.id}`,
-    }))
+    ProductsImages.map(item => ({ ...item, key: item.id }))
   );
+  const [counts, setCounts] = useState({});
 
-  const backArrowHandle = () => {
-    navigation.navigate('ForgetPasswordScreen');
-  };
-
+  // ✅ Navigation handlers
   const CheckoutHandler = () => {
     navigation.navigate('ShippingMethodScreen');
   };
 
-   const [counts, setCounts] = useState({});
-  
-  
-
+  // ✅ Count handlers
   const increaseCount = id => {
     setCounts(prev => ({ ...prev, [id]: (prev[id] || 1) + 1 }));
   };
 
   const decreaseCount = id => {
     setCounts(prev => ({
-      ...prev,[id]: prev[id] > 1 ? prev[id] - 1 : 1,}));
+      ...prev,
+      [id]: prev[id] > 1 ? prev[id] - 1 : 1,
+    }));
+  };
+
+  // ✅ Delete row function
+  const deleteRow = (rowMap, rowKey) => {
+    if (rowMap[rowKey]) {
+      rowMap[rowKey].closeRow();
+    }
+    const newData = listData.filter(item => item.key !== rowKey);
+    setListData(newData);
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ flex: 1, backgroundColor: LightGrey }}>
       <ScrollView>
-    <View style={styles.screenContainer}>
-      <View style={styles.HeaderContainer}>
-       <View style={styles.CategoryPageContainer}>
-           
-         <HeadertText
-           navigation={navigation}
+        <View style={styles.screenContainer}>
+          {/* ✅ Header */}
+          <View style={styles.HeaderContainer}>
+            <View style={styles.CategoryPageContainer}>
+              <HeadertText
+                navigation={navigation}
+                text="Shopping Cart"
+              />
+            </View>
+          </View>
 
-            text = "Shopping Cart"
-          />
-        </View>
-      </View>
-
-      <View style={styles.SwipeListContainer}>
-        <SwipeListView
-          data={listData}
-          renderItem={({ item, rowMap }) => (
-            <View style={styles.rowFront}>
-              <View style={styles.MainContainer}>
-                <View style={styles.productCardWrapper}>
-                  <View style={{ flexDirection: 'row' }}>
-                    <View style={styles.productCard}>
-                      <View
-                        style={[
-                          styles.productImageWrapper,
-                          { backgroundColor: item?.color },
-                        ]}
-                      >
-                        <Image source={item.source} style={styles.productImage} />
-                      </View>
-                      <View style={{ marginLeft: RF(15), flex: 1 }}>
-                        <Text style={styles.productPrice}>{item.price}</Text>
-                        <Text style={styles.productName}>{item.name}</Text>
-                        <Text style={styles.productSize}>{item.Size}</Text>
-                      </View>
-                      <View style={{ gap: RF(5), alignItems: 'center' }}>
-                        <TouchableOpacity  onPress={() => increaseCount(item.id)}>
-                      
-                              <Image source={PlusIcon} style={[IconSize,{tintColor:Secondary}]}/>
-                      </TouchableOpacity>
-                        <View>
-                          <Text style={styles.quantityBarText}>{counts[item.id] || 1}</Text>
+          {/* ✅ Swipe List */}
+          <View style={styles.SwipeListContainer}>
+            <SwipeListView
+              data={listData}
+              renderItem={({ item }) => (
+                <View style={styles.rowFront}>
+                  <View style={styles.MainContainer}>
+                    <View style={styles.productCardWrapper}>
+                      <View style={{ flexDirection: 'row' }}>
+                        <View style={styles.productCard}>
+                          <View
+                            style={[
+                              styles.productImageWrapper,
+                              { backgroundColor: item?.color },
+                            ]}
+                          >
+                            <Image
+                              source={item.source}
+                              style={styles.productImage}
+                            />
+                          </View>
+                          <View style={{ marginLeft: RF(15), flex: 1 }}>
+                            <Text style={styles.productPrice}>{item.price}</Text>
+                            <Text style={styles.productName}>{item.name}</Text>
+                            <Text style={styles.productSize}>{item.Size}</Text>
+                          </View>
+                          <View style={{ gap: RF(5), alignItems: 'center' }}>
+                            <TouchableOpacity onPress={() => increaseCount(item.id)}>
+                              <Image
+                                source={PlusIcon}
+                                style={[IconSize, { tintColor: Secondary }]}
+                              />
+                            </TouchableOpacity>
+                            <View>
+                              <Text style={styles.quantityBarText}>
+                                {counts[item.id] || 1}
+                              </Text>
+                            </View>
+                            <TouchableOpacity onPress={() => decreaseCount(item.id)}>
+                              <Image
+                                source={MinusIcon}
+                                style={[IconSize, { tintColor: Secondary }]}
+                              />
+                            </TouchableOpacity>
+                          </View>
                         </View>
-                      <TouchableOpacity onPress={() => decreaseCount(item.id)}>
-                                  <Image source={MinusIcon} style={[IconSize,{tintColor:Secondary}]}/>
-                                  </TouchableOpacity>
                       </View>
                     </View>
                   </View>
                 </View>
-              </View>
+              )}
+              renderHiddenItem={({ item, rowMap }) => (
+                <View style={styles.rowBack}>
+                  <TouchableOpacity
+                    style={[styles.backRightBtn, styles.backRightBtnRight]}
+                    onPress={() => deleteRow(rowMap, item.key)}
+                  >
+                    <Text style={styles.backTextWhite}>Delete</Text>
+                  </TouchableOpacity>
+                </View>
+              )}
+              rightOpenValue={-75}
+              disableRightSwipe={true}
+              keyExtractor={item => item.id}
+              contentContainerStyle={{
+                gap: RF(10),
+                paddingBottom: RF(20),
+              }}
+            />
+          </View>
+
+          {/* ✅ Totals Section */}
+          <View style={styles.OtherMainContainer}>
+            <View style={styles.OtherDetailContainer}>
+              <Text style={[TextRegular, { fontSize: RF(12), flex: 1 }]}>
+                Subtotal
+              </Text>
+              <Text style={[TextRegular, { fontSize: RF(12) }]}>
+                $56.7
+              </Text>
             </View>
-          )}
-          renderHiddenItem={({ item, rowMap }) => (
-            <View style={styles.rowBack}>
-              <TouchableOpacity
-                style={[styles.backRightBtn, styles.backRightBtnRight]}
-                onPress={() => deleteRow(rowMap, item.key)}
-              >
-                <Text style={styles.backTextWhite}>Delete</Text>
-              </TouchableOpacity>
+
+            <View style={styles.OtherDetailContainer}>
+              <Text style={[TextRegular, { fontSize: RF(12), flex: 1 }]}>
+                Shipping charges
+              </Text>
+              <Text style={[TextRegular, { fontSize: RF(12) }]}>
+                $1.6
+              </Text>
             </View>
-          )}
-          rightOpenValue={-75}
-          
-          disableRightSwipe={true}
-          keyExtractor={(item) => item.id}
-          contentContainerStyle={{ gap: RF(10), paddingBottom: RF(20) }}
-        />
 
+            <View style={styles.SepraterContainer}>
+              <View
+                style={{
+                  backgroundColor: LightGrey,
+                  width: '100%',
+                  height: RF(2),
+                }}
+              />
+            </View>
 
-      </View>
+            <View style={styles.OtherDetailContainer}>
+              <Text style={[TextBold, { color: 'black', fontSize: RF(12), flex: 1 }]}>
+                Total
+              </Text>
+              <Text style={[TextBold, { color: 'black', fontSize: RF(12) }]}>
+                $58.2
+              </Text>
+            </View>
 
-       <View  style={styles.OtherMainContainer}>
-         
-            
-            
-          <View style ={styles.OtherDetailContainer}>
-
-          <Text style ={[TextRegular ,{ fontSize:RF(12) ,flex:1}] }>Subtotal</Text>
-          <Text style ={[TextRegular ,{ fontSize:RF(12) }] }>$56.7</Text>
-
+            <Buttons onPress={CheckoutHandler} text={'Checkout'} />
           </View>
-
-            <View style ={styles.OtherDetailContainer}>
-
-           <Text style ={[TextRegular ,{ fontSize:RF(12) ,flex:1}] }>Shipping charges</Text>
-                   <Text style ={[TextRegular ,{ fontSize:RF(12)}] }>$1.6</Text>
-
-          </View>
-
-              <View style ={styles.SepraterContainer}>
-
-           <View style ={{  backgroundColor:LightGrey, width:'100%', height:RF(2) } } />
-
-          </View>
-
-
-            <View style ={styles.OtherDetailContainer}>
-
-           <Text style ={[TextBold ,{color: 'black', fontSize:RF(12) ,flex:1}] }>Total</Text>
-                   <Text style ={[TextBold ,{color: 'black', fontSize:RF(12), }] }>$58.2</Text>
-
-          </View>
-                <Buttons onPress={ CheckoutHandler} text={'Checkout'}/>
-          </View>
-                    </View>
-
-
-    </ScrollView>
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
 
 export default CartScreen;
+
 
 const styles = StyleSheet.create({
   screenContainer: {

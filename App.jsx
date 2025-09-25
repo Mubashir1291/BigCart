@@ -20,7 +20,7 @@ import OrderSucessScreen from './src/screens/OrderSucessScreen';
 import TrackOrderScreen from './src/screens/TrackOrderScreen';
 import ProductDetailsScreen from './src/screens/ProductDetailsScreen';
 import FilterScreen from './src/screens/FilterScreen';
-import CartScreen from './src/screens/CartScreen';
+// import CartScreen from './src/screens/CartScreen';
 import ShippingMethodScreen from './src/screens/ShippingMethodScreen';
 import ShippmentAddressScreen from './src/screens/ShippmentAddressScreen';
 import TransactionScreen from './src/screens/TransactionScreen';
@@ -69,7 +69,7 @@ function App() {
         <Stack.Screen name="ProductDetailsScreen"component={ProductDetailsScreen}
         />
         <Stack.Screen name="FilterScreen" component={FilterScreen} />
-        <Stack.Screen name="CartScreen" component={CartScreen} />
+        {/* <Stack.Screen name="CartScreen" component={CartScreen} /> */}
         <Stack.Screen name="ShippingMethodScreen"component={ShippingMethodScreen}
         />
         <Stack.Screen name="ShippmentAddressScreen"component={ShippmentAddressScreen}

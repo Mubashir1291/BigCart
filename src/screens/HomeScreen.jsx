@@ -179,6 +179,96 @@ const HomeScreen = () => {
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView>
         <View style={styles.MainContainer}>
+ <View style={styles.SearchInputContainer}>
+          <TouchableOpacity onPress={SearchScreenHandle}>
+            <Image source={SearchIcon} style={styles.searchIcon} />
+          </TouchableOpacity>
+
+          <TextInput
+            style={styles.searchInput}
+            placeholder=" Search Keyword..."
+            placeholderTextColor={'grey'}
+            color={'black'}
+          />
+          <TouchableOpacity onPress={FilterScreenHandle}>
+            <Image source={FilterIcon} style={styles.filterIcon} />
+          </TouchableOpacity>
+        </View>
+
+        {/* Main Image Swiper */}
+
+        <View
+          style={{
+            width: '100%',
+            height: RF(283),
+            alignItems: 'center',
+            paddingHorizontal: RF(15),
+          }}
+        >
+          <Swiper
+            autoplay={true}
+            showsButtons={false}
+            loop
+            dot={<View style={styles.dotStyle} />}
+            activeDot={<View style={styles.activeDotStyle} />}
+            paginationStyle={styles.paginationStyle}
+          >
+            <ImageBackground
+              source={HomeBackGround}
+              style={styles.mainBannerImage}
+            >
+              <View style={styles.offtextView}>
+                <Text style={styles.offtext}> 20% Off on your</Text>
+                <Text style={styles.offtext}> first purchase </Text>
+              </View>
+            </ImageBackground>
+
+            <ImageBackground
+              source={homebackImage}
+              style={styles.mainBannerImage}
+            />
+          </Swiper>
+        </View>
+
+        {/* Category Section */}
+
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionHeaderText}>Categories</Text>
+
+          <TouchableOpacity onPress={CategoryHandle}>
+            <Image source={RightIcon} style={styles.rightArrowIcon} />
+          </TouchableOpacity>
+        </View>
+
+        {/* Flat List For Categories */}
+        <FlatList
+          data={CategoriesImages}
+          renderItem={({ item }) => (
+            <View style={styles.categoryItem}>
+              <View
+                style={[
+                  styles.categoryImageWrapper,
+                  { backgroundColor: item?.color },
+                ]}
+              >
+                <Image source={item.source} style={styles.categoryImage} />
+              </View>
+              <Text style={styles.categoryNameText}>{item.name}</Text>
+            </View>
+          )}
+          keyExtractor={item => item.id}
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.flatListContainer}
+        />
+
+        {/* Featured Products Section */}
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionHeaderText}>Featured Products</Text>
+          <TouchableOpacity onPress={VegitableHandle}>
+            <Image source={RightIcon} style={styles.rightArrowIcon} />
+          </TouchableOpacity>
+        </View>
 
           <View
             style={{
@@ -201,29 +291,30 @@ const HomeScreen = () => {
                     }
                     style={styles.productCard}
                   >
-                    <View style={styles.NewTagWrapper}>
-                      <Text style={styles.NewTagTextWrapper}> New</Text>
-                    </View>
-
-                    <TouchableOpacity
-                      onPress={() => {
-                        if (Heart.includes(item.id)) {
-                          setHeart(Heart.filter(id => id !== item.id));
-                        } else {
-                          setHeart([...Heart, item.id]);
-                        }
-                      }}
-                      style={styles.HeartWrapper}
-                    >
-                      <Image
-                        source={
-                          Heart.includes(item.id)
-                            ? HeartFilIcon
-                            : HeartIcon
-                        }
-                        style={styles.HeartIconStyle}
-                      />
-                    </TouchableOpacity>
+             <View  style={styles.topContainer}>
+            
+                                <View style={styles.NewTagWrapper}>
+                                  <Text style={styles.NewTagTextWrapper}> New</Text>
+                                    </View>
+            
+                                    <TouchableOpacity
+                                  onPress={() => {
+                                    if (Heart.includes(item.id)) {
+                                      setHeart(Heart.filter(id => id !== item.id));
+                                    } else {
+                                      setHeart([...Heart, item.id]);
+                                    }
+                                  }}
+                                >
+                                  <Image
+                                    source={
+                                      Heart.includes(item.id) ? HeartFilIcon : HeartIcon
+                                    }
+                                    style={styles.HeartIconStyle}
+                                  />
+                                </TouchableOpacity>
+                              
+                                </View>
 
                     <View
                       style={[
@@ -302,7 +393,7 @@ const HomeScreen = () => {
       </ScrollView>
 
       {/* ✅ CHANGED: Single bottom cart view showing total items + price */}
-      {selectedItems.length > 0 && (
+     {selectedItems.length > 0 && (
         <View style={styles.BottomContainer}>
          <TouchableOpacity
   style={styles.viewButton}
@@ -327,6 +418,8 @@ const HomeScreen = () => {
 </TouchableOpacity>
 
           </View>
+      
+  
       )}
     </SafeAreaView>
   );
@@ -486,30 +579,28 @@ const styles = StyleSheet.create({
     tintColor: Secondary,
     resizeMode: 'contain',
   },
+  topContainer:{
+  
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  width:'100%'
+},
+
   NewTagWrapper: {
-    paddingHorizontal: RF(10),
-    paddingVertical: RF(5),
-    backgroundColor: '#FCFFD9',
-    position: 'absolute',
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignSelf: 'flex-start',
+ backgroundColor: Secondary,
+  paddingHorizontal: RF(6),
+  paddingVertical: RF(2),
   },
   NewTagTextWrapper: {
-    fontSize: RF(10),
-    color: '#E8AD41',
-    fontFamily: 'Poppins-Regular',
+    color: White,
+  fontSize: RF(10),
+  fontFamily: 'Poppins-Bold',
   },
   HeartIconStyle: {
-    height: RF(15),
-    width: RF(15),
-    resizeMode: 'contain',
-  },
-  HeartWrapper: {
-    width: '100%',
-    position: 'absolute',
-    left: RF(150),
-    top:RF(7)
+  width: RF(18),
+  height: RF(18),
+  resizeMode: 'contain',
   },
   dotStyle: {
     backgroundColor: 'rgba(0,0,0,.2)',
