@@ -10,10 +10,13 @@ import Buttons from '../components/buttons/Buttons';
 
 
 const CheckoutScreen = ({ route }) => {
+
   const { selectedItems, counts } = route.params;
 
   const [cartCounts, setCartCounts] = useState(counts);
+
   const navigation = useNavigation();
+  
   const checkouthandler =()=>{
     navigation.navigate('ShippingMethodScreen')
   }

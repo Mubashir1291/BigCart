@@ -1,126 +1,122 @@
-import React, { useState } from 'react';
-import { View, Text, Image, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
-import { RF } from '../Utils/Responsive';
-import { White, Secondary } from '../styles/colors/colorsCode';
-import { MinusIcon, PlusIcon, DeleteIcon, FilterIcon } from '../assets/Index';
-import HeadertText from '../components/header/HeaderText';
-import { useNavigation } from '@react-navigation/native';
-import Buttons from '../components/buttons/Buttons';
+import React from "react";
+import { View, Text, FlatList, Image, TouchableOpacity, StyleSheet } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
+import { setFavourites } from "../redux/Reducers/userReducer";
+import { RF } from "../Utils/Responsive";
+import { HeartFilIcon, FilterIcon } from "../assets/Index";
+import HeaderText from "../components/header/HeaderText";
+import { White } from "../styles/colors/colorsCode";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
+const FavouriteScreen = () => {
+const navigation = useNavigation();
+const {favourites}=useSelector(state=>state.user)
+  // Ensure you are selecting the raw data: full product list and the list of favorite IDs
+  // const products = useSelector(state => state.products.items || []);
+  // const favouriteIds = useSelector(state => state.user.favourites || []); // Initialize as array
 
-
-const CheckoutScreen = ({ route }) => {
-
-  const { } = route.params;
-
-
-  const navigation = useNavigation();
+  // Derived state: the actual favorite product objects
+  // const favourites = products.filter(product => favouriteIds.includes(product.id));
   
 
-  
+  // if (!favourites || favourites.length === 0) {
+  //   return (
+  //     <View style={styles.emptyContainer}>
+  //       <Text style={styles.emptyText}>No Favourites Added</Text>
+  //     </View>
+  //   );
+  // }
 
- 
-
-
-
-  return (
-    <View style={{ flex: 1, backgroundColor: White, padding: RF(15) }}>
-
-
-      < Text> hello</Text>
-       {/* <View style={styles.HeaderContainer}>
-            <View style={styles.CategoryPageContainer}>
-              <HeadertText
-                navigation={navigation}
-                text="Favourites"
-                Img={FilterIcon}
-                tintColor2={White}
-
-              />
-            </View> */}
-          {/* </View> */}
-
-      {/* <FlatList
-        data={selectedItems}
-        keyExtractor={item => item.id}
-        showsVerticalScrollIndicator={false}
-        renderItem={({ item }) =>
-          cartCounts[item.id] ? (
-            <View style={styles.cartItem}>
-              <Image source={item.source} style={styles.cartImage} />
-              <View style={{ flex: 1 }}>
-                <Text style={styles.cartName}>{item.name}</Text>
-                <Text style={styles.cartPrice}>${item.price}</Text>
-              </View>
-
-             
-            </View>
-          ) : null
-        }
-      /> */}
-
-      
+return (
+  <View style={styles.container}>
+    {/* Header */}
+    <View style={styles.HeaderContainer}>
+      <HeaderText
+        navigation={navigation}
+        text="Favourites"
+        Img={FilterIcon}
+        tintColor2={White}
+      />
     </View>
-  );
-};
 
-export default CheckoutScreen;
+    {/* Favourites List */}
+    <FlatList
+      data={favourites}
+      keyExtractor={(item) => item.id?.toString()}
+      ListEmptyComponent={
+        <View style={{ flex: 1, justifyContent: "center", alignItems: "center", marginTop: 50 }}>
+          <Text style={{ fontSize: 16, color: "grey" }}>No Favourites Added</Text>
+        </View>
+      }
+      renderItem={({ item }) => (
+        <View style={styles.card}>
+          <Image source={item.source} style={styles.image} />
+          <View style={{ flex: 1, marginLeft: 10 }}>
+            <Text style={styles.name}>{item.name}</Text>
+            <Text style={styles.price}>${item.price}</Text>
+
+          </View>
+          <Image
+            source={HeartFilIcon}
+            style={styles.heartIcon}
+          />
+
+        </View>
+           
+      )}
+      showsVerticalScrollIndicator={false}
+    />
+  </View>
+);
+}
+
+export default FavouriteScreen;
 
 const styles = StyleSheet.create({
-  cartItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: RF(15),
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
-    paddingBottom: RF(10),
-
+  container: {
+    flex: 1,
+    padding: RF(10),
+    backgroundColor: "#fff",
   },
-  cartImage: {
-    width: RF(75),
-    height: RF(75),
-    resizeMode: 'contain',
-    marginRight: RF(10),
-  },
-  cartName: {
-    fontSize: RF(14),
-    fontWeight: '600',
-    color: '#333',
-  },
-  cartPrice: {
-    fontSize: RF(12),
-    color: Secondary,
-  },
-  cartControls: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: RF(10),
-  },
-  icon: {
-    width: RF(18),
-    height: RF(18),
-    resizeMode: 'contain',
-    tintColor: Secondary,
-  },
-  cartCount: {
-    fontSize: RF(14),
-    fontWeight: '600',
-  },
-  footer: {
-    borderTopWidth: 1,
-    borderColor: '#ddd',
-    paddingTop: RF(10),
-    
-  },
-  totalText: {
-    fontSize: RF(16),
-    fontWeight: '700',
+  card: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: RF(10),
     marginBottom: RF(10),
+    borderWidth: 1,
+    borderRadius: 8,
+    borderColor: "#ddd",
+    backgroundColor: "#fff",
   },
-  checkoutBtn: {
-    backgroundColor: Secondary,
-    padding: RF(12),
-    borderRadius: RF(8),
-    alignItems: 'center',
+  image: {
+    width: RF(50),
+    height: RF(50),
+    resizeMode: "contain",
+  },
+  name: {
+    fontSize: RF(14),
+    fontWeight: "600",
+  },
+  price: {
+    fontSize: RF(12),
+    color: "grey",
+  },
+  heartIcon: {
+    width: RF(15),
+    height: RF(15),
+    tintColor: "red",
+    resizeMode: "contain",
+  },
+  emptyContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  emptyText: {
+    fontSize: RF(16),
+    color: "grey",
+  },
+  HeaderContainer: {
+    backgroundColor: "#fff",
   },
 });

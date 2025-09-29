@@ -7,9 +7,7 @@ import {
   TouchableOpacity,
   FlatList,
   ScrollView,
-  Dimensions,
   ImageBackground,
-  
 } from 'react-native';
 import { RF } from '../Utils/Responsive';
 import {
@@ -43,20 +41,16 @@ import {
   Secondary,
   White,
 } from '../styles/colors/colorsCode';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Swiper from 'react-native-swiper';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { store } from '../redux/store';
-import { setFavourites } from '../redux/Reducers/userReducer';
+import { setFavourites, cartItems } from '../redux/Reducers/userReducer';
 import { useDispatch, useSelector } from 'react-redux';
-import { cartItems } from '../redux/Reducers/userReducer';
-import {
-  TextBold,
-  TextMedium,
-  TextSemiBold,
-} from '../components/IconSize/Sizes';
+import { TextBold } from '../components/IconSize/Sizes';
 
+// ✅ Categories & Products dummy data
 const CategoriesImages = [
   { id: '1', source: CatIconvegitable, color: '#E6F2EA', name: 'Vegetables' },
   { id: '2', source: CatIconApple, color: '#FFE9E5', name: 'Fruits' },
@@ -106,7 +100,7 @@ const ProductsImages = [
     id: '5',
     source: Pomgrante,
     color: '#FFE3E2',
-    name: ' Pomegrante',
+    name: 'Pomegrante',
     price: '2.09',
     Size: '1.50 lbs',
     new: 'NEW',
@@ -123,50 +117,47 @@ const ProductsImages = [
 
 const HomeScreen = () => {
   const navigation = useNavigation();
+// useEffect(()=>{
+// store.dispatch(setFavourites([])) 
+// },[])
+  // ✅ NEW: use objects/arrays for multi-item handling
   const [counts, setCounts] = useState({});
-  const [Heart, setHeart] = useState([]);
+  const [selectedItems, setSelectedItems] = useState([]); // instead of single selectedItem
+  const [expandedIds, setExpandedIds] = useState([]); // instead of single expandedId
+
+  // ✅ Redux favourites state
   const favourites = useSelector(state => state.user.favourites);
 
-
-  // ✅ CHANGED: replaced single `selectedItem` with selectedItems array
-
-  const [selectedItems, setSelectedItems] = useState([]);
-
-  // ✅ CHANGED: replaced single expandedId with array expandedIds
-
-  const [expandedIds, setExpandedIds] = useState([]);
-
-  // ✅ CHANGED: add/remove items in counts + selectedItems
-
+  // ✅ Add item to cart
   const increaseCount = item => {
-    store.dispatch.cartItems(prev => ({ ...prev, [item.id]: (prev[item.id] || 0) + 1 }));
+    setCounts(prev => ({ ...prev, [item.id]: (prev[item.id] || 0) + 1 }));
+
     if (!selectedItems.some(i => i.id === item.id)) {
-      cartItems(prev => [...prev, item]);
+      setSelectedItems(prev => [...prev, item]); // ✅ FIXED: update local selectedItems state
     }
     if (!expandedIds.includes(item.id)) {
-      cartItems(prev => [...prev, item.id]);
+      setExpandedIds(prev => [...prev, item.id]); // ✅ FIXED: update local expandedIds state
     }
   };
 
+  // Decrease count
   const decreaseCount = item => {
-    cartItems(prev => {
+    setCounts(prev => {
       const updated = { ...prev };
       if ((updated[item.id] || 1) > 1) {
         updated[item.id] = updated[item.id] - 1;
       } else {
         delete updated[item.id];
-        store.dispatch.cartItems(prev => prev.filter(i => i.id !== item.id));
-        store.dispatch.caller(prev => prev.filter(id => id !== item.id)); 
+        setSelectedItems(prev => prev.filter(i => i.id !== item.id)); // ✅ FIXED remove from cart
+        setExpandedIds(prev => prev.filter(id => id !== item.id)); // ✅ FIXED collapse card
       }
       return updated;
     });
   };
 
-  // ✅ CHANGED: functions for total items and total price
+  // ✅ Helpers for bottom bar
   const getTotalQuantity = () =>
     Object.values(counts).reduce((a, b) => a + b, 0);
-
-  console.log(JSON.stringify(counts), 'this is calling');
 
   const getTotalPrice = () =>
     selectedItems.reduce(
@@ -183,11 +174,11 @@ const HomeScreen = () => {
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView>
         <View style={styles.MainContainer}>
+          {/* ✅ Search bar */}
           <View style={styles.SearchInputContainer}>
             <TouchableOpacity onPress={SearchScreenHandle}>
               <Image source={SearchIcon} style={styles.searchIcon} />
             </TouchableOpacity>
-
             <TextInput
               style={styles.searchInput}
               placeholder=" Search Keyword..."
@@ -199,8 +190,7 @@ const HomeScreen = () => {
             </TouchableOpacity>
           </View>
 
-          {/* Main Image Swiper */}
-
+          {/* ✅ Swiper Banner */}
           <View
             style={{
               width: '100%',
@@ -210,9 +200,9 @@ const HomeScreen = () => {
             }}
           >
             <Swiper
-              autoplay={true}
-              showsButtons={false}
+              autoplay
               loop
+              showsButtons={false}
               dot={<View style={styles.dotStyle} />}
               activeDot={<View style={styles.activeDotStyle} />}
               paginationStyle={styles.paginationStyle}
@@ -226,7 +216,6 @@ const HomeScreen = () => {
                   <Text style={styles.offtext}> first purchase </Text>
                 </View>
               </ImageBackground>
-
               <ImageBackground
                 source={homebackImage}
                 style={styles.mainBannerImage}
@@ -234,17 +223,13 @@ const HomeScreen = () => {
             </Swiper>
           </View>
 
-          {/* Category Section */}
-
+          {/* ✅ Category Section */}
           <View style={styles.sectionHeader}>
             <Text style={styles.sectionHeaderText}>Categories</Text>
-
             <TouchableOpacity onPress={CategoryHandle}>
               <Image source={RightIcon} style={styles.rightArrowIcon} />
             </TouchableOpacity>
           </View>
-
-          {/* Flat List For Categories */}
           <FlatList
             data={CategoriesImages}
             renderItem={({ item }) => (
@@ -261,12 +246,12 @@ const HomeScreen = () => {
               </View>
             )}
             keyExtractor={item => item.id}
-            horizontal={true}
+            horizontal
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={styles.flatListContainer}
           />
 
-          {/* Featured Products Section */}
+          {/* ✅ Products Section */}
           <View style={styles.sectionHeader}>
             <Text style={styles.sectionHeaderText}>Featured Products</Text>
             <TouchableOpacity onPress={VegitableHandle}>
@@ -274,137 +259,113 @@ const HomeScreen = () => {
             </TouchableOpacity>
           </View>
 
-          <View
-            style={{
-              width: '100%',
-              alignItems: 'center',
-              padding: 10,
-              justifyContent: 'center',
-            }}
-          >
-            <FlatList
-              data={ProductsImages}
-              renderItem={({ item }) => (
-                <View style={styles.productCardWrapper}>
-                  {/* Product Card */}
-                  <TouchableOpacity
-                    onPress={() =>
-                      navigation.navigate('ProductDetailsScreen', {
-                        Detail: item,
-                      })
-                    }
-                    style={styles.productCard}
-                  >
-                    <View style={styles.topContainer}>
-                      <View style={styles.NewTagWrapper}>
-                        <Text style={styles.NewTagTextWrapper}> New</Text>
-                      </View>
-
-                      <TouchableOpacity
-                        onPress={() => {
-                          if (favourites.includes(item.id)) {
-                            store.dispatch(
-                              setFavourites(
-                                favourites.filter(id => id !== item.id),
-                              ),
-                            );
-                          } else {
-                            store.dispatch(
-                              setFavourites([...favourites, item.id]),
-                            );
-                          }
-                        }}
-                      >
-                        <Image
-                          source={
-                            favourites.includes(item.id)
-                              ? HeartFilIcon
-                              : HeartIcon
-                          }
-                          style={styles.HeartIconStyle}
-                        />
-                      </TouchableOpacity>
+          <FlatList
+            data={ProductsImages}
+            numColumns={2}
+            keyExtractor={item => item.id}
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{ alignItems: 'center' }}
+            renderItem={({ item }) => (
+              <View style={styles.productCardWrapper}>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate('ProductDetailsScreen', {
+                      Detail: item,
+                    })
+                  }
+                  style={styles.productCard}
+                >
+                  {/* ✅ Favourite toggle */}
+                  <View style={styles.topContainer}>
+                    <View style={styles.NewTagWrapper}>
+                      <Text style={styles.NewTagTextWrapper}> New</Text>
                     </View>
-
-                    <View
-                      style={[
-                        styles.productImageWrapper,
-                        { backgroundColor: item?.color },
-                      ]}
-                    >
-                      <Image source={item.source} style={styles.productImage} />
-                    </View>
-
-                    <Text style={styles.productPrice}>${item.price}</Text>
-                    <Text style={styles.productName}>{item.name}</Text>
-                    <Text style={styles.productSize}>{item.Size}</Text>
-                  </TouchableOpacity>
-
-                  {/* ✅ CHANGED: expandedIds used instead of expandedId */}
-                  {expandedIds.includes(item.id) ? (
-                    <View style={styles.quantityBar}>
-                      <TouchableOpacity
-                        onPress={() => {
-                          if ((counts[item.id] || 1) <= 1) {
-                            decreaseCount(item);
-                          } else {
-                            decreaseCount(item);
-                          }
-                        }}
-                      >
-                        <Image
-                          source={
-                            (counts[item.id] || 1) <= 1 ? DeleteIcon : MinusIcon
-                          }
-                          style={[
-                            styles.MinusBar,
-                            (counts[item.id] || 1) <= 1 && {
-                              tintColor: 'red',
-                              width: RF(20),
-                              height: RF(20),
-                            },
-                          ]}
-                        />
-                      </TouchableOpacity>
-
-                      <Text style={styles.quantityBarText}>
-                        {counts[item.id] || 1}
-                      </Text>
-
-                      <TouchableOpacity onPress={() => increaseCount(item)}>
-                        <Image source={PlusIcon} style={styles.MinusBar} />
-                      </TouchableOpacity>
-                    </View>
-                  ) : (
                     <TouchableOpacity
-                      style={styles.singlePlusWrapper}
-                      onPress={() => increaseCount(item)} // ✅ simplified
+                      onPress={() => {
+                        const exists = favourites.some(
+                          fav => fav.id === item.id,
+                        );
+                        if (exists) {
+                          store.dispatch(
+                            setFavourites(favourites.filter(fav => fav.id !== item.id)),
+                          );
+                        } else {
+                          store.dispatch(setFavourites([...favourites, item]));
+                        }
+                      }}
                     >
+                      <Image
+                        source={
+                          favourites.some(fav => fav.id === item.id)
+                            ? HeartFilIcon
+                            : HeartIcon
+                        }
+                        style={styles.HeartIconStyle}
+                      />
+                    </TouchableOpacity>
+                  </View>
+
+                  <View
+                    style={[
+                      styles.productImageWrapper,
+                      { backgroundColor: item?.color },
+                    ]}
+                  >
+                    <Image source={item.source} style={styles.productImage} />
+                  </View>
+
+                  <Text style={styles.productPrice}>${item.price}</Text>
+                  <Text style={styles.productName}>{item.name}</Text>
+                  <Text style={styles.productSize}>{item.Size}</Text>
+                </TouchableOpacity>
+
+                {/* ✅ Expandable quantity bar */}
+                {expandedIds.includes(item.id) ? (
+                  <View style={styles.quantityBar}>
+                    <TouchableOpacity onPress={() => decreaseCount(item)}>
+                      <Image
+                        source={
+                          (counts[item.id] || 1) <= 1 ? DeleteIcon : MinusIcon
+                        }
+                        style={[
+                          styles.MinusBar,
+                          (counts[item.id] || 1) <= 1 && {
+                            tintColor: 'red',
+                            width: RF(20),
+                            height: RF(20),
+                          },
+                        ]}
+                      />
+                    </TouchableOpacity>
+                    <Text style={styles.quantityBarText}>
+                      {counts[item.id] || 1}
+                    </Text>
+                    <TouchableOpacity onPress={() => increaseCount(item)}>
                       <Image source={PlusIcon} style={styles.MinusBar} />
                     </TouchableOpacity>
-                  )}
-                </View>
-              )}
-              keyExtractor={item => item.id}
-              numColumns={2}
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={{ alignItems: 'center' }}
-            />
-          </View>
+                  </View>
+                ) : (
+                  <TouchableOpacity
+                    style={styles.singlePlusWrapper}
+                    onPress={() => increaseCount(item)}
+                  >
+                    <Image source={PlusIcon} style={styles.MinusBar} />
+                  </TouchableOpacity>
+                )}
+              </View>
+            )}
+          />
           <View style={{ height: RF(70) }} />
         </View>
       </ScrollView>
 
-      {/* ✅ CHANGED: Single bottom cart view showing total items + price */}
+      {/* ✅ Bottom cart bar (only shows if items selected) */}
       {selectedItems.length > 0 && (
         <View style={styles.BottomContainer}>
           <TouchableOpacity
             style={styles.viewButton}
             onPress={() =>
-              navigation.navigate('CheckoutScreen', {
-                selectedItems,
-                counts,
-              })
+              navigation.navigate('CheckoutScreen', { selectedItems, counts })
             }
           >
             <View style={styles.itemCircle}>
