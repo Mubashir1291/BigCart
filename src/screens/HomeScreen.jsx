@@ -1,4 +1,3 @@
-
 import {
   StyleSheet,
   Text,
@@ -10,6 +9,7 @@ import {
   ScrollView,
   Dimensions,
   ImageBackground,
+  
 } from 'react-native';
 import { RF } from '../Utils/Responsive';
 import {
@@ -47,6 +47,10 @@ import React, { useState } from 'react';
 import Swiper from 'react-native-swiper';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { store } from '../redux/store';
+import { setFavourites } from '../redux/Reducers/userReducer';
+import { useDispatch, useSelector } from 'react-redux';
+import { cartItems } from '../redux/Reducers/userReducer';
 import {
   TextBold,
   TextMedium,
@@ -121,6 +125,7 @@ const HomeScreen = () => {
   const navigation = useNavigation();
   const [counts, setCounts] = useState({});
   const [Heart, setHeart] = useState([]);
+  const favourites = useSelector(state => state.user.favourites);
 
 
   // ✅ CHANGED: replaced single `selectedItem` with selectedItems array
@@ -134,24 +139,24 @@ const HomeScreen = () => {
   // ✅ CHANGED: add/remove items in counts + selectedItems
 
   const increaseCount = item => {
-    setCounts(prev => ({ ...prev, [item.id]: (prev[item.id] || 0) + 1 }));
+    store.dispatch.cartItems(prev => ({ ...prev, [item.id]: (prev[item.id] || 0) + 1 }));
     if (!selectedItems.some(i => i.id === item.id)) {
-      setSelectedItems(prev => [...prev, item]);
+      cartItems(prev => [...prev, item]);
     }
     if (!expandedIds.includes(item.id)) {
-      setExpandedIds(prev => [...prev, item.id]);
+      cartItems(prev => [...prev, item.id]);
     }
   };
 
   const decreaseCount = item => {
-    setCounts(prev => {
+    cartItems(prev => {
       const updated = { ...prev };
       if ((updated[item.id] || 1) > 1) {
         updated[item.id] = updated[item.id] - 1;
       } else {
         delete updated[item.id];
-        setSelectedItems(prev => prev.filter(i => i.id !== item.id));
-        setExpandedIds(prev => prev.filter(id => id !== item.id)); // ✅ CHANGED
+        store.dispatch.cartItems(prev => prev.filter(i => i.id !== item.id));
+        store.dispatch.caller(prev => prev.filter(id => id !== item.id)); 
       }
       return updated;
     });
@@ -161,13 +166,12 @@ const HomeScreen = () => {
   const getTotalQuantity = () =>
     Object.values(counts).reduce((a, b) => a + b, 0);
 
-   console.log(JSON.stringify(counts),'this is calling')
+  console.log(JSON.stringify(counts), 'this is calling');
 
-    const getTotalPrice = () =>
+  const getTotalPrice = () =>
     selectedItems.reduce(
-    (sum, item) =>
-        sum + parseFloat(item.price) * (counts[item.id] || 1),
-      0
+      (sum, item) => sum + parseFloat(item.price) * (counts[item.id] || 1),
+      0,
     );
 
   const CategoryHandle = () => navigation.navigate('CategoryScreen');
@@ -179,96 +183,96 @@ const HomeScreen = () => {
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView>
         <View style={styles.MainContainer}>
- <View style={styles.SearchInputContainer}>
-          <TouchableOpacity onPress={SearchScreenHandle}>
-            <Image source={SearchIcon} style={styles.searchIcon} />
-          </TouchableOpacity>
+          <View style={styles.SearchInputContainer}>
+            <TouchableOpacity onPress={SearchScreenHandle}>
+              <Image source={SearchIcon} style={styles.searchIcon} />
+            </TouchableOpacity>
 
-          <TextInput
-            style={styles.searchInput}
-            placeholder=" Search Keyword..."
-            placeholderTextColor={'grey'}
-            color={'black'}
-          />
-          <TouchableOpacity onPress={FilterScreenHandle}>
-            <Image source={FilterIcon} style={styles.filterIcon} />
-          </TouchableOpacity>
-        </View>
-
-        {/* Main Image Swiper */}
-
-        <View
-          style={{
-            width: '100%',
-            height: RF(283),
-            alignItems: 'center',
-            paddingHorizontal: RF(15),
-          }}
-        >
-          <Swiper
-            autoplay={true}
-            showsButtons={false}
-            loop
-            dot={<View style={styles.dotStyle} />}
-            activeDot={<View style={styles.activeDotStyle} />}
-            paginationStyle={styles.paginationStyle}
-          >
-            <ImageBackground
-              source={HomeBackGround}
-              style={styles.mainBannerImage}
-            >
-              <View style={styles.offtextView}>
-                <Text style={styles.offtext}> 20% Off on your</Text>
-                <Text style={styles.offtext}> first purchase </Text>
-              </View>
-            </ImageBackground>
-
-            <ImageBackground
-              source={homebackImage}
-              style={styles.mainBannerImage}
+            <TextInput
+              style={styles.searchInput}
+              placeholder=" Search Keyword..."
+              placeholderTextColor={'grey'}
+              color={'black'}
             />
-          </Swiper>
-        </View>
+            <TouchableOpacity onPress={FilterScreenHandle}>
+              <Image source={FilterIcon} style={styles.filterIcon} />
+            </TouchableOpacity>
+          </View>
 
-        {/* Category Section */}
+          {/* Main Image Swiper */}
 
-        <View style={styles.sectionHeader}>
-          <Text style={styles.sectionHeaderText}>Categories</Text>
-
-          <TouchableOpacity onPress={CategoryHandle}>
-            <Image source={RightIcon} style={styles.rightArrowIcon} />
-          </TouchableOpacity>
-        </View>
-
-        {/* Flat List For Categories */}
-        <FlatList
-          data={CategoriesImages}
-          renderItem={({ item }) => (
-            <View style={styles.categoryItem}>
-              <View
-                style={[
-                  styles.categoryImageWrapper,
-                  { backgroundColor: item?.color },
-                ]}
+          <View
+            style={{
+              width: '100%',
+              height: RF(283),
+              alignItems: 'center',
+              paddingHorizontal: RF(15),
+            }}
+          >
+            <Swiper
+              autoplay={true}
+              showsButtons={false}
+              loop
+              dot={<View style={styles.dotStyle} />}
+              activeDot={<View style={styles.activeDotStyle} />}
+              paginationStyle={styles.paginationStyle}
+            >
+              <ImageBackground
+                source={HomeBackGround}
+                style={styles.mainBannerImage}
               >
-                <Image source={item.source} style={styles.categoryImage} />
-              </View>
-              <Text style={styles.categoryNameText}>{item.name}</Text>
-            </View>
-          )}
-          keyExtractor={item => item.id}
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.flatListContainer}
-        />
+                <View style={styles.offtextView}>
+                  <Text style={styles.offtext}> 20% Off on your</Text>
+                  <Text style={styles.offtext}> first purchase </Text>
+                </View>
+              </ImageBackground>
 
-        {/* Featured Products Section */}
-        <View style={styles.sectionHeader}>
-          <Text style={styles.sectionHeaderText}>Featured Products</Text>
-          <TouchableOpacity onPress={VegitableHandle}>
-            <Image source={RightIcon} style={styles.rightArrowIcon} />
-          </TouchableOpacity>
-        </View>
+              <ImageBackground
+                source={homebackImage}
+                style={styles.mainBannerImage}
+              />
+            </Swiper>
+          </View>
+
+          {/* Category Section */}
+
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionHeaderText}>Categories</Text>
+
+            <TouchableOpacity onPress={CategoryHandle}>
+              <Image source={RightIcon} style={styles.rightArrowIcon} />
+            </TouchableOpacity>
+          </View>
+
+          {/* Flat List For Categories */}
+          <FlatList
+            data={CategoriesImages}
+            renderItem={({ item }) => (
+              <View style={styles.categoryItem}>
+                <View
+                  style={[
+                    styles.categoryImageWrapper,
+                    { backgroundColor: item?.color },
+                  ]}
+                >
+                  <Image source={item.source} style={styles.categoryImage} />
+                </View>
+                <Text style={styles.categoryNameText}>{item.name}</Text>
+              </View>
+            )}
+            keyExtractor={item => item.id}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.flatListContainer}
+          />
+
+          {/* Featured Products Section */}
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionHeaderText}>Featured Products</Text>
+            <TouchableOpacity onPress={VegitableHandle}>
+              <Image source={RightIcon} style={styles.rightArrowIcon} />
+            </TouchableOpacity>
+          </View>
 
           <View
             style={{
@@ -291,30 +295,36 @@ const HomeScreen = () => {
                     }
                     style={styles.productCard}
                   >
-             <View  style={styles.topContainer}>
-            
-                                <View style={styles.NewTagWrapper}>
-                                  <Text style={styles.NewTagTextWrapper}> New</Text>
-                                    </View>
-            
-                                    <TouchableOpacity
-                                  onPress={() => {
-                                    if (Heart.includes(item.id)) {
-                                      setHeart(Heart.filter(id => id !== item.id));
-                                    } else {
-                                      setHeart([...Heart, item.id]);
-                                    }
-                                  }}
-                                >
-                                  <Image
-                                    source={
-                                      Heart.includes(item.id) ? HeartFilIcon : HeartIcon
-                                    }
-                                    style={styles.HeartIconStyle}
-                                  />
-                                </TouchableOpacity>
-                              
-                                </View>
+                    <View style={styles.topContainer}>
+                      <View style={styles.NewTagWrapper}>
+                        <Text style={styles.NewTagTextWrapper}> New</Text>
+                      </View>
+
+                      <TouchableOpacity
+                        onPress={() => {
+                          if (favourites.includes(item.id)) {
+                            store.dispatch(
+                              setFavourites(
+                                favourites.filter(id => id !== item.id),
+                              ),
+                            );
+                          } else {
+                            store.dispatch(
+                              setFavourites([...favourites, item.id]),
+                            );
+                          }
+                        }}
+                      >
+                        <Image
+                          source={
+                            favourites.includes(item.id)
+                              ? HeartFilIcon
+                              : HeartIcon
+                          }
+                          style={styles.HeartIconStyle}
+                        />
+                      </TouchableOpacity>
+                    </View>
 
                     <View
                       style={[
@@ -322,10 +332,7 @@ const HomeScreen = () => {
                         { backgroundColor: item?.color },
                       ]}
                     >
-                      <Image
-                        source={item.source}
-                        style={styles.productImage}
-                      />
+                      <Image source={item.source} style={styles.productImage} />
                     </View>
 
                     <Text style={styles.productPrice}>${item.price}</Text>
@@ -347,9 +354,7 @@ const HomeScreen = () => {
                       >
                         <Image
                           source={
-                            (counts[item.id] || 1) <= 1
-                              ? DeleteIcon
-                              : MinusIcon
+                            (counts[item.id] || 1) <= 1 ? DeleteIcon : MinusIcon
                           }
                           style={[
                             styles.MinusBar,
@@ -366,9 +371,7 @@ const HomeScreen = () => {
                         {counts[item.id] || 1}
                       </Text>
 
-                      <TouchableOpacity
-                        onPress={() => increaseCount(item)}
-                      >
+                      <TouchableOpacity onPress={() => increaseCount(item)}>
                         <Image source={PlusIcon} style={styles.MinusBar} />
                       </TouchableOpacity>
                     </View>
@@ -393,39 +396,40 @@ const HomeScreen = () => {
       </ScrollView>
 
       {/* ✅ CHANGED: Single bottom cart view showing total items + price */}
-     {selectedItems.length > 0 && (
+      {selectedItems.length > 0 && (
         <View style={styles.BottomContainer}>
-         <TouchableOpacity
-  style={styles.viewButton}
-  onPress={() =>
-    navigation.navigate('CheckoutScreen', {
-      selectedItems,
-      counts,
-    })
-  }
->
-  <View style={styles.itemCircle}>
-    <Text style={{ fontSize: RF(15), color: White, lineHeight: 30 }}>
-      {getTotalQuantity()}
-    </Text>
-  </View>
-  <Text style={[TextBold, { color: White, fontSize: RF(15) }]}>
-    View your cart
-  </Text>
-  <Text style={{ fontSize: RF(14), fontFamily: 'Poppins-Bold', color: White }}>
-    ${getTotalPrice().toFixed(2)}
-  </Text>
-</TouchableOpacity>
-
-          </View>
-      
-  
+          <TouchableOpacity
+            style={styles.viewButton}
+            onPress={() =>
+              navigation.navigate('CheckoutScreen', {
+                selectedItems,
+                counts,
+              })
+            }
+          >
+            <View style={styles.itemCircle}>
+              <Text style={{ fontSize: RF(15), color: White, lineHeight: 30 }}>
+                {getTotalQuantity()}
+              </Text>
+            </View>
+            <Text style={[TextBold, { color: White, fontSize: RF(15) }]}>
+              View your cart
+            </Text>
+            <Text
+              style={{
+                fontSize: RF(14),
+                fontFamily: 'Poppins-Bold',
+                color: White,
+              }}
+            >
+              ${getTotalPrice().toFixed(2)}
+            </Text>
+          </TouchableOpacity>
+        </View>
       )}
     </SafeAreaView>
   );
 };
-
-
 
 export default HomeScreen;
 
@@ -563,7 +567,8 @@ const styles = StyleSheet.create({
   },
   quantityBar: {
     width: '100%',
-    height: RF(30),    backgroundColor: White,
+    height: RF(30),
+    backgroundColor: White,
     marginTop: RF(5),
     alignItems: 'center',
     flexDirection: 'row',
@@ -579,28 +584,27 @@ const styles = StyleSheet.create({
     tintColor: Secondary,
     resizeMode: 'contain',
   },
-  topContainer:{
-  
-  flexDirection: 'row',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  width:'100%'
-},
+  topContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+  },
 
   NewTagWrapper: {
- backgroundColor: Secondary,
-  paddingHorizontal: RF(6),
-  paddingVertical: RF(2),
+    backgroundColor: Secondary,
+    paddingHorizontal: RF(6),
+    paddingVertical: RF(2),
   },
   NewTagTextWrapper: {
     color: White,
-  fontSize: RF(10),
-  fontFamily: 'Poppins-Bold',
+    fontSize: RF(10),
+    fontFamily: 'Poppins-Bold',
   },
   HeartIconStyle: {
-  width: RF(18),
-  height: RF(18),
-  resizeMode: 'contain',
+    width: RF(18),
+    height: RF(18),
+    resizeMode: 'contain',
   },
   dotStyle: {
     backgroundColor: 'rgba(0,0,0,.2)',

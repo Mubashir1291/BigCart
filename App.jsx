@@ -44,6 +44,7 @@ const Stack = createNativeStackNavigator();
 
 function App() {
   const [isSplash,setIsSplash]=useState(true)
+  
   useEffect(()=>{  
   setTimeout(()=>{
   setIsSplash(false)

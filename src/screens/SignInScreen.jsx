@@ -40,12 +40,15 @@ const WelcomeScreen = () => {
   const SignInHandler = () => {
 
  store.dispatch(setIsLogin(true))
+ 
   }
+
     const SignupHandle = () => {
 
     navigation.navigate('SignupScreen');
     
   }
+
   const ForgetScreenHandle=()=>{
   
     navigation.navigate("ForgetPasswordScreen")
