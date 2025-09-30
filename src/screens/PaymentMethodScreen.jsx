@@ -360,7 +360,6 @@ const styles = StyleSheet.create({
     borderRadius:RF(13),
     alignItems:'center',
     justifyContent:'center',
-    backgroundColor:Secondary
 
 
   },

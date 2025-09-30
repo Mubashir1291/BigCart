@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   StyleSheet,
   Text,
@@ -41,16 +42,14 @@ import {
   Secondary,
   White,
 } from '../styles/colors/colorsCode';
-import React, { useEffect, useState } from 'react';
 import Swiper from 'react-native-swiper';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { store } from '../redux/store';
-import { setFavourites, cartItems } from '../redux/Reducers/userReducer';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setFavourites, setCartItems } from '../redux/Reducers/userReducer';
 import { TextBold } from '../components/IconSize/Sizes';
 
-// ✅ Categories & Products dummy data
+// Categories & Products dummy data
 const CategoriesImages = [
   { id: '1', source: CatIconvegitable, color: '#E6F2EA', name: 'Vegetables' },
   { id: '2', source: CatIconApple, color: '#FFE9E5', name: 'Fruits' },
@@ -67,7 +66,7 @@ const ProductsImages = [
     source: Peach,
     color: '#FFCEC1',
     name: 'Fresh Peach',
-    price: '8.00',
+    price: 8.0,
     Size: 'Dozen',
   },
   {
@@ -75,7 +74,7 @@ const ProductsImages = [
     source: Avacado,
     color: '#FCFFD9',
     name: 'Avacado',
-    price: '7.00',
+    price: 7.0,
     Size: '2.0 lbs',
     new: 'NEW',
   },
@@ -84,7 +83,7 @@ const ProductsImages = [
     source: Pineapple,
     color: '#FFE6C2',
     name: 'Pineapple',
-    price: '9.90',
+    price: 9.9,
     Size: '1.50 lbs',
   },
   {
@@ -92,7 +91,7 @@ const ProductsImages = [
     source: Grapes,
     color: '#FEE1ED',
     name: 'Black Grapes',
-    price: '7.05',
+    price: 7.05,
     Size: '5.0 lbs',
     new: '-16%',
   },
@@ -101,7 +100,7 @@ const ProductsImages = [
     source: Pomgrante,
     color: '#FFE3E2',
     name: 'Pomegrante',
-    price: '2.09',
+    price: 2.09,
     Size: '1.50 lbs',
     new: 'NEW',
   },
@@ -110,73 +109,64 @@ const ProductsImages = [
     source: Brocli,
     color: '#D2FFD0',
     name: 'Fresh Broccoli',
-    price: '3',
+    price: 3,
     Size: '1.0 kg',
   },
 ];
 
 const HomeScreen = () => {
   const navigation = useNavigation();
-// useEffect(()=>{
-// store.dispatch(setFavourites([])) 
-// },[])
-  // ✅ NEW: use objects/arrays for multi-item handling
-  const [counts, setCounts] = useState({});
-  const [selectedItems, setSelectedItems] = useState([]); // instead of single selectedItem
-  const [expandedIds, setExpandedIds] = useState([]); // instead of single expandedId
+  
+  const favourites = useSelector(state => state.user.favourites) || [];
+  const cartItems = useSelector(state => state.user.cartItems) || [];
+  const dispatch = useDispatch();
 
-  // ✅ Redux favourites state
-  const favourites = useSelector(state => state.user.favourites);
+  // ✅ Add product
+  const addToCart = (product) => {
+    const updated = [...cartItems];
+    const existing = updated.find(item => item.id === product.id);
 
-  // ✅ Add item to cart
-  const increaseCount = item => {
-    setCounts(prev => ({ ...prev, [item.id]: (prev[item.id] || 0) + 1 }));
-
-    if (!selectedItems.some(i => i.id === item.id)) {
-      setSelectedItems(prev => [...prev, item]); // ✅ FIXED: update local selectedItems state
+    if (existing) {
+      existing.quantity += 1;
+    } else {
+      updated.push({ ...product, quantity: 1 });
     }
-    if (!expandedIds.includes(item.id)) {
-      setExpandedIds(prev => [...prev, item.id]); // ✅ FIXED: update local expandedIds state
-    }
+    dispatch(setCartItems(updated));
   };
 
-  // Decrease count
-  const decreaseCount = item => {
-    setCounts(prev => {
-      const updated = { ...prev };
-      if ((updated[item.id] || 1) > 1) {
-        updated[item.id] = updated[item.id] - 1;
-      } else {
-        delete updated[item.id];
-        setSelectedItems(prev => prev.filter(i => i.id !== item.id)); // ✅ FIXED remove from cart
-        setExpandedIds(prev => prev.filter(id => id !== item.id)); // ✅ FIXED collapse card
-      }
-      return updated;
-    });
+  // ✅ Increment
+  const increment = (id) => {
+    const updated = cartItems.map(item =>
+      item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+    );
+    dispatch(setCartItems(updated));
   };
 
-  // ✅ Helpers for bottom bar
+  // ✅ Decrement
+  const decrement = (id) => {
+    const updated = cartItems
+      .map(item =>
+        item.id === id ? { ...item, quantity: item.quantity - 1 } : item
+      )
+      .filter(item => item.quantity > 0);
+
+    dispatch(setCartItems(updated));
+  };
+
+  // ✅ Helpers
   const getTotalQuantity = () =>
-    Object.values(counts).reduce((a, b) => a + b, 0);
+    cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   const getTotalPrice = () =>
-    selectedItems.reduce(
-      (sum, item) => sum + parseFloat(item.price) * (counts[item.id] || 1),
-      0,
-    );
-
-  const CategoryHandle = () => navigation.navigate('CategoryScreen');
-  const VegitableHandle = () => navigation.navigate('VegitableScreen');
-  const SearchScreenHandle = () => navigation.navigate('SearchScreen');
-  const FilterScreenHandle = () => navigation.navigate('FilterScreen');
+    cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView>
         <View style={styles.MainContainer}>
-          {/* ✅ Search bar */}
+          {/* Search bar */}
           <View style={styles.SearchInputContainer}>
-            <TouchableOpacity onPress={SearchScreenHandle}>
+            <TouchableOpacity onPress={() => navigation.navigate('SearchScreen')}>
               <Image source={SearchIcon} style={styles.searchIcon} />
             </TouchableOpacity>
             <TextInput
@@ -185,20 +175,13 @@ const HomeScreen = () => {
               placeholderTextColor={'grey'}
               color={'black'}
             />
-            <TouchableOpacity onPress={FilterScreenHandle}>
+            <TouchableOpacity onPress={() => navigation.navigate('FilterScreen')}>
               <Image source={FilterIcon} style={styles.filterIcon} />
             </TouchableOpacity>
           </View>
 
-          {/* ✅ Swiper Banner */}
-          <View
-            style={{
-              width: '100%',
-              height: RF(283),
-              alignItems: 'center',
-              paddingHorizontal: RF(15),
-            }}
-          >
+          {/* Banner */}
+          <View style={{ width: '100%', height: RF(283), alignItems: 'center', paddingHorizontal: RF(15) }}>
             <Swiper
               autoplay
               loop
@@ -207,26 +190,20 @@ const HomeScreen = () => {
               activeDot={<View style={styles.activeDotStyle} />}
               paginationStyle={styles.paginationStyle}
             >
-              <ImageBackground
-                source={HomeBackGround}
-                style={styles.mainBannerImage}
-              >
+              <ImageBackground source={HomeBackGround} style={styles.mainBannerImage}>
                 <View style={styles.offtextView}>
                   <Text style={styles.offtext}> 20% Off on your</Text>
                   <Text style={styles.offtext}> first purchase </Text>
                 </View>
               </ImageBackground>
-              <ImageBackground
-                source={homebackImage}
-                style={styles.mainBannerImage}
-              />
+              <ImageBackground source={homebackImage} style={styles.mainBannerImage} />
             </Swiper>
           </View>
 
-          {/* ✅ Category Section */}
+          {/* Categories */}
           <View style={styles.sectionHeader}>
             <Text style={styles.sectionHeaderText}>Categories</Text>
-            <TouchableOpacity onPress={CategoryHandle}>
+            <TouchableOpacity onPress={() => navigation.navigate('CategoryScreen')}>
               <Image source={RightIcon} style={styles.rightArrowIcon} />
             </TouchableOpacity>
           </View>
@@ -234,12 +211,7 @@ const HomeScreen = () => {
             data={CategoriesImages}
             renderItem={({ item }) => (
               <View style={styles.categoryItem}>
-                <View
-                  style={[
-                    styles.categoryImageWrapper,
-                    { backgroundColor: item?.color },
-                  ]}
-                >
+                <View style={[styles.categoryImageWrapper, { backgroundColor: item?.color }]}>
                   <Image source={item.source} style={styles.categoryImage} />
                 </View>
                 <Text style={styles.categoryNameText}>{item.name}</Text>
@@ -251,10 +223,10 @@ const HomeScreen = () => {
             contentContainerStyle={styles.flatListContainer}
           />
 
-          {/* ✅ Products Section */}
+          {/* Products */}
           <View style={styles.sectionHeader}>
             <Text style={styles.sectionHeaderText}>Featured Products</Text>
-            <TouchableOpacity onPress={VegitableHandle}>
+            <TouchableOpacity onPress={() => navigation.navigate('VegitableScreen')}>
               <Image source={RightIcon} style={styles.rightArrowIcon} />
             </TouchableOpacity>
           </View>
@@ -263,126 +235,96 @@ const HomeScreen = () => {
             data={ProductsImages}
             numColumns={2}
             keyExtractor={item => item.id}
-            showsHorizontalScrollIndicator={false}
             contentContainerStyle={{ alignItems: 'center' }}
-            renderItem={({ item }) => (
-              <View style={styles.productCardWrapper}>
-                <TouchableOpacity
-                  onPress={() =>
-                    navigation.navigate('ProductDetailsScreen', {
-                      Detail: item,
-                    })
-                  }
-                  style={styles.productCard}
-                >
-                  {/* ✅ Favourite toggle */}
-                  <View style={styles.topContainer}>
-                    <View style={styles.NewTagWrapper}>
-                      <Text style={styles.NewTagTextWrapper}> New</Text>
-                    </View>
-                    <TouchableOpacity
-                      onPress={() => {
-                        const exists = favourites.some(
-                          fav => fav.id === item.id,
-                        );
-                        if (exists) {
-                          store.dispatch(
-                            setFavourites(favourites.filter(fav => fav.id !== item.id)),
-                          );
-                        } else {
-                          store.dispatch(setFavourites([...favourites, item]));
-                        }
-                      }}
-                    >
-                      <Image
-                        source={
-                          favourites.some(fav => fav.id === item.id)
-                            ? HeartFilIcon
-                            : HeartIcon
-                        }
-                        style={styles.HeartIconStyle}
-                      />
-                    </TouchableOpacity>
-                  </View>
+            renderItem={({ item }) => {
+              const cartItem = cartItems?.find(ci => ci.id === item.id);
+              const quantity = cartItem ? cartItem.quantity : 0;
+              const isFavourite = favourites.some(fav => fav.id === item.id);
 
-                  <View
-                    style={[
-                      styles.productImageWrapper,
-                      { backgroundColor: item?.color },
-                    ]}
+              return (
+                <View style={styles.productCardWrapper}>
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate('ProductDetailsScreen', { Detail: item })}
+                    style={styles.productCard}
                   >
-                    <Image source={item.source} style={styles.productImage} />
-                  </View>
-
-                  <Text style={styles.productPrice}>${item.price}</Text>
-                  <Text style={styles.productName}>{item.name}</Text>
-                  <Text style={styles.productSize}>{item.Size}</Text>
-                </TouchableOpacity>
-
-                {/* ✅ Expandable quantity bar */}
-                {expandedIds.includes(item.id) ? (
-                  <View style={styles.quantityBar}>
-                    <TouchableOpacity onPress={() => decreaseCount(item)}>
-                      <Image
-                        source={
-                          (counts[item.id] || 1) <= 1 ? DeleteIcon : MinusIcon
+                    <View style={styles.topContainer}>
+                     
+                         {item.new ? (
+                        <View style={styles.NewTagWrapper}>
+                          <Text style={styles.NewTagTextWrapper}>{item.new}</Text>
+                        </View>
+                      ) : (
+                        <View style={{ width: RF(40) }} />
+                      )}
+                       <TouchableOpacity
+                        onPress={() =>
+                          dispatch(
+                            setFavourites(
+                              isFavourite
+                                ? favourites.filter(fav => fav.id !== item.id)
+                                : [...favourites, item]
+                            )
+                          )
                         }
-                        style={[
-                          styles.MinusBar,
-                          (counts[item.id] || 1) <= 1 && {
-                            tintColor: 'red',
-                            width: RF(20),
-                            height: RF(20),
-                          },
-                        ]}
-                      />
-                    </TouchableOpacity>
-                    <Text style={styles.quantityBarText}>
-                      {counts[item.id] || 1}
-                    </Text>
-                    <TouchableOpacity onPress={() => increaseCount(item)}>
+                      >
+                        <Image
+                          source={isFavourite ? HeartFilIcon : HeartIcon}
+                          style={styles.HeartIconStyle}
+                        />
+                      </TouchableOpacity>
+                    </View>
+                    <View style={[styles.productImageWrapper, { backgroundColor: item.color }]}>
+                      <Image source={item.source} style={styles.productImage} />
+                    </View>
+                    <Text style={styles.productName}>{item.name}</Text>
+                    <Text style={styles.productPrice}>${item.price}</Text>
+                    <Text style={styles.productSize}>{item.Size}</Text>
+                  </TouchableOpacity>
+
+                  {/* Quantity bar */}
+                  {quantity > 0 ? (
+                    <View style={styles.quantityBar}>
+                      <TouchableOpacity onPress={() => decrement(item.id)}>
+                        <Image
+                          source={quantity <= 1 ? DeleteIcon : MinusIcon}
+                          style={[styles.MinusBar, quantity <= 1 && { tintColor: 'red', width: RF(20), height: RF(20) }]}
+                        />
+                      </TouchableOpacity>
+                      <Text style={styles.quantityBarText}>{quantity}</Text>
+                      <TouchableOpacity onPress={() => increment(item.id)}>
+                        <Image source={PlusIcon} style={styles.MinusBar} />
+                      </TouchableOpacity>
+                    </View>
+                  ) : (
+                    <TouchableOpacity style={styles.singlePlusWrapper} onPress={() => addToCart(item)}>
                       <Image source={PlusIcon} style={styles.MinusBar} />
                     </TouchableOpacity>
-                  </View>
-                ) : (
-                  <TouchableOpacity
-                    style={styles.singlePlusWrapper}
-                    onPress={() => increaseCount(item)}
-                  >
-                    <Image source={PlusIcon} style={styles.MinusBar} />
-                  </TouchableOpacity>
-                )}
-              </View>
-            )}
+                  )}
+                </View>
+              );
+            }}
           />
           <View style={{ height: RF(70) }} />
         </View>
       </ScrollView>
 
-      {/* ✅ Bottom cart bar (only shows if items selected) */}
-      {selectedItems.length > 0 && (
+      {/* Bottom bar */}
+      {cartItems?.length > 0 && (
         <View style={styles.BottomContainer}>
-          <TouchableOpacity
+             <TouchableOpacity
             style={styles.viewButton}
             onPress={() =>
-              navigation.navigate('CheckoutScreen', { selectedItems, counts })
+              navigation.navigate('CheckoutScreen', {
+                selectedItems: cartItems,
+                counts: Object.fromEntries(cartItems.map(item => [item.id, item.quantity]))
+              })
             }
           >
             <View style={styles.itemCircle}>
-              <Text style={{ fontSize: RF(15), color: White, lineHeight: 30 }}>
-                {getTotalQuantity()}
-              </Text>
+              <Text style={{ fontSize: RF(15), color: White, lineHeight: 30 }}>{getTotalQuantity()}</Text>
             </View>
-            <Text style={[TextBold, { color: White, fontSize: RF(15) }]}>
-              View your cart
-            </Text>
-            <Text
-              style={{
-                fontSize: RF(14),
-                fontFamily: 'Poppins-Bold',
-                color: White,
-              }}
-            >
+            <Text style={[TextBold, { color: White, fontSize: RF(15) }]}>View your cart</Text>
+            <Text style={{ fontSize: RF(14), fontFamily: 'Poppins-Bold', color: White }}>
               ${getTotalPrice().toFixed(2)}
             </Text>
           </TouchableOpacity>
@@ -394,6 +336,7 @@ const HomeScreen = () => {
 
 export default HomeScreen;
 
+// Styles
 const styles = StyleSheet.create({
   MainContainer: {
     backgroundColor: LightGrey,
@@ -536,9 +479,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: 35,
   },
-  quantityBarText: {
-    fontSize: RF(18),
-  },
+  quantityBarText: { fontSize: RF(18) },
   MinusBar: {
     width: RF(15),
     height: RF(15),
@@ -551,7 +492,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
   },
-
   NewTagWrapper: {
     backgroundColor: Secondary,
     paddingHorizontal: RF(6),
@@ -629,7 +569,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-
   singlePlusWrapper: {
     width: '100%',
     height: RF(30),

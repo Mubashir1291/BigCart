@@ -18,11 +18,15 @@ export default function Routes() {
   console.log(isLogin);
 
   useEffect(() => {
+
     const timer = setTimeout(() => setIsSplash(false), 3000);
+
     return () => clearTimeout(timer);
+
   }, []);
 
   return (
+    
     <Stack.Navigator screenOptions={{ headerShown: false }}>
         
 

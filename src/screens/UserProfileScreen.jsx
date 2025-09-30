@@ -103,7 +103,11 @@ const UserProfileScreen = () => {
   const backArrowHandle = item => {
     if(item?.name==='Logout'){
       store.dispatch(setIsLogin(false))
+    
+      } else if (item?.screen) {
+      navigation.navigate(item.screen);
     }
+  
   };
 
   // const handleCamera = async () => {
