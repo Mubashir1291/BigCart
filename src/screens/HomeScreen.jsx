@@ -48,8 +48,14 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useSelector, useDispatch } from 'react-redux';
 import { setFavourites, setCartItems } from '../redux/Reducers/userReducer';
 import { TextBold } from '../components/IconSize/Sizes';
+import {
+  SharedElement,
+  SharedElementTransition,
+  nodeFromRef
+} from 'react-native-shared-element';// Categories & Products dummy data
 
-// Categories & Products dummy data
+
+
 const CategoriesImages = [
   { id: '1', source: CatIconvegitable, color: '#E6F2EA', name: 'Vegetables' },
   { id: '2', source: CatIconApple, color: '#FFE9E5', name: 'Fruits' },
@@ -116,6 +122,8 @@ const ProductsImages = [
 
 const HomeScreen = () => {
   const navigation = useNavigation();
+  let startScene ;
+  let startNode;
   
   const favourites = useSelector(state => state.user.favourites) || [];
   const cartItems = useSelector(state => state.user.cartItems) || [];
@@ -144,7 +152,8 @@ const HomeScreen = () => {
 
   // ✅ Decrement
   const decrement = (id) => {
-    const updated = cartItems
+    const safeCartItems = Array.isArray(cartItems) ? cartItems : [];
+    const updated = safeCartItems
       .map(item =>
         item.id === id ? { ...item, quantity: item.quantity - 1 } : item
       )
@@ -243,6 +252,7 @@ const HomeScreen = () => {
 
               return (
                 <View style={styles.productCardWrapper}>
+                  
                   <TouchableOpacity
                     onPress={() => navigation.navigate('ProductDetailsScreen', { Detail: item })}
                     style={styles.productCard}
@@ -261,8 +271,8 @@ const HomeScreen = () => {
                           dispatch(
                             setFavourites(
                               isFavourite
-                                ? favourites.filter(fav => fav.id !== item.id)
-                                : [...favourites, item]
+                                ? (Array.isArray(favourites) ? favourites : []).filter(fav => fav.id !== item.id)
+                                : [...(Array.isArray(favourites) ? favourites : []), item]
                             )
                           )
                         }
@@ -273,10 +283,18 @@ const HomeScreen = () => {
                         />
                       </TouchableOpacity>
                     </View>
+                    <SharedElement id={`item.${item.id}.source`}>
                     <View style={[styles.productImageWrapper, { backgroundColor: item.color }]}>
                       <Image source={item.source} style={styles.productImage} />
                     </View>
+                    </SharedElement>
+
+
                     <Text style={styles.productName}>{item.name}</Text>
+
+
+
+
                     <Text style={styles.productPrice}>${item.price}</Text>
                     <Text style={styles.productSize}>{item.Size}</Text>
                   </TouchableOpacity>

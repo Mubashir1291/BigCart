@@ -153,8 +153,8 @@ const HomeScreen = () => {
         updated[item.id] = updated[item.id] - 1;
       } else {
         delete updated[item.id];
-        setSelectedItems(prev => prev.filter(i => i.id !== item.id));
-        setExpandedIds(prev => prev.filter(id => id !== item.id)); // ✅ CHANGED
+    setSelectedItems(prev => (Array.isArray(prev) ? prev : []).filter(i => i.id !== item.id));
+        setExpandedIds(prev => (Array.isArray(prev) ? prev : []).filter(id => id !== item.id)); // ✅ CHANGED
       }
       return updated;
     });
@@ -227,11 +227,11 @@ const HomeScreen = () => {
 
                         <TouchableOpacity
                       onPress={() => {
-                        if (Heart.includes(item.id)) {
-                          setHeart(Heart.filter(id => id !== item.id));
+                     if ((Array.isArray(Heart) ? Heart : []).includes(item.id)) {
+                          setHeart((Array.isArray(Heart) ? Heart : []).filter(id => id !== item.id));
+
                         } else {
-                          setHeart([...Heart, item.id]);
-                        }
+                        setHeart([...(Array.isArray(Heart) ? Heart : []), item.id]);                        }
                       }}
                     >
                       <Image

@@ -22,9 +22,14 @@ import { IconSize, TextBold, TextMedium, TextRegular, TextSemiBold } from '../co
 import { useNavigation, useRoute } from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { SharedElement } from 'react-native-shared-element';
 
 const ProductDetailsScreen = () => {
   const [HeartPress, setHeartPress] = useState(true);
+
+  let endScene;
+  let endNode;
+
   const [counts, setCounts] = useState(1);
 
   const route = useRoute();
@@ -79,12 +84,15 @@ const ProductDetailsScreen = () => {
                 />
               </TouchableOpacity>
             </View>
-
+            
+             <SharedElement id={`item.${route?.params?.Detail?.id}.source`}>
             <Image 
               source={route?.params?.Detail?.source} 
               style={styles.ProductsImages} 
               resizeMode="contain"
             />
+            </SharedElement >
+
           </View>
 
           <View style={styles.DetailsContainer}>

@@ -36,6 +36,7 @@ import {PersistGate} from 'redux-persist/integration/react';
 // import ReviewScreen from './src/screens/ReviewScreen';
 // import SplashScreen from './src/screens/SplashScreen';
 // import CheckoutScreen from './src/screens/CheckoutScreen';
+
 import Routes from './src/Routes/Routes'
 
 import { useEffect, useState } from 'react';

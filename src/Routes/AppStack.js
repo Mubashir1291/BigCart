@@ -25,8 +25,10 @@ import PaymentMethodScreen from '../screens/PaymentMethodScreen';
 import CategoryScreen from '../screens/CategoryScreen';
 import VegitableScreen from '../screens/VegitableScreen';
 import CheckoutScreen from '../screens/CheckoutScreen';
+import {createSharedElementStackNavigator} from 'react-navigation-shared-element';
 
-const Stack = createNativeStackNavigator();
+// const Stack = createNativeStackNavigator();
+const Stack = createSharedElementStackNavigator();
 
 export default function AppStack() {
   return (
@@ -39,7 +41,13 @@ export default function AppStack() {
       <Stack.Screen name="AddAddressScreen" component={AddAddressScreen} />
       <Stack.Screen name="OrderSucessScreen" component={OrderSucessScreen} />
       <Stack.Screen name="TrackOrderScreen" component={TrackOrderScreen} />
-      <Stack.Screen name="ProductDetailsScreen" component={ProductDetailsScreen} />
+      <Stack.Screen name="ProductDetailsScreen" component={ProductDetailsScreen} 
+      sharedElements={(route, otherRoute, showing) => {
+        const { Detail } = route.params;
+        return [`item.${Detail.id}.source`];
+      }}
+      
+      />
       <Stack.Screen name="FilterScreen" component={FilterScreen} />
       <Stack.Screen name="ShippingMethodScreen" component={ShippingMethodScreen} />
       <Stack.Screen name="ShippmentAddressScreen" component={ShippmentAddressScreen} />
