@@ -63,27 +63,17 @@ const AddAddresScreen = () => {
                 keyboardType={'numeric'}
               />
               {/* <GooglePlacesAutocomplete
-                placeholder="Search Address"
-                fetchDetails={true}
-                // onPress={(data, details = null) => {
-                //   console.log(details?.geometry?.location);
-                // }}
-                query={{
-                  key: GoogleMapsKey,
-                  language: 'en',
-                }}
-                enablePoweredByContainer={false}
-              
-                styles={{
-                  textInputContainer: styles.TextInputContainer,
-                  textInput: { color: '#000' },
-              
-                  listView: {
-                    zIndex: 1000, // Ensure the list is above other components
-                    height: 200, // You can adjust this height
-                  },
-                }}
-              /> */}
+      placeholder='Search'
+       fetchDetails={true} 
+      onPress={(data, details = null) => {
+        // 'details' is provided when fetchDetails = true
+        console.log(data, details);
+      }}
+      query={{
+        key: GoogleMapsKey,
+        language: 'en',
+      }}
+    /> */}
               <InfoInput
                 Img={ZipCodeIcon}
                 placeholder={'Zip code'}

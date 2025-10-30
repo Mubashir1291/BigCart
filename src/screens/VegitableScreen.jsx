@@ -253,6 +253,9 @@ const HomeScreen = () => {
                       ]}
                     >
                       <Image source={item.source} style={styles.productImage} />
+
+
+                      
                     </View>
 
                     <Text style={styles.productPrice}>${item.price}</Text>
